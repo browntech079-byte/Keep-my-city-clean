@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
 
     <title>CityCare | Admin Dashboard</title>
 
+    <!-- Main and Admin Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
 </head>
@@ -14,14 +16,10 @@
 
     <div class="admin-layout">
 
-        <!-- ==========================================
-             SIDEBAR
-        =========================================== -->
-
+        <!-- SIDEBAR -->
         <aside class="admin-sidebar">
 
             <a href="index.html" class="admin-logo">
-
                 <img
                     src="assets/images/citycare-logo.png"
                     alt="CityCare Logo"
@@ -31,7 +29,6 @@
                     <h1>CityCare</h1>
                     <p>Smart Civic Management</p>
                 </div>
-
             </a>
 
             <p class="sidebar-label">WORKSPACE</p>
@@ -78,18 +75,13 @@
         </aside>
 
 
-        <!-- ==========================================
-             MAIN CONTENT
-        =========================================== -->
-
+        <!-- MAIN CONTENT -->
         <main class="admin-main">
 
             <!-- TOP BAR -->
-
             <header class="admin-topbar">
 
                 <div class="admin-search">
-
                     <span>⌕</span>
 
                     <input
@@ -98,9 +90,7 @@
                         placeholder="Search complaints, locations, categories..."
                         aria-label="Search complaints"
                     >
-
                 </div>
-
 
                 <div class="admin-user">
 
@@ -117,42 +107,30 @@
 
 
             <!-- PAGE CONTENT -->
-
             <div class="admin-content">
 
-
-                <!-- ==========================================
-                     PAGE HEADING
-                =========================================== -->
-
+                <!-- PAGE HEADING -->
                 <section class="admin-page-heading">
 
                     <div>
-
                         <p class="admin-eyebrow">
                             ADMIN DASHBOARD
                         </p>
 
-                        <h2>
-                            Complaint Management
-                        </h2>
+                        <h2>Complaint Management</h2>
 
                         <p>
                             Monitor, review, and manage civic issues
                             reported by citizens.
                         </p>
-
                     </div>
-
 
                     <div class="admin-date">
 
                         <span>▦</span>
 
                         <div>
-                            <strong>
-                                Management Overview
-                            </strong>
+                            <strong>Management Overview</strong>
 
                             <small>
                                 Live complaint records
@@ -164,102 +142,63 @@
                 </section>
 
 
-                <!-- ==========================================
-                     STATISTICS
-                =========================================== -->
-
+                <!-- STATISTICS -->
                 <section
                     class="admin-stats"
                     id="adminStats"
                 >
 
-                    <!-- TOTAL -->
-
+                    <!-- TOTAL COMPLAINTS -->
                     <article class="admin-stat-card total-card">
 
-                        <div class="stat-icon">
-                            ▤
-                        </div>
+                        <div class="stat-icon">▤</div>
 
                         <div>
+                            <span>Total Complaints</span>
 
-                            <span>
-                                Total Complaints
-                            </span>
-
-                            <strong id="adminTotalCount">
-                                0
-                            </strong>
-
+                            <strong id="adminTotalCount">0</strong>
                         </div>
 
                     </article>
 
 
                     <!-- PENDING -->
-
                     <article class="admin-stat-card pending-card">
 
-                        <div class="stat-icon">
-                            ◷
-                        </div>
+                        <div class="stat-icon">◷</div>
 
                         <div>
+                            <span>Pending</span>
 
-                            <span>
-                                Pending
-                            </span>
-
-                            <strong id="adminPendingCount">
-                                0
-                            </strong>
-
+                            <strong id="adminPendingCount">0</strong>
                         </div>
 
                     </article>
 
 
                     <!-- IN PROGRESS -->
-
                     <article class="admin-stat-card progress-card">
 
-                        <div class="stat-icon">
-                            ↻
-                        </div>
+                        <div class="stat-icon">↻</div>
 
                         <div>
+                            <span>In Progress</span>
 
-                            <span>
-                                In Progress
-                            </span>
-
-                            <strong id="adminProgressCount">
-                                0
-                            </strong>
-
+                            <strong id="adminProgressCount">0</strong>
                         </div>
 
                     </article>
 
 
                     <!-- RESOLVED -->
-
                     <article class="admin-stat-card resolved-card">
 
-                        <div class="stat-icon">
-                            ✓
-                        </div>
+                        <div class="stat-icon">✓</div>
 
                         <div>
+                            <span>Resolved</span>
 
-                            <span>
-                                Resolved
-                            </span>
-
-                            <strong id="adminResolvedCount">
-                                0
-                            </strong>
-
+                            <strong id="adminResolvedCount">0</strong>
                         </div>
 
                     </article>
@@ -267,30 +206,20 @@
                 </section>
 
 
-                <!-- ==========================================
-                     COMPLAINT MANAGEMENT
-                =========================================== -->
-
+                <!-- COMPLAINT MANAGEMENT -->
                 <section class="admin-complaints-panel">
 
-
                     <!-- PANEL HEADER -->
-
                     <div class="admin-panel-heading">
 
                         <div>
-
-                            <h2>
-                                All Complaints
-                            </h2>
+                            <h2>All Complaints</h2>
 
                             <p>
                                 Review reports, assign departments,
                                 and manage complaint status.
                             </p>
-
                         </div>
-
 
                         <button
                             id="refreshAdminComplaints"
@@ -303,74 +232,36 @@
 
 
                     <!-- STATUS MESSAGE -->
-
                     <p
                         id="adminMessage"
                         role="status"
                     ></p>
 
 
-                    <!-- ==========================================
-                         COMPLAINT TABLE
-                    =========================================== -->
-
+                    <!-- COMPLAINT TABLE -->
                     <div class="admin-table-wrapper">
 
                         <table class="admin-table">
 
-                            <!-- TABLE HEADER -->
-
                             <thead>
-
                                 <tr>
-
-                                    <th>
-                                        #
-                                    </th>
-
-                                    <th>
-                                        Complaint
-                                    </th>
-
-                                    <th>
-                                        Category
-                                    </th>
-
-                                    <th>
-                                        Department
-                                    </th>
-
-                                    <th>
-                                        Location
-                                    </th>
-
-                                    <th>
-                                        Submitted
-                                    </th>
-
-                                    <th>
-                                        Status
-                                    </th>
-
-                                    <th>
-                                        Update Status
-                                    </th>
-
+                                    <th>#</th>
+                                    <th>Complaint</th>
+                                    <th>Category</th>
+                                    <th>Department</th>
+                                    <th>Location</th>
+                                    <th>Submitted</th>
+                                    <th>Status</th>
+                                    <th>Update Status</th>
                                 </tr>
-
                             </thead>
-
-
-                            <!-- TABLE BODY -->
 
                             <tbody id="adminComplaintsList">
 
                                 <tr>
-
                                     <td colspan="8">
                                         Loading complaints...
                                     </td>
-
                                 </tr>
 
                             </tbody>
@@ -381,7 +272,6 @@
 
                 </section>
 
-
             </div>
 
         </main>
@@ -390,9 +280,7 @@
 
 
     <!-- ADMIN JAVASCRIPT -->
-
-    <script src="js/admin.js"></script>
+    <script src="js/admin.js" defer></script>
 
 </body>
 </html>
-```

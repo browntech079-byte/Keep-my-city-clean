@@ -1,327 +1,378 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>Report Issue — CityCare</title>
+    <title>Report Issue — CityCare</title>
 
-<link rel="stylesheet" href="css/style.css">
-```
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
 
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
 </head>
 
-<body>
+<body class="report-page">
 
-```
-<!-- Navigation -->
-<header class="navbar">
+    <div class="report-layout">
 
-    <a href="index.html" class="brand">
+        <!-- =====================================
+             LEFT SIDEBAR
+        ====================================== -->
 
-        <img
-            src="assets/images/citycare-logo.png"
-            alt="CityCare Logo"
-            class="brand-logo"
-        >
+        <aside class="report-sidebar">
 
-        <span class="brand-name">CityCare</span>
+            <!-- CityCare Logo -->
+            <a href="index.html" class="report-sidebar-brand">
 
-    </a>
-
-    <nav class="nav-links">
-
-        <a href="index.html">Home</a>
-
-        <a href="complaints.html">Complaints</a>
-
-        <a href="report.html" class="active">Report Issue</a>
-
-        <a href="login.html" class="nav-login">Login</a>
-
-    </nav>
-
-</header>
-
-
-<!-- Main Content -->
-<main class="report-container">
-
-    <!-- Page Header -->
-    <section class="page-header">
-
-        <span class="eyebrow">
-            CIVIC REPORTING
-        </span>
-
-        <h1>
-            Report a civic issue.
-        </h1>
-
-        <p>
-            Help improve your city by reporting problems
-            directly to the appropriate authorities.
-        </p>
-
-    </section>
-
-
-    <!-- Report Bento Layout -->
-    <section class="report-grid">
-
-        <!-- Complaint Form -->
-        <div class="report-form-card">
-
-            <div class="card-header">
-
-                <span class="card-label">
-                    ISSUE DETAILS
-                </span>
-
-                <span class="required-note">
-                    * Required
-                </span>
-
-            </div>
-
-
-            <form id="complaintForm">
-
-                <!-- Title -->
-                <div class="form-group">
-
-                    <label for="title">
-                        Issue Title *
-                    </label>
-
-                    <input
-                        type="text"
-                        id="title"
-                        name="title"
-                        placeholder="e.g. Large pothole near main road"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- Category -->
-                <div class="form-group">
-
-                    <label for="category">
-                        Category *
-                    </label>
-
-                    <select
-                        id="category"
-                        name="category"
-                        required
-                    >
-
-                        <option value="">
-                            Select issue category
-                        </option>
-
-                        <option value="Pothole">
-                            Road / Pothole
-                        </option>
-
-                        <option value="Garbage">
-                            Garbage / Waste
-                        </option>
-
-                        <option value="Streetlight">
-                            Streetlight
-                        </option>
-
-                        <option value="Water">
-                            Water Supply
-                        </option>
-
-                        <option value="Drainage">
-                            Drainage / Sewage
-                        </option>
-
-                        <option value="Traffic">
-                            Traffic / Signals
-                        </option>
-
-                        <option value="Other">
-                            Other
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- Description -->
-                <div class="form-group">
-
-                    <label for="description">
-                        Description *
-                    </label>
-
-                    <textarea
-                        id="description"
-                        name="description"
-                        rows="6"
-                        placeholder="Describe the issue and provide any useful details..."
-                        required
-                    ></textarea>
-
-                </div>
-
-
-                <!-- Image -->
-                <div class="form-group">
-
-                    <label for="image">
-                        Add Photo
-                    </label>
-
-                    <input
-                        type="file"
-                        id="image"
-                        name="image"
-                        accept="image/*"
-                    >
-
-                    <small>
-                        Upload a clear photo of the civic issue.
-                    </small>
-
-                </div>
-
-
-                <!-- Location Hidden Fields -->
-                <input
-                    type="hidden"
-                    id="latitude"
-                    name="latitude"
+                <img
+                    src="assets/images/citycare-logo.png"
+                    alt="CityCare Logo"
+                    class="report-sidebar-logo"
                 >
 
-                <input
-                    type="hidden"
-                    id="longitude"
-                    name="longitude"
-                >
-
-                <input
-                    type="hidden"
-                    id="address"
-                    name="address"
-                >
-
-
-                <!-- Selected Location -->
-                <div class="selected-location">
-
-                    <span class="card-label">
-                        SELECTED LOCATION
-                    </span>
-
-                    <p id="locationText">
-                        Click on the map to select the issue location.
-                    </p>
-
+                <div class="report-sidebar-brand-text">
+                    <strong>CityCare</strong>
+                    <span>Smart Civic Issue Management</span>
                 </div>
 
-
-                <!-- Submit -->
-                <button
-                    type="submit"
-                    class="btn btn-primary submit-btn"
-                >
-                    Submit Complaint →
-                </button>
-
-            </form>
-
-        </div>
+            </a>
 
 
-        <!-- Map Card -->
-        <div class="report-map-card">
+            <!-- Navigation -->
+            <div class="report-sidebar-section">
 
-            <div class="card-header">
-
-                <div>
-
-                    <span class="card-label">
-                        LOCATION
-                    </span>
-
-                    <h2>
-                        Where is the issue?
-                    </h2>
-
-                </div>
-
-                <span class="map-status">
-                    ● Interactive Map
-                </span>
-
-            </div>
-
-
-            <!-- Interactive Map -->
-            <div
-                id="reportMap"
-                class="report-map"
-            ></div>
-
-
-            <div class="map-instruction">
-
-                <span class="instruction-icon">
-                    +
-                </span>
-
-                <p>
-                    Click anywhere on the map to place the
-                    complaint location.
+                <p class="report-sidebar-label">
+                    WORKSPACE
                 </p>
 
+                <nav class="report-sidebar-nav">
+
+                    <a href="index.html">
+                        <span class="sidebar-icon" aria-hidden="true">⌂</span>
+                        <span>Home</span>
+                    </a>
+
+                    <a
+                        href="report.html"
+                        class="active"
+                        aria-current="page"
+                    >
+                        <span class="sidebar-icon" aria-hidden="true">＋</span>
+                        <span>Report Issue</span>
+                    </a>
+
+                    <a href="complaints.html">
+                        <span class="sidebar-icon" aria-hidden="true">▤</span>
+                        <span>Complaints</span>
+                    </a>
+
+                    <a href="profile.html">
+                        <span class="sidebar-icon" aria-hidden="true">♙</span>
+                        <span>My Profile</span>
+                    </a>
+
+                </nav>
+
             </div>
+
+
+            <!-- Sidebar Bottom -->
+            <div class="report-sidebar-bottom">
+
+                <div class="report-sidebar-message">
+                    <span>Better infrastructure</span>
+                    <strong>for a brighter tomorrow.</strong>
+                </div>
+
+                <a href="login.html" class="report-sidebar-login">
+                    <span aria-hidden="true">↪</span>
+                    <span>Login</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+
+        <div class="report-main">
+
+            <main class="report-container">
+
+                <!-- Page Header -->
+                <section class="page-header">
+
+                    <h1>
+                        Report a civic issue.
+                    </h1>
+
+                    <p>
+                        Help improve your city by reporting problems
+                        directly to the appropriate authorities.
+                    </p>
+
+                </section>
+
+
+                <!-- Report Bento Layout -->
+                <section class="report-grid">
+
+                    <!-- Complaint Form -->
+                    <div class="report-form-card">
+
+                        <div class="card-header">
+
+                            <span class="card-label">
+                                ISSUE DETAILS
+                            </span>
+
+                            <span class="required-note">
+                                * Required
+                            </span>
+
+                        </div>
+
+
+                        <form id="complaintForm">
+
+                            <!-- Issue Title -->
+                            <div class="form-group">
+
+                                <label for="title">
+                                    Issue Title *
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                    placeholder="e.g. Large pothole near main road"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <!-- Category -->
+                            <div class="form-group">
+
+                                <label for="category">
+                                    Category *
+                                </label>
+
+                                <select
+                                    id="category"
+                                    name="category"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select issue category
+                                    </option>
+
+                                    <option value="Pothole">
+                                        Road / Pothole
+                                    </option>
+
+                                    <option value="Garbage">
+                                        Garbage / Waste
+                                    </option>
+
+                                    <option value="Streetlight">
+                                        Streetlight
+                                    </option>
+
+                                    <option value="Water">
+                                        Water Supply
+                                    </option>
+
+                                    <option value="Drainage">
+                                        Drainage / Sewage
+                                    </option>
+
+                                    <option value="Traffic">
+                                        Traffic / Signals
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <!-- Description -->
+                            <div class="form-group">
+
+                                <label for="description">
+                                    Description *
+                                </label>
+
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    rows="6"
+                                    placeholder="Describe the issue and provide any useful details..."
+                                    required
+                                ></textarea>
+
+                            </div>
+
+
+                            <!-- Image Upload -->
+                            <div class="form-group">
+
+                                <label for="image">
+                                    Add Photo
+                                </label>
+
+                                <input
+                                    type="file"
+                                    id="image"
+                                    name="image"
+                                    accept="image/*"
+                                >
+
+                                <small>
+                                    Upload a clear photo of the civic issue.
+                                </small>
+
+                            </div>
+
+
+                            <!-- Hidden Location Fields -->
+                            <input
+                                type="hidden"
+                                id="latitude"
+                                name="latitude"
+                            >
+
+                            <input
+                                type="hidden"
+                                id="longitude"
+                                name="longitude"
+                            >
+
+                            <input
+                                type="hidden"
+                                id="address"
+                                name="address"
+                            >
+
+
+                            <!-- Selected Location -->
+                            <div class="selected-location">
+
+                                <span class="card-label">
+                                    SELECTED LOCATION
+                                </span>
+
+                                <p id="locationText">
+                                    Click on the map to select the issue location.
+                                </p>
+
+                            </div>
+
+
+                            <!-- Submit -->
+                            <button
+                                type="submit"
+                                class="btn btn-primary submit-btn"
+                            >
+                                Submit Complaint →
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- Map Card -->
+                    <div class="report-map-card">
+
+                        <div class="card-header">
+
+                            <div>
+
+                                <span class="card-label">
+                                    LOCATION
+                                </span>
+
+                                <h2>
+                                    Where is the issue?
+                                </h2>
+
+                            </div>
+
+                            <span class="map-status">
+                                ● Interactive Map
+                            </span>
+
+                        </div>
+
+
+                        <!-- Interactive Map -->
+                        <div
+                            id="reportMap"
+                            class="report-map"
+                        ></div>
+
+
+                        <!-- Map Instruction -->
+                        <div class="map-instruction">
+
+                            <span class="instruction-icon">
+                                +
+                            </span>
+
+                            <p>
+                                Click anywhere on the map to place the
+                                complaint location.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+
+            <!-- Footer -->
+            <footer class="footer">
+
+                <span>
+                    © 2026 CityCare
+                </span>
+
+                <span>
+                    Smart Civic Issue Management Platform
+                </span>
+
+            </footer>
 
         </div>
 
-    </section>
-
-</main>
+    </div>
 
 
-<!-- Footer -->
-<footer class="footer">
+    <!-- Leaflet Map -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <span>
-        © 2026 CityCare
-    </span>
-
-    <span>
-        Smart Civic Issue Management Platform
-    </span>
-
-</footer>
-
-
-<!-- Leaflet Map -->
-<link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
->
-
-<script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
-
-<script src="js/report.js"></script>
-```
+    <!-- Existing Report JavaScript -->
+    <script src="js/report.js"></script>
 
 </body>
-
 </html>

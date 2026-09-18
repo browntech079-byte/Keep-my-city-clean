@@ -1,9 +1,11 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>My Complaints — CityCare</title>
 
     <link rel="stylesheet" href="css/style.css">
@@ -14,90 +16,206 @@
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     >
 </head>
-<body>
 
-<header class="navbar">
-    <a href="index.html" class="brand">
-        <img
-            src="assets/images/citycare-logo.png"
-            alt="CityCare Logo"
-            class="brand-logo"
-        >
-        <span class="brand-name">CityCare</span>
-    </a>
+<body class="complaints-page">
 
-    <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="complaints.html" class="active">Complaints</a>
-        <a href="report.html">Report Issue</a>
-        <a href="login.html" class="nav-login">Login</a>
-    </nav>
-</header>
+    <div class="complaints-layout">
 
-<main class="complaints-container">
+        <!-- =====================================
+             LEFT SIDEBAR
+        ====================================== -->
 
-    <section class="page-header">
-        <div>
-            <span class="eyebrow">YOUR CITY, YOUR VOICE</span>
-            <h1>My complaints<span>.</span></h1>
-            <p>Track the civic issues you've reported to CityCare.</p>
-        </div>
+        <aside class="report-sidebar">
 
-        <a href="report.html" class="btn btn-primary">
-            + Report an issue
-        </a>
-    </section>
+            <!-- CityCare Logo -->
+            <a href="index.html" class="report-sidebar-brand">
 
-    <section class="complaint-stats">
-        <article class="stat-card">
-            <span>Total complaints</span>
-            <strong id="totalCount">0</strong>
-        </article>
+                <img
+                    src="assets/images/citycare-logo.png"
+                    alt="CityCare Logo"
+                    class="report-sidebar-logo"
+                >
 
-        <article class="stat-card">
-            <span>Pending</span>
-            <strong id="pendingCount">0</strong>
-        </article>
+                <div class="report-sidebar-brand-text">
+                    <strong>CityCare</strong>
+                    <span>Smart Civic Issue Management</span>
+                </div>
 
-        <article class="stat-card">
-            <span>In progress</span>
-            <strong id="progressCount">0</strong>
-        </article>
+            </a>
 
-        <article class="stat-card">
-            <span>Resolved</span>
-            <strong id="resolvedCount">0</strong>
-        </article>
-    </section>
 
-    <section class="complaints-panel">
-        <div class="panel-heading">
-            <div>
-                <h2>Reported issues</h2>
-                <p>Your submitted complaints and their latest status.</p>
+            <!-- Navigation -->
+            <div class="report-sidebar-section">
+
+                <p class="report-sidebar-label">
+                    WORKSPACE
+                </p>
+
+                <nav class="report-sidebar-nav">
+
+                    <a href="index.html">
+                        <span class="sidebar-icon" aria-hidden="true">⌂</span>
+                        <span>Home</span>
+                    </a>
+
+                    <a href="report.html">
+                        <span class="sidebar-icon" aria-hidden="true">＋</span>
+                        <span>Report Issue</span>
+                    </a>
+
+                    <a
+                        href="complaints.html"
+                        class="active"
+                        aria-current="page"
+                    >
+                        <span class="sidebar-icon" aria-hidden="true">▤</span>
+                        <span>Complaints</span>
+                    </a>
+
+                    <a href="profile.html">
+                        <span class="sidebar-icon" aria-hidden="true">♙</span>
+                        <span>My Profile</span>
+                    </a>
+
+                </nav>
+
             </div>
 
-            <button id="refreshComplaints" class="btn btn-secondary">
-                Refresh
-            </button>
+
+            <!-- Sidebar Bottom -->
+            <div class="report-sidebar-bottom">
+
+                <div class="report-sidebar-message">
+                    <span>Better infrastructure</span>
+                    <strong>for a brighter tomorrow.</strong>
+                </div>
+
+                <a href="login.html" class="report-sidebar-login">
+                    <span aria-hidden="true">↪</span>
+                    <span>Login</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================
+             MAIN COMPLAINTS CONTENT
+        ====================================== -->
+
+        <div class="complaints-main">
+
+            <main class="complaints-container">
+
+                <!-- Page Header -->
+                <section class="page-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            YOUR CITY, YOUR VOICE
+                        </span>
+
+                        <h1>
+                            My complaints<span>.</span>
+                        </h1>
+
+                        <p>
+                            Track the civic issues you've reported to CityCare.
+                        </p>
+                    </div>
+
+                    <a href="report.html" class="btn btn-primary">
+                        + Report an issue
+                    </a>
+
+                </section>
+
+
+                <!-- Complaint Statistics -->
+                <section class="complaint-stats">
+
+                    <article class="stat-card">
+                        <span>Total complaints</span>
+                        <strong id="totalCount">0</strong>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>Pending</span>
+                        <strong id="pendingCount">0</strong>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>In progress</span>
+                        <strong id="progressCount">0</strong>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>Resolved</span>
+                        <strong id="resolvedCount">0</strong>
+                    </article>
+
+                </section>
+
+
+                <!-- Reported Complaints -->
+                <section class="complaints-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h2>Reported issues</h2>
+                            <p>
+                                Your submitted complaints and their latest status.
+                            </p>
+                        </div>
+
+                        <button
+                            id="refreshComplaints"
+                            class="btn btn-secondary"
+                        >
+                            Refresh
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="complaintsMessage"
+                        class="complaints-message"
+                    >
+                        Loading your complaints...
+                    </div>
+
+                    <div
+                        id="complaintsList"
+                        class="complaints-list"
+                    ></div>
+
+                </section>
+
+            </main>
+
+
+            <!-- Footer -->
+            <footer class="footer">
+
+                <span>© 2026 CityCare</span>
+
+                <span>
+                    Smart Civic Issue Management Platform
+                </span>
+
+            </footer>
+
         </div>
 
-        <div id="complaintsMessage" class="complaints-message">
-            Loading your complaints...
-        </div>
+    </div>
 
-        <div id="complaintsList" class="complaints-list"></div>
-    </section>
 
-</main>
-
-<footer class="footer">
-    <span>© 2026 CityCare</span>
-    <span>Smart Civic Issue Management Platform</span>
-</footer>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="js/complaints.js"></script>
+    <!-- Existing JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/complaints.js"></script>
 
 </body>
 </html>

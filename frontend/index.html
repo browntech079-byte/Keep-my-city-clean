@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,210 +11,280 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="home-page">
 
-    <!-- Navigation -->
-    <header class="navbar">
+    <div class="home-layout">
 
-        <a href="index.html" class="brand">
-            <img
-                src="assets/images/citycare-logo.png"
-                alt="CityCare Logo"
-                class="brand-logo"
-            >
+        <!-- ==========================================
+             LEFT GREEN SIDEBAR
+        =========================================== -->
 
-            <span class="brand-name">CityCare</span>
-        </a>
+        <aside class="home-sidebar">
 
-        <nav class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="complaints.html">Complaints</a>
-            <a href="report.html">Report Issue</a>
-            <a href="login.html" class="nav-login">Login</a>
-        </nav>
+            <!-- CityCare Branding -->
+            <a href="index.html" class="home-sidebar-brand">
 
-    </header>
+                <img
+                    src="assets/images/citycare-logo.png"
+                    alt="CityCare Logo"
+                    class="home-sidebar-logo"
+                >
+
+                <div class="home-sidebar-brand-text">
+                    <strong>CityCare</strong>
+                    <span>Smart Civic Issue Management</span>
+                </div>
+
+            </a>
 
 
-    <!-- Main Content -->
-    <main class="home-container">
+            <!-- Sidebar Navigation -->
+            <div class="home-sidebar-section">
 
-        <!-- Hero Bento Card -->
-        <section class="hero-card">
-
-            <div class="hero-content">
-
-                <span class="eyebrow">
-                    SMART CIVIC ISSUE MANAGEMENT
-                </span>
-
-                <h1>
-                    Report problems.<br>
-                    Improve your city.
-                </h1>
-
-                <p>
-                    CityCare helps citizens report civic issues,
-                    track complaints and connect problems with
-                    the right authorities.
+                <p class="home-sidebar-label">
+                    WORKSPACE
                 </p>
 
-                <div class="hero-actions">
+                <nav class="home-sidebar-nav">
 
-                    <a href="report.html" class="btn btn-primary">
-                        Report an Issue
+                    <a
+                        href="index.html"
+                        class="active"
+                        aria-current="page"
+                    >
+                        <span class="home-sidebar-icon" aria-hidden="true">⌂</span>
+                        <span>Home</span>
                     </a>
 
-                    <a href="complaints.html" class="btn btn-secondary">
-                        View Complaints
+                    <a href="report.html">
+                        <span class="home-sidebar-icon" aria-hidden="true">＋</span>
+                        <span>Report Issue</span>
                     </a>
 
-                </div>
+                    <a href="complaints.html">
+                        <span class="home-sidebar-icon" aria-hidden="true">▤</span>
+                        <span>Complaints</span>
+                    </a>
+
+                    <a href="profile.html">
+                        <span class="home-sidebar-icon" aria-hidden="true">♙</span>
+                        <span>My Profile</span>
+                    </a>
+
+                </nav>
 
             </div>
 
-            <div class="hero-visual">
 
-                <div class="map-preview">
-                    <div class="map-grid"></div>
+            <!-- Sidebar Bottom -->
+            <div class="home-sidebar-bottom">
 
-                    <div class="map-pin">
-                        <span></span>
-                    </div>
-
-                    <div class="map-label">
-                        <strong>CityCare Map</strong>
-                        <small>Locate civic issues</small>
-                    </div>
+                <div class="home-sidebar-message">
+                    <span>Better infrastructure</span>
+                    <strong>for a brighter tomorrow.</strong>
                 </div>
 
-            </div>
-
-        </section>
-
-
-        <!-- Bento Grid -->
-        <section class="bento-grid">
-
-            <!-- Report Card -->
-            <article class="bento-card report-card">
-
-                <div class="card-icon">+</div>
-
-                <span class="card-label">
-                    REPORT
-                </span>
-
-                <h2>
-                    Report a civic issue
-                </h2>
-
-                <p>
-                    Submit problems such as potholes,
-                    garbage, streetlights and water issues.
-                </p>
-
-                <a href="report.html" class="card-link">
-                    Report now →
+                <a href="login.html" class="home-sidebar-login">
+                    <span aria-hidden="true">↪</span>
+                    <span>Login</span>
                 </a>
 
-            </article>
+            </div>
+
+        </aside>
 
 
-            <!-- Map Card -->
-            <article class="bento-card map-card">
+        <!-- ==========================================
+             MAIN CONTENT
+        =========================================== -->
 
-                <div class="card-top">
+        <div class="home-main">
 
-                    <span class="card-label">
-                        LIVE MAP
-                    </span>
+            <main class="home-container">
 
-                    <span class="status-dot"></span>
+                <!-- Hero Bento Card -->
+                <section class="hero-card">
 
-                </div>
+                    <div class="hero-content">
 
-                <h2>
-                    Issues around your city
-                </h2>
+                        <span class="eyebrow">
+                            SMART CIVIC ISSUE MANAGEMENT
+                        </span>
 
-                <p>
-                    Explore reported civic problems
-                    through an interactive map.
-                </p>
+                        <h1>
+                            Report problems.<br>
+                            Improve your city.
+                        </h1>
 
-                <div class="mini-map">
+                        <p>
+                            CityCare helps citizens report civic issues,
+                            track complaints and connect problems with
+                            the right authorities.
+                        </p>
 
-                    <div class="mini-pin pin-one"></div>
-                    <div class="mini-pin pin-two"></div>
-                    <div class="mini-pin pin-three"></div>
+                        <div class="hero-actions">
 
-                </div>
+                            <a href="report.html" class="btn btn-primary">
+                                Report an Issue
+                            </a>
 
-            </article>
+                            <a href="complaints.html" class="btn btn-secondary">
+                                View Complaints
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="hero-visual">
+
+                        <div class="map-preview">
+
+                            <div class="map-grid"></div>
+
+                            <div class="map-pin">
+                                <span></span>
+                            </div>
+
+                            <div class="map-label">
+                                <strong>CityCare Map</strong>
+                                <small>Locate civic issues</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
 
 
-            <!-- Tracking Card -->
-            <article class="bento-card tracking-card">
+                <!-- Bento Grid -->
+                <section class="bento-grid">
 
-                <span class="card-label">
-                    TRACKING
+                    <!-- Report Card -->
+                    <article class="bento-card report-card">
+
+                        <div class="card-icon">+</div>
+
+                        <span class="card-label">
+                            REPORT
+                        </span>
+
+                        <h2>
+                            Report a civic issue
+                        </h2>
+
+                        <p>
+                            Submit problems such as potholes,
+                            garbage, streetlights and water issues.
+                        </p>
+
+                        <a href="report.html" class="card-link">
+                            Report now →
+                        </a>
+
+                    </article>
+
+
+                    <!-- Map Card -->
+                    <article class="bento-card map-card">
+
+                        <div class="card-top">
+
+                            <span class="card-label">
+                                LIVE MAP
+                            </span>
+
+                            <span class="status-dot"></span>
+
+                        </div>
+
+                        <h2>
+                            Issues around your city
+                        </h2>
+
+                        <p>
+                            Explore reported civic problems
+                            through an interactive map.
+                        </p>
+
+                        <div class="mini-map">
+
+                            <div class="mini-pin pin-one"></div>
+                            <div class="mini-pin pin-two"></div>
+                            <div class="mini-pin pin-three"></div>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Tracking Card -->
+                    <article class="bento-card tracking-card">
+
+                        <span class="card-label">
+                            TRACKING
+                        </span>
+
+                        <h2>
+                            Follow your complaint
+                        </h2>
+
+                        <p>
+                            Track the progress of your submitted
+                            complaint from pending to resolved.
+                        </p>
+
+                        <div class="status-flow">
+
+                            <span class="active">Submitted</span>
+                            <span>In Progress</span>
+                            <span>Resolved</span>
+
+                        </div>
+
+                    </article>
+
+
+                    <!-- Community Card -->
+                    <article class="bento-card community-card">
+
+                        <div class="community-number">
+                            24/7
+                        </div>
+
+                        <span class="card-label">
+                            COMMUNITY
+                        </span>
+
+                        <h2>
+                            Better cities start with citizens.
+                        </h2>
+
+                    </article>
+
+                </section>
+
+            </main>
+
+
+            <!-- Footer -->
+            <footer class="footer">
+
+                <span>© 2026 CityCare</span>
+
+                <span>
+                    Smart Civic Issue Management Platform
                 </span>
 
-                <h2>
-                    Follow your complaint
-                </h2>
+            </footer>
 
-                <p>
-                    Track the progress of your submitted
-                    complaint from pending to resolved.
-                </p>
+        </div>
 
-                <div class="status-flow">
-
-                    <span class="active">Submitted</span>
-                    <span>In Progress</span>
-                    <span>Resolved</span>
-
-                </div>
-
-            </article>
+    </div>
 
 
-            <!-- Community Card -->
-            <article class="bento-card community-card">
-
-                <div class="community-number">
-                    24/7
-                </div>
-
-                <span class="card-label">
-                    COMMUNITY
-                </span>
-
-                <h2>
-                    Better cities start with citizens.
-                </h2>
-
-            </article>
-
-        </section>
-
-    </main>
-
-
-    <!-- Footer -->
-    <footer class="footer">
-
-        <span>© 2026 CityCare</span>
-
-        <span>
-            Smart Civic Issue Management Platform
-        </span>
-
-    </footer>
-
-
+    <!-- Existing JavaScript -->
     <script src="js/main.js"></script>
 
 </body>

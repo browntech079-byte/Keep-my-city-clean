@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const API_BASE_URL = "https://citycare-gov.onrender.com";
 
-
     // ==========================================
     // DOM ELEMENTS
     // ==========================================
@@ -14,44 +13,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const complaintsList = document.getElementById("complaintsList");
     const complaintsMessage = document.getElementById("complaintsMessage");
     const refreshButton = document.getElementById("refreshComplaints");
-
     const totalCount = document.getElementById("totalCount");
     const pendingCount = document.getElementById("pendingCount");
     const progressCount = document.getElementById("progressCount");
     const resolvedCount = document.getElementById("resolvedCount");
 
-
-    // Stop if this page does not contain the complaints list
     if (!complaintsList) return;
 
-
-    // ==========================================
-    // RESOLVE COMPLAINT IMAGE URL
-    // ==========================================
-    // If the backend returns a full URL (e.g. Cloudinary), use it as-is.
-    // If it returns a relative path (e.g. served from its own /uploads
-    // route), that path is relative to the FRONTEND's origin unless we
-    // prefix it with the backend's own origin — the frontend and backend
-    // live on different Render domains, so a bare "/uploads/xyz.jpg"
-    // would otherwise resolve against the wrong host.
+    let isLoading = false;
+    let lastAutoRefreshAt = 0;
 
     function resolveImageUrl(image) {
-
         if (!image) return image;
-
         if (/^https?:\/\//i.test(image)) {
             return image;
         }
-
         return `${API_BASE_URL}${image.startsWith("/") ? "" : "/"}${image}`;
     }
 
-
-    // ==========================================
-    // LOAD USER COMPLAINTS
-    // ==========================================
-
     async function loadComplaints() {
+        if (isLoading) return;
+        isLoading = true;
 
         if (complaintsMessage) {
             complaintsMessage.textContent = "Loading your complaints...";
@@ -59,15 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         complaintsList.innerHTML = "";
 
-
         if (refreshButton) {
             refreshButton.disabled = true;
             refreshButton.textContent = "Loading...";
         }
 
-
         try {
-
             const response = await fetch(
                 `${API_BASE_URL}/api/complaints/my`,
                 {
@@ -75,7 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     credentials: "include"
                 }
             );
-
 
             let data = {};
 
@@ -85,9 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 data = {};
             }
 
-
             if (!response.ok) {
-
                 if (response.status === 401) {
                     throw new Error("Authentication required");
                 }
@@ -97,20 +73,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
 
-
             const complaints = Array.isArray(data.complaints)
                 ? data.complaints
                 : [];
 
-
-            // ==========================================
-            // UPDATE STATISTICS
-            // ==========================================
-
             if (totalCount) {
                 totalCount.textContent = complaints.length;
             }
-
 
             if (pendingCount) {
                 pendingCount.textContent = complaints.filter(
@@ -118,13 +87,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 ).length;
             }
 
-
             if (progressCount) {
                 progressCount.textContent = complaints.filter(
                     complaint => complaint.status === "In Progress"
                 ).length;
             }
-
 
             if (resolvedCount) {
                 resolvedCount.textContent = complaints.filter(
@@ -132,20 +99,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 ).length;
             }
 
-
-            // ==========================================
-            // EMPTY STATE
-            // ==========================================
-
             if (complaints.length === 0) {
-
                 if (complaintsMessage) {
                     complaintsMessage.textContent = "";
                 }
 
-
                 const emptyMessage = document.createElement("div");
-
                 emptyMessage.className = "complaint-empty";
 
                 emptyMessage.innerHTML = `
@@ -158,405 +117,231 @@ document.addEventListener("DOMContentLoaded", () => {
                     </a>
                 `;
 
-
                 complaintsList.appendChild(emptyMessage);
-
                 return;
             }
-
-
-            // ==========================================
-            // COMPLAINT COUNT MESSAGE
-            // ==========================================
 
             if (complaintsMessage) {
                 complaintsMessage.textContent =
                     `${complaints.length} complaint(s) found.`;
             }
 
-
-            // ==========================================
-            // CREATE COMPLAINT CARDS
-            // ==========================================
-
             complaints.forEach(complaint => {
-
                 complaintsList.appendChild(
                     createComplaintCard(complaint)
                 );
-
             });
 
-
         } catch (error) {
-
             console.error(
                 "Loading complaints error:",
                 error
             );
 
-
             if (complaintsMessage) {
-
                 complaintsMessage.textContent = "";
 
-
                 if (
-                    error.message ===
-                    "Authentication required"
+                    error.message === "Authentication required"
                 ) {
-
                     complaintsMessage.textContent =
                         "Please log in to view your complaints.";
-
 
                     const loginLink =
                         document.createElement("a");
 
                     loginLink.href = "login.html";
-
-                    loginLink.textContent =
-                        " Go to Login";
-
+                    loginLink.textContent = " Go to Login";
                     loginLink.className =
                         "complaints-login-link";
 
-
-                    complaintsMessage.appendChild(
-                        loginLink
-                    );
+                    complaintsMessage.appendChild(loginLink);
 
                 } else {
-
                     complaintsMessage.textContent =
                         error.message ||
                         "Unable to load complaints.";
-
                 }
-
             }
 
         } finally {
+            isLoading = false;
 
             if (refreshButton) {
-
                 refreshButton.disabled = false;
-
                 refreshButton.textContent = "Refresh";
-
             }
-
         }
-
     }
-
-
-    // ==========================================
-    // CREATE COMPLAINT CARD
-    // ==========================================
 
     function createComplaintCard(complaint) {
 
-        const card =
-            document.createElement("article");
-
-        card.className =
-            "complaint-card";
-
-
-        // ==========================================
-        // IMAGE
-        // ==========================================
+        const card = document.createElement("article");
+        card.className = "complaint-card";
 
         if (complaint.image) {
-
             const imageWrapper =
                 document.createElement("div");
 
             imageWrapper.className =
                 "complaint-image-wrapper";
 
-
-            const image =
-                document.createElement("img");
-
-            image.className =
-                "complaint-image";
-
-            image.src =
-                resolveImageUrl(complaint.image);
+            const image = document.createElement("img");
+            image.className = "complaint-image";
+            image.src = resolveImageUrl(complaint.image);
 
             image.alt =
-                complaint.title ||
-                "Complaint image";
-
+                complaint.title || "Complaint image";
 
             image.loading = "lazy";
-
 
             image.onerror = () => {
                 imageWrapper.remove();
             };
 
-
             imageWrapper.appendChild(image);
-
             card.appendChild(imageWrapper);
-
         }
 
+        const details = document.createElement("div");
+        details.className = "complaint-details";
 
-        // ==========================================
-        // DETAILS CONTAINER
-        // ==========================================
-
-        const details =
-            document.createElement("div");
-
-        details.className =
-            "complaint-details";
-
-
-        // ==========================================
-        // TITLE
-        // ==========================================
-
-        const title =
-            document.createElement("h3");
+        const title = document.createElement("h3");
 
         title.textContent =
-            complaint.title ||
-            "Untitled complaint";
+            complaint.title || "Untitled complaint";
 
-
-        // ==========================================
-        // DESCRIPTION
-        // ==========================================
-
-        const description =
-            document.createElement("p");
-
-        description.className =
-            "complaint-description";
+        const description = document.createElement("p");
+        description.className = "complaint-description";
 
         description.textContent =
             complaint.description ||
             "No description provided.";
 
-
-        // ==========================================
-        // CATEGORY
-        // ==========================================
-
-        const category =
-            document.createElement("p");
-
-        category.className =
-            "complaint-category";
+        const category = document.createElement("p");
+        category.className = "complaint-category";
 
         category.textContent =
-            `Category: ${
-                complaint.category ||
-                "Uncategorized"
-            }`;
+            `Category: ${complaint.category || "Uncategorized"}`;
 
-
-        // ==========================================
-        // DEPARTMENT
-        // ==========================================
-
-        const department =
-            document.createElement("p");
-
-        department.className =
-            "complaint-department";
+        const department = document.createElement("p");
+        department.className = "complaint-department";
 
         department.textContent =
-            `Department: ${
-                complaint.department ||
-                "Not assigned"
-            }`;
+            `Department: ${complaint.department || "Not assigned"}`;
 
+        const location = document.createElement("p");
+        location.className = "complaint-location";
 
-        // ==========================================
-        // LOCATION
-        // ==========================================
-
-        const location =
-            document.createElement("p");
-
-        location.className =
-            "complaint-location";
-
-
-        const address =
-            complaint.location?.address;
-
+        const address = complaint.location?.address;
 
         if (address) {
-
-            location.textContent =
-                `Location: ${address}`;
+            location.textContent = `Location: ${address}`;
 
         } else if (
             complaint.location?.latitude != null &&
             complaint.location?.longitude != null
         ) {
-
             location.textContent =
-                `Coordinates: ${
-                    complaint.location.latitude
-                }, ${
-                    complaint.location.longitude
-                }`;
+                `Coordinates: ${complaint.location.latitude}, ` +
+                `${complaint.location.longitude}`;
 
         } else {
-
-            location.textContent =
-                "Location not available";
-
+            location.textContent = "Location not available";
         }
 
+        const meta = document.createElement("div");
+        meta.className = "complaint-meta";
 
-        // ==========================================
-        // META INFORMATION
-        // ==========================================
-
-        const meta =
-            document.createElement("div");
-
-        meta.className =
-            "complaint-meta";
-
-
-        // Submitted date
-        const date =
-            document.createElement("span");
-
+        const date = document.createElement("span");
 
         if (complaint.createdAt) {
-
             date.textContent =
                 `Submitted: ${new Date(
                     complaint.createdAt
                 ).toLocaleDateString()}`;
 
         } else {
-
             date.textContent =
                 "Submission date unavailable";
-
         }
 
-
-        // Complaint ID
-        const complaintId =
-            document.createElement("span");
-
+        const complaintId = document.createElement("span");
 
         if (complaint._id) {
-
             complaintId.textContent =
                 `ID: ${complaint._id.slice(-6).toUpperCase()}`;
-
         }
 
-
         meta.appendChild(date);
-
 
         if (complaint._id) {
             meta.appendChild(complaintId);
         }
 
-
-        // ==========================================
-        // ADD DETAILS
-        // ==========================================
-
         details.appendChild(title);
-
         details.appendChild(description);
-
         details.appendChild(category);
-
         details.appendChild(department);
-
         details.appendChild(location);
-
         details.appendChild(meta);
 
+        const status = document.createElement("span");
+        status.className = "complaint-status";
 
-        // ==========================================
-        // STATUS
-        // ==========================================
+        const statusText = complaint.status || "Pending";
 
-        const status =
-            document.createElement("span");
-
-        status.className =
-            "complaint-status";
-
-
-        const statusText =
-            complaint.status ||
-            "Pending";
-
-
-        status.textContent =
-            statusText;
-
+        status.textContent = statusText;
 
         const statusClass = {
-
             "Pending": "pending",
-
             "In Progress": "in-progress",
-
             "Resolved": "resolved",
-
             "Rejected": "rejected"
-
         };
 
-
         status.classList.add(
-            statusClass[statusText] ||
-            "pending"
+            statusClass[statusText] || "pending"
         );
 
-
-        // ==========================================
-        // FINAL CARD
-        // ==========================================
-
         card.appendChild(details);
-
         card.appendChild(status);
 
-
         return card;
-
     }
 
-
-    // ==========================================
-    // REFRESH BUTTON
-    // ==========================================
-
     if (refreshButton) {
-
         refreshButton.addEventListener(
             "click",
             loadComplaints
         );
-
     }
 
+    function refreshWhenCustomerReturns() {
 
-    // ==========================================
-    // INITIAL LOAD
-    // ==========================================
+        if (document.visibilityState !== "visible") {
+            return;
+        }
+
+        const now = Date.now();
+
+        if (now - lastAutoRefreshAt < 1500) {
+            return;
+        }
+
+        lastAutoRefreshAt = now;
+        loadComplaints();
+    }
+
+    document.addEventListener(
+        "visibilitychange",
+        refreshWhenCustomerReturns
+    );
+
+    window.addEventListener(
+        "focus",
+        refreshWhenCustomerReturns
+    );
 
     loadComplaints();
 

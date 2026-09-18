@@ -9,156 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ==========================================
-    // 1. REGISTER USER
-    // ==========================================
-
-    const registerForm = document.getElementById("registerForm");
-
-    if (registerForm) {
-
-        registerForm.addEventListener("submit", async (event) => {
-
-            event.preventDefault();
-
-            const fullName = document.getElementById("fullName").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const mobile = document.getElementById("mobile").value.trim();
-            const password = document.getElementById("password").value;
-            const city = document.getElementById("city").value.trim();
-            const state = document.getElementById("state").value.trim();
-
-            const message = document.getElementById("registerMessage");
-
-            message.textContent = "Creating your account...";
-
-            try {
-
-                const response = await fetch(
-                    `${API_BASE_URL}/api/auth/register`,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body: JSON.stringify({
-                            fullName,
-                            email,
-                            mobile,
-                            password,
-                            city,
-                            state
-                        })
-                    }
-                );
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(
-                        data.message || "Registration failed"
-                    );
-                }
-
-                message.textContent =
-                    "Account created successfully! Redirecting to login...";
-
-                registerForm.reset();
-
-                // Reset the city dropdown after registration
-                if (citySelect) {
-
-                    citySelect.innerHTML =
-                        '<option value="">Select state first</option>';
-
-                    citySelect.disabled = true;
-                }
-
-                setTimeout(() => {
-
-                    window.location.href = "login.html";
-
-                }, 1500);
-
-            } catch (error) {
-
-                console.error("Registration error:", error);
-
-                message.textContent = error.message;
-            }
-        });
-    }
-
-
-    // ==========================================
-    // 2. LOGIN USER
-    // ==========================================
-
-    const loginForm = document.getElementById("loginForm");
-
-    if (loginForm) {
-
-        loginForm.addEventListener("submit", async (event) => {
-
-            event.preventDefault();
-
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
-
-            const message = document.getElementById("loginMessage");
-
-            message.textContent = "Signing you in...";
-
-            try {
-
-                const response = await fetch(
-                    `${API_BASE_URL}/api/auth/login`,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        credentials: "include",
-
-                        body: JSON.stringify({
-                            email,
-                            password
-                        })
-                    }
-                );
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(
-                        data.message || "Login failed"
-                    );
-                }
-
-                message.textContent =
-                    "Login successful! Redirecting...";
-
-                setTimeout(() => {
-
-                    window.location.href = "report.html";
-
-                }, 1000);
-
-            } catch (error) {
-
-                console.error("Login error:", error);
-
-                message.textContent = error.message;
-            }
-        });
-    }
-
-
-    // ==========================================
-    // 3. STATE AND CITY DROPDOWN
+    // STATE AND CITY DROPDOWN
     // ==========================================
 
     const stateSelect = document.getElementById("state");
@@ -319,7 +170,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
 
-    // Populate cities when a state is selected
+    // ==========================================
+    // POPULATE CITIES WHEN STATE CHANGES
+    // ==========================================
 
     if (stateSelect && citySelect) {
 
@@ -336,7 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 const option = document.createElement("option");
 
                 option.value = "";
-
                 option.textContent = "Select state first";
 
                 citySelect.appendChild(option);
@@ -349,7 +201,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const defaultOption = document.createElement("option");
 
             defaultOption.value = "";
-
             defaultOption.textContent = "Select your city";
 
             citySelect.appendChild(defaultOption);
@@ -359,13 +210,164 @@ document.addEventListener("DOMContentLoaded", () => {
                 const option = document.createElement("option");
 
                 option.value = city;
-
                 option.textContent = city;
 
                 citySelect.appendChild(option);
             });
 
             citySelect.disabled = cities.length === 0;
+        });
+    }
+
+
+    // ==========================================
+    // REGISTER USER
+    // ==========================================
+
+    const registerForm = document.getElementById("registerForm");
+
+    if (registerForm) {
+
+        registerForm.addEventListener("submit", async (event) => {
+
+            event.preventDefault();
+
+            const fullName = document.getElementById("fullName").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const mobile = document.getElementById("mobile").value.trim();
+            const password = document.getElementById("password").value;
+            const city = document.getElementById("city").value.trim();
+            const state = document.getElementById("state").value.trim();
+
+            const message = document.getElementById("registerMessage");
+
+            message.textContent = "Creating your account...";
+
+            try {
+
+                const response = await fetch(
+                    API_BASE_URL + "/api/auth/register",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            fullName,
+                            email,
+                            mobile,
+                            password,
+                            city,
+                            state
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message || "Registration failed"
+                    );
+                }
+
+                message.textContent =
+                    "Account created successfully! Redirecting to login...";
+
+                registerForm.reset();
+
+                if (citySelect) {
+
+                    citySelect.innerHTML =
+                        '<option value="">Select state first</option>';
+
+                    citySelect.disabled = true;
+                }
+
+                setTimeout(() => {
+
+                    window.location.href = "login.html";
+
+                }, 1500);
+
+            } catch (error) {
+
+                console.error("Registration error:", error);
+
+                message.textContent =
+                    error.message || "Registration failed";
+            }
+        });
+    }
+
+
+    // ==========================================
+    // LOGIN USER
+    // ==========================================
+
+    const loginForm = document.getElementById("loginForm");
+
+    if (loginForm) {
+
+        loginForm.addEventListener("submit", async (event) => {
+
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+
+            const message = document.getElementById("loginMessage");
+
+            message.textContent = "Signing you in...";
+
+            try {
+
+                const response = await fetch(
+                    API_BASE_URL + "/api/auth/login",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+
+                        credentials: "include",
+
+                        body: JSON.stringify({
+                            email,
+                            password
+                        })
+                    }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message || "Login failed"
+                    );
+                }
+
+                message.textContent =
+                    "Login successful! Redirecting...";
+
+                setTimeout(() => {
+
+                    window.location.href = "report.html";
+
+                }, 1000);
+
+            } catch (error) {
+
+                console.error("Login error:", error);
+
+                message.textContent =
+                    error.message || "Login failed";
+            }
         });
     }
 

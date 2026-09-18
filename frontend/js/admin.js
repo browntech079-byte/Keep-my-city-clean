@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const API_URL = "http://127.0.0.1:5000/api/complaints";
+    const API_URL = "https://citycare-gov.onrender.com/api/complaints";
 
     const searchInput = document.getElementById("adminSearch");
     const totalCount = document.getElementById("adminTotalCount");

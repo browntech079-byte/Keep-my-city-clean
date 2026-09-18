@@ -5,10 +5,18 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const path = require("path");
 
+// ==========================================
+// LOAD ENVIRONMENT VARIABLES
+// ==========================================
+
 // Load .env from the CityCare project root
 dotenv.config({
     path: path.resolve(__dirname, "../.env")
 });
+
+// ==========================================
+// IMPORT ROUTES
+// ==========================================
 
 // Import routes after loading environment variables
 const authRoutes = require("./routes/authRoutes");
@@ -19,14 +27,46 @@ const authMiddleware = require("./middleware/authMiddleware");
 const app = express();
 
 // ==========================================
+// TRUST PROXY (REQUIRED ON RENDER)
+// ==========================================
+
+// Render terminates TLS at its edge and forwards requests to this app
+// over plain HTTP internally. Without this, Express can't see that the
+// original request was HTTPS, so req.secure stays false and
+// express-session silently refuses to send cookies marked
+// cookie.secure: true — which breaks login in production even though
+// the request itself succeeds.
+app.set("trust proxy", 1);
+
+// ==========================================
 // MIDDLEWARE
 // ==========================================
 
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || "http://127.0.0.1:5500";
+// Allowed frontend origins
+const allowedOrigins = [
+    "http://127.0.0.1:5500",
+    "http://localhost:5500",
+    "https://citycare-frontend-5i4h.onrender.com"
+];
 
+// CORS configuration
 app.use(
     cors({
-        origin: CLIENT_ORIGIN,
+        origin: function (origin, callback) {
+            // Allow requests without an origin
+            // (useful for Postman/server-to-server requests)
+            if (!origin) {
+                return callback(null, true);
+            }
+
+            if (allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            }
+
+            return callback(
+                new Error("Not allowed by CORS")
+            );
+        },
         credentials: true
     })
 );
@@ -50,11 +90,19 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
+
         cookie: {
             httpOnly: true,
-            secure: isProduction,           // cookie only sent over HTTPS in production
+
+            // HTTPS cookie in production
+            secure: isProduction,
+
+            // Required for frontend and backend
+            // running on different Render domains
             sameSite: isProduction ? "none" : "lax",
-            maxAge: 1000 * 60 * 60 * 24     // 24 hours
+
+            // 24 hours
+            maxAge: 1000 * 60 * 60 * 24
         }
     })
 );
@@ -64,10 +112,15 @@ app.use(
 // ==========================================
 
 app.use("/api/auth", authRoutes);
+
 app.use("/api/test", testRoutes);
+
 app.use("/api/complaints", complaintRoutes);
 
-// Temporary protected route for authentication testing
+// ==========================================
+// TEMPORARY PROTECTED ROUTE
+// ==========================================
+
 app.get(
     "/api/test-direct/protected",
     authMiddleware,
@@ -93,7 +146,7 @@ app.get("/", (req, res) => {
 });
 
 // ==========================================
-// 404 HANDLER (no route matched)
+// 404 HANDLER
 // ==========================================
 
 app.use((req, res) => {
@@ -108,7 +161,11 @@ app.use((req, res) => {
 // ==========================================
 
 app.use((err, req, res, next) => {
-    console.error("Unhandled error:", err.stack || err.message);
+    console.error(
+        "Unhandled error:",
+        err.stack || err.message
+    );
+
     res.status(err.status || 500).json({
         success: false,
         message: err.message || "Internal server error"

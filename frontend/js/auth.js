@@ -1,5 +1,12 @@
-
+```javascript
 document.addEventListener("DOMContentLoaded", () => {
+
+    // ==========================================
+    // CITYCARE LIVE BACKEND
+    // ==========================================
+
+    const API_BASE_URL = "https://citycare-gov.onrender.com";
+
 
     // ==========================================
     // 1. REGISTER USER
@@ -8,7 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.getElementById("registerForm");
 
     if (registerForm) {
+
         registerForm.addEventListener("submit", async (event) => {
+
             event.preventDefault();
 
             const fullName = document.getElementById("fullName").value.trim();
@@ -17,18 +26,22 @@ document.addEventListener("DOMContentLoaded", () => {
             const password = document.getElementById("password").value;
             const city = document.getElementById("city").value.trim();
             const state = document.getElementById("state").value.trim();
+
             const message = document.getElementById("registerMessage");
 
             message.textContent = "Creating your account...";
 
             try {
+
                 const response = await fetch(
-                    "http://127.0.0.1:5000/api/auth/register",
+                    `${API_BASE_URL}/api/auth/register`,
                     {
                         method: "POST",
+
                         headers: {
                             "Content-Type": "application/json"
                         },
+
                         body: JSON.stringify({
                             fullName,
                             email,
@@ -55,17 +68,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Reset the city dropdown after registration
                 if (citySelect) {
+
                     citySelect.innerHTML =
                         '<option value="">Select state first</option>';
+
                     citySelect.disabled = true;
                 }
 
                 setTimeout(() => {
+
                     window.location.href = "login.html";
+
                 }, 1500);
 
             } catch (error) {
+
                 console.error("Registration error:", error);
+
                 message.textContent = error.message;
             }
         });
@@ -79,24 +98,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
 
     if (loginForm) {
+
         loginForm.addEventListener("submit", async (event) => {
+
             event.preventDefault();
 
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
+
             const message = document.getElementById("loginMessage");
 
             message.textContent = "Signing you in...";
 
             try {
+
                 const response = await fetch(
-                    "http://127.0.0.1:5000/api/auth/login",
+                    `${API_BASE_URL}/api/auth/login`,
                     {
                         method: "POST",
+
                         headers: {
                             "Content-Type": "application/json"
                         },
+
                         credentials: "include",
+
                         body: JSON.stringify({
                             email,
                             password
@@ -116,11 +142,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     "Login successful! Redirecting...";
 
                 setTimeout(() => {
+
                     window.location.href = "report.html";
+
                 }, 1000);
 
             } catch (error) {
+
                 console.error("Login error:", error);
+
                 message.textContent = error.message;
             }
         });
@@ -290,6 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // Populate cities when a state is selected
+
     if (stateSelect && citySelect) {
 
         stateSelect.addEventListener("change", () => {
@@ -299,28 +330,36 @@ document.addEventListener("DOMContentLoaded", () => {
             citySelect.innerHTML = "";
 
             if (!selectedState) {
+
                 citySelect.disabled = true;
 
                 const option = document.createElement("option");
+
                 option.value = "";
+
                 option.textContent = "Select state first";
 
                 citySelect.appendChild(option);
+
                 return;
             }
 
             const cities = citiesByState[selectedState] || [];
 
             const defaultOption = document.createElement("option");
+
             defaultOption.value = "";
+
             defaultOption.textContent = "Select your city";
 
             citySelect.appendChild(defaultOption);
 
             cities.forEach((city) => {
+
                 const option = document.createElement("option");
 
                 option.value = city;
+
                 option.textContent = city;
 
                 citySelect.appendChild(option);
@@ -331,3 +370,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+```

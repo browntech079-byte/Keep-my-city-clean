@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login — CityCare</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <a href="index.html" class="brand">
+
+            <img
+                src="assets/images/citycare-logo.png"
+                alt="CityCare Logo"
+                class="brand-logo"
+            >
+
+            <span class="brand-name">
+                CityCare
+            </span>
+
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="complaints.html">
+                Complaints
+            </a>
+
+            <a href="report.html">
+                Report Issue
+            </a>
+
+            <a href="login.html" class="nav-login active">
+                Login
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main class="auth-container">
+
+        <section class="auth-card">
+
+            <div class="auth-header">
+
+                <span class="eyebrow">
+                    CITYCARE ACCOUNT
+                </span>
+
+                <h1>
+                    Welcome back.
+                </h1>
+
+                <p>
+                    Sign in to report issues and track your complaints.
+                </p>
+
+            </div>
+
+
+            <form id="loginForm">
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address *
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password *
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary auth-submit"
+                >
+                    Login →
+                </button>
+
+
+                <p id="loginMessage" class="auth-message"></p>
+
+            </form>
+
+
+            <div class="auth-footer">
+
+                <span>
+                    Don't have an account?
+                </span>
+
+                <a href="register.html">
+                    Create one
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+
+        <span>
+            © 2026 CityCare
+        </span>
+
+        <span>
+            Smart Civic Issue Management Platform
+        </span>
+
+    </footer>
+
+
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

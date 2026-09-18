@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account — CityCare</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+
+        <a href="index.html" class="brand">
+
+            <img
+                src="assets/images/citycare-logo.png"
+                alt="CityCare Logo"
+                class="brand-logo"
+            >
+
+            <span class="brand-name">
+                CityCare
+            </span>
+
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="complaints.html">
+                Complaints
+            </a>
+
+            <a href="report.html">
+                Report Issue
+            </a>
+
+            <a href="login.html" class="nav-login">
+                Login
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Registration -->
+    <main class="auth-container">
+
+        <section class="auth-card">
+
+            <div class="auth-header">
+
+                <span class="eyebrow">
+                    CITYCARE ACCOUNT
+                </span>
+
+                <h1>
+                    Create your account.
+                </h1>
+
+                <p>
+                    Join CityCare and help make your city better.
+                </p>
+
+            </div>
+
+
+            <form id="registerForm">
+
+                <!-- Full Name -->
+                <div class="form-group">
+
+                    <label for="fullName">
+                        Full Name *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address *
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Mobile -->
+                <div class="form-group">
+
+                    <label for="mobile">
+                        Mobile Number *
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="mobile"
+                        name="mobile"
+                        placeholder="Enter your mobile number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Password -->
+                <div class="form-group">
+
+                    <label for="password">
+                        Password *
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- State and City -->
+                <div class="form-row">
+
+                    <!-- State -->
+                    <div class="form-group">
+
+                        <label for="state">
+                            State *
+                        </label>
+
+                        <select
+                            id="state"
+                            name="state"
+                            required
+                        >
+
+                            <option value="">
+                                Select your state
+                            </option>
+
+                            <option value="Andhra Pradesh">
+                                Andhra Pradesh
+                            </option>
+
+                            <option value="Arunachal Pradesh">
+                                Arunachal Pradesh
+                            </option>
+
+                            <option value="Assam">
+                                Assam
+                            </option>
+
+                            <option value="Bihar">
+                                Bihar
+                            </option>
+
+                            <option value="Chhattisgarh">
+                                Chhattisgarh
+                            </option>
+
+                            <option value="Goa">
+                                Goa
+                            </option>
+
+                            <option value="Gujarat">
+                                Gujarat
+                            </option>
+
+                            <option value="Haryana">
+                                Haryana
+                            </option>
+
+                            <option value="Himachal Pradesh">
+                                Himachal Pradesh
+                            </option>
+
+                            <option value="Jharkhand">
+                                Jharkhand
+                            </option>
+
+                            <option value="Karnataka">
+                                Karnataka
+                            </option>
+
+                            <option value="Kerala">
+                                Kerala
+                            </option>
+
+                            <option value="Madhya Pradesh">
+                                Madhya Pradesh
+                            </option>
+
+                            <option value="Maharashtra">
+                                Maharashtra
+                            </option>
+
+                            <option value="Manipur">
+                                Manipur
+                            </option>
+
+                            <option value="Meghalaya">
+                                Meghalaya
+                            </option>
+
+                            <option value="Mizoram">
+                                Mizoram
+                            </option>
+
+                            <option value="Nagaland">
+                                Nagaland
+                            </option>
+
+                            <option value="Odisha">
+                                Odisha
+                            </option>
+
+                            <option value="Punjab">
+                                Punjab
+                            </option>
+
+                            <option value="Rajasthan">
+                                Rajasthan
+                            </option>
+
+                            <option value="Sikkim">
+                                Sikkim
+                            </option>
+
+                            <option value="Tamil Nadu">
+                                Tamil Nadu
+                            </option>
+
+                            <option value="Telangana">
+                                Telangana
+                            </option>
+
+                            <option value="Tripura">
+                                Tripura
+                            </option>
+
+                            <option value="Uttar Pradesh">
+                                Uttar Pradesh
+                            </option>
+
+                            <option value="Uttarakhand">
+                                Uttarakhand
+                            </option>
+
+                            <option value="West Bengal">
+                                West Bengal
+                            </option>
+
+                            <option value="Delhi">
+                                Delhi
+                            </option>
+
+                            <option value="Jammu and Kashmir">
+                                Jammu and Kashmir
+                            </option>
+
+                            <option value="Ladakh">
+                                Ladakh
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- City -->
+                    <div class="form-group">
+
+                        <label for="city">
+                            City *
+                        </label>
+
+                        <select
+                            id="city"
+                            name="city"
+                            required
+                            disabled
+                        >
+
+                            <option value="">
+                                Select state first
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Submit -->
+                <button
+                    type="submit"
+                    class="btn btn-primary auth-submit"
+                >
+                    Create Account →
+                </button>
+
+
+                <!-- Registration message -->
+                <p
+                    id="registerMessage"
+                    class="auth-message"
+                ></p>
+
+            </form>
+
+
+            <!-- Login link -->
+            <div class="auth-footer">
+
+                <span>
+                    Already have an account?
+                </span>
+
+                <a href="login.html">
+                    Login here
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+
+        <span>
+            © 2026 CityCare
+        </span>
+
+        <span>
+            Smart Civic Issue Management Platform
+        </span>
+
+    </footer>
+
+
+    <script src="js/auth.js"></script>
+
+</body>
+
+</html>

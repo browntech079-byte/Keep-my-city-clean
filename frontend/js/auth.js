@@ -1,4 +1,3 @@
-```javascript
 document.addEventListener("DOMContentLoaded", () => {
 
     // ==========================================
@@ -6,6 +5,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
 
     const API_BASE_URL = "https://citycare-gov.onrender.com";
+
+
+    // ==========================================
+    // SAFE JSON PARSING HELPER
+    // ==========================================
+    // Render free-tier services can cold-start or time out and return an
+    // HTML/plain-text error page instead of JSON. response.json() would
+    // throw a raw SyntaxError in that case, so this always resolves to an
+    // object instead of throwing.
+
+    async function readJsonSafe(response) {
+
+        try {
+
+            return await response.json();
+
+        } catch (err) {
+
+            return {};
+        }
+    }
 
 
     // ==========================================
@@ -228,9 +248,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (registerForm) {
 
+        const registerButton = registerForm.querySelector(
+            'button[type="submit"], input[type="submit"]'
+        );
+
         registerForm.addEventListener("submit", async (event) => {
 
             event.preventDefault();
+
+            if (registerButton) {
+
+                registerButton.disabled = true;
+            }
 
             const fullName = document.getElementById("fullName").value.trim();
             const email = document.getElementById("email").value.trim();
@@ -265,12 +294,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 );
 
-                const data = await response.json();
+                const data = await readJsonSafe(response);
 
                 if (!response.ok) {
 
                     throw new Error(
-                        data.message || "Registration failed"
+                        data.message ||
+                        `Registration failed (${response.status})`
                     );
                 }
 
@@ -299,6 +329,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 message.textContent =
                     error.message || "Registration failed";
+
+                if (registerButton) {
+
+                    registerButton.disabled = false;
+                }
             }
         });
     }
@@ -312,9 +347,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (loginForm) {
 
+        const loginButton = loginForm.querySelector(
+            'button[type="submit"], input[type="submit"]'
+        );
+
         loginForm.addEventListener("submit", async (event) => {
 
             event.preventDefault();
+
+            if (loginButton) {
+
+                loginButton.disabled = true;
+            }
 
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
@@ -343,12 +387,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 );
 
-                const data = await response.json();
+                const data = await readJsonSafe(response);
 
                 if (!response.ok) {
 
                     throw new Error(
-                        data.message || "Login failed"
+                        data.message ||
+                        `Login failed (${response.status})`
                     );
                 }
 
@@ -367,9 +412,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 message.textContent =
                     error.message || "Login failed";
+
+                if (loginButton) {
+
+                    loginButton.disabled = false;
+                }
             }
         });
     }
 
 });
-```

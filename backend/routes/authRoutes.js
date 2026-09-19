@@ -7,8 +7,6 @@ const {
     getCurrentUser
 } = require("../controllers/authController");
 
-const authMiddleware = require("../middleware/authMiddleware");
-
 const router = express.Router();
 
 // Register
@@ -22,6 +20,6 @@ router.post("/logout", logoutUser);
 
 // Current logged-in user (used by profile.html and any page
 // that needs to know if someone is signed in)
-router.get("/me", authMiddleware, getCurrentUser);
+router.get("/me", getCurrentUser);
 
 module.exports = router;

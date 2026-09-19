@@ -311,9 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // Do NOT set Content-Type manually.
                     // Browser automatically sets the
                     // multipart/form-data boundary.
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("citycare_token") || ""}`
-                    },
+                    credentials: "include",
 
                     body: formData
                 }
@@ -340,12 +338,9 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) {
 
                 if (response.status === 401) {
-                    localStorage.removeItem("citycare_token");
-                    localStorage.removeItem("citycare_user");
-
-                    alert("Please log in before submitting a complaint.");
-                    window.location.href = "login.html";
-                    return;
+                    throw new Error(
+                        "Please log in before submitting a complaint."
+                    );
                 }
 
                 throw new Error(

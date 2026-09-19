@@ -1,23 +1,7 @@
+backend/controllers/authcontroller.js
+
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-
-// ==========================================
-// GENERATE TOKEN
-// ==========================================
-
-function generateToken(user) {
-    return jwt.sign(
-        {
-            id: user._id,
-            fullName: user.fullName,
-            email: user.email,
-            role: user.role
-        },
-        process.env.SESSION_SECRET,
-        { expiresIn: "7d" }
-    );
-}
 
 // ==========================================
 // REGISTER USER
@@ -127,12 +111,8 @@ const loginUser = async (req, res) => {
             });
         }
 
-        // Issue a signed token containing the user's identity.
-        // The frontend stores this and sends it back as
-        // Authorization: Bearer <token> on every request.
-        const token = generateToken(user);
-
-        const safeUser = {
+        // Store user information in session
+        req.session.user = {
             id: user._id,
             fullName: user.fullName,
             email: user.email,
@@ -142,8 +122,7 @@ const loginUser = async (req, res) => {
         res.json({
             success: true,
             message: "Login successful",
-            token,
-            user: safeUser
+            user: req.session.user
         });
 
     } catch (error) {
@@ -160,16 +139,29 @@ const loginUser = async (req, res) => {
 // ==========================================
 // LOGOUT USER
 // ==========================================
-// With token-based auth there's no server-side session to clear —
-// the token simply stops being sent once the frontend deletes it
-// from its own storage. This endpoint exists so the frontend has
-// something consistent to call, and to leave room for a token
-// blocklist later if that's ever needed.
 
 const logoutUser = (req, res) => {
-    res.json({
-        success: true,
-        message: "Logout successful"
+    if (!req.session) {
+        return res.json({
+            success: true,
+            message: "Logout successful"
+        });
+    }
+
+    req.session.destroy((error) => {
+        if (error) {
+            return res.status(500).json({
+                success: false,
+                message: "Logout failed"
+            });
+        }
+
+        res.clearCookie("connect.sid");
+
+        res.json({
+            success: true,
+            message: "Logout successful"
+        });
     });
 };
 
@@ -180,7 +172,7 @@ const logoutUser = (req, res) => {
 
 const getCurrentUser = async (req, res) => {
     try {
-        if (!req.user) {
+        if (!req.session || !req.session.user) {
             return res.status(401).json({
                 success: false,
                 message: "Not logged in"
@@ -188,11 +180,13 @@ const getCurrentUser = async (req, res) => {
         }
 
         const user = await User.findById(
-            req.user.id
+            req.session.user.id
         ).select("-password");
 
         if (!user) {
-            // The account behind this token no longer exists
+            // The account behind this session no longer exists
+            req.session.destroy(() => {});
+
             return res.status(401).json({
                 success: false,
                 message: "Not logged in"

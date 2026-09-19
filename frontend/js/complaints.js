@@ -23,14 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let isLoading = false;
     let lastAutoRefreshAt = 0;
 
-    function getAuthToken() {
-        return localStorage.getItem("citycare_token");
-    }
-
-    function goToLogin() {
-        window.location.href = "login.html";
-    }
-
     function resolveImageUrl(image) {
         if (!image) return image;
         if (/^https?:\/\//i.test(image)) {
@@ -42,13 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     async function loadComplaints() {
         if (isLoading) return;
         isLoading = true;
-
-        const token = getAuthToken();
-
-        if (!token) {
-            goToLogin();
-            return;
-        }
 
         if (complaintsMessage) {
             complaintsMessage.textContent = "Loading your complaints...";
@@ -66,9 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `${API_BASE_URL}/api/complaints/my`,
                 {
                     method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+                    credentials: "include"
                 }
             );
 
@@ -82,10 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!response.ok) {
                 if (response.status === 401) {
-                    localStorage.removeItem("citycare_token");
-                    localStorage.removeItem("citycare_user");
-                    goToLogin();
-                    return;
+                    throw new Error("Authentication required");
                 }
 
                 throw new Error(

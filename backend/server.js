@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const session = require("express-session");
 const path = require("path");
 
 // ==========================================
@@ -19,7 +20,9 @@ dotenv.config({
 
 // Import routes after loading environment variables
 const authRoutes = require("./routes/authRoutes");
+const testRoutes = require("./routes/testRoutes");
 const complaintRoutes = require("./routes/complaintRoutes");
+const authMiddleware = require("./middleware/authMiddleware");
 
 const app = express();
 
@@ -39,7 +42,7 @@ const allowedOrigins = [
     "http://localhost:3000",
     "http://127.0.0.1:5500",
     "https://citycare-frontend-5i4h.onrender.com",
-    "https://clean-my-city-vm.onrender.com"
+    "https://clean-my-city-vvmu.onrender.com"
 ];
 
 app.use(
@@ -101,16 +104,39 @@ app.use(
 );
 
 // ==========================================
-// TOKEN SECRET CHECK
+// SESSION CONFIGURATION
 // ==========================================
-// SESSION_SECRET is reused here as the JWT signing secret, so no
-// new environment variable needs to be added on Render — the one
-// you already have keeps working.
 
 if (!process.env.SESSION_SECRET) {
     console.error("SESSION_SECRET is missing from .env");
     process.exit(1);
 }
+
+const isProduction = process.env.NODE_ENV === "production";
+
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+
+        resave: false,
+
+        saveUninitialized: false,
+
+        cookie: {
+            httpOnly: true,
+
+            // HTTPS cookie in production
+            secure: isProduction,
+
+            // Required for frontend and backend
+            // running on different Render domains
+            sameSite: isProduction ? "none" : "lax",
+
+            // 24 hours
+            maxAge: 1000 * 60 * 60 * 24
+        }
+    })
+);
 
 // ==========================================
 // API ROUTES
@@ -118,7 +144,25 @@ if (!process.env.SESSION_SECRET) {
 
 app.use("/api/auth", authRoutes);
 
+app.use("/api/test", testRoutes);
+
 app.use("/api/complaints", complaintRoutes);
+
+// ==========================================
+// TEMPORARY PROTECTED ROUTE
+// ==========================================
+
+app.get(
+    "/api/test-direct/protected",
+    authMiddleware,
+    (req, res) => {
+        res.json({
+            success: true,
+            message: "You are authenticated!",
+            user: req.user
+        });
+    }
+);
 
 // ==========================================
 // ROOT ROUTE

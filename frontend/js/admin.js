@@ -18,20 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // HELPER FUNCTIONS
     // ==========================================
 
-    function getAuthToken() {
-        return localStorage.getItem("citycare_token");
-    }
-
-    function goToLogin() {
-        window.location.href = "login.html";
-    }
-
-    function handleUnauthorized() {
-        localStorage.removeItem("citycare_token");
-        localStorage.removeItem("citycare_user");
-        goToLogin();
-    }
-
     function resolveImageUrl(image) {
         if (!image) return image;
         if (/^https?:\/\//i.test(image)) {
@@ -501,13 +487,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadComplaints() {
 
-        const token = getAuthToken();
-
-        if (!token) {
-            goToLogin();
-            return;
-        }
-
         showMessage("Loading complaints...");
 
         if (refreshButton) {
@@ -518,25 +497,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response = await fetch(API_URL, {
                 method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                credentials: "include"
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-
-                if (response.status === 401) {
-                    handleUnauthorized();
-                    return;
-                }
-
-                if (response.status === 403) {
-                    throw new Error(
-                        "Admin access required for this page."
-                    );
-                }
 
                 throw new Error(
                     data.message ||
@@ -613,9 +579,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: "PATCH",
 
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${getAuthToken()}`
+                        "Content-Type": "application/json"
                     },
+
+                    credentials: "include",
 
                     body: JSON.stringify({
                         status: newStatus
@@ -627,11 +594,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 await response.json();
 
             if (!response.ok) {
-
-                if (response.status === 401) {
-                    handleUnauthorized();
-                    return;
-                }
 
                 throw new Error(
                     data.message ||
@@ -701,9 +663,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     method: "PATCH",
 
                     headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${getAuthToken()}`
+                        "Content-Type": "application/json"
                     },
+
+                    credentials: "include",
 
                     body: JSON.stringify({
                         department: newDepartment
@@ -715,11 +678,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 await response.json();
 
             if (!response.ok) {
-
-                if (response.status === 401) {
-                    handleUnauthorized();
-                    return;
-                }
 
                 throw new Error(
                     data.message ||

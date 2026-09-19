@@ -63,11 +63,27 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "login.html";
     }
 
+    function getAuthToken() {
+        return localStorage.getItem("citycare_token");
+    }
+
+    function clearAuth() {
+        localStorage.removeItem("citycare_token");
+        localStorage.removeItem("citycare_user");
+    }
+
     // ==========================================
     // LOAD PROFILE
     // ==========================================
 
     async function loadProfile() {
+
+        const token = getAuthToken();
+
+        if (!token) {
+            goToLogin();
+            return;
+        }
 
         profileMessage.hidden = false;
         profileMessage.textContent = "Loading your profile...";
@@ -79,7 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 `${API_BASE_URL}/api/auth/me`,
                 {
                     method: "GET",
-                    credentials: "include"
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
                 }
             );
 
@@ -92,7 +110,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             if (response.status === 401) {
-                // Not logged in — send them to the login page
+                // Not logged in (or the token expired) — send them
+                // to the login page
+                clearAuth();
                 goToLogin();
                 return;
             }
@@ -154,7 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 `${API_BASE_URL}/api/complaints/my`,
                 {
                     method: "GET",
-                    credentials: "include"
+                    headers: {
+                        Authorization: `Bearer ${getAuthToken()}`
+                    }
                 }
             );
 
@@ -205,11 +227,14 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             await fetch(`${API_BASE_URL}/api/auth/logout`, {
                 method: "POST",
-                credentials: "include"
+                headers: {
+                    Authorization: `Bearer ${getAuthToken()}`
+                }
             });
         } catch (error) {
             console.error("Logout error:", error);
         } finally {
+            clearAuth();
             goToLogin();
         }
     }

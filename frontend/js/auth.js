@@ -247,7 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        credentials: "include",
                         body: JSON.stringify({
                             fullName,
                             email,
@@ -344,7 +343,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        credentials: "include",
                         body: JSON.stringify({
                             email,
                             password
@@ -361,10 +359,30 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
                 }
 
+                // Store the token — this is what every future
+                // request sends back as Authorization: Bearer <token>
+                // instead of relying on a cross-site cookie, which
+                // browsers like Brave and Safari block by default.
+                if (data.token) {
+                    localStorage.setItem("citycare_token", data.token);
+                }
+
+                if (data.user) {
+                    localStorage.setItem(
+                        "citycare_user",
+                        JSON.stringify(data.user)
+                    );
+                }
+
                 showMessage(message, "Login successful! Redirecting...");
 
+                const destination =
+                    data.user && data.user.role === "admin"
+                        ? "admin.html"
+                        : "report.html";
+
                 setTimeout(() => {
-                    window.location.href = "report.html";
+                    window.location.href = destination;
                 }, 1000);
 
             } catch (error) {

@@ -1,20 +1,22 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
-// Register User
+// ==========================================
+// REGISTER USER
+// ==========================================
+
 const registerUser = async (req, res) => {
     try {
         const {
             fullName,
             email,
-            mobile,
             password,
             city,
             state
         } = req.body;
 
         // Check required fields
-        if (!fullName || !email || !mobile || !password || !city || !state) {
+        if (!fullName || !email || !password || !city || !state) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
@@ -22,7 +24,9 @@ const registerUser = async (req, res) => {
         }
 
         // Check if email already exists
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({
+            email: email.trim().toLowerCase()
+        });
 
         if (existingUser) {
             return res.status(409).json({
@@ -36,12 +40,11 @@ const registerUser = async (req, res) => {
 
         // Create user
         const user = await User.create({
-            fullName,
-            email,
-            mobile,
+            fullName: fullName.trim(),
+            email: email.trim().toLowerCase(),
             password: hashedPassword,
-            city,
-            state
+            city: city.trim(),
+            state: state.trim()
         });
 
         res.status(201).json({
@@ -66,7 +69,10 @@ const registerUser = async (req, res) => {
 };
 
 
-// Login User
+// ==========================================
+// LOGIN USER
+// ==========================================
+
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -79,7 +85,9 @@ const loginUser = async (req, res) => {
         }
 
         // Find user
-        const user = await User.findOne({ email });
+        const user = await User.findOne({
+            email: email.trim().toLowerCase()
+        });
 
         if (!user) {
             return res.status(401).json({
@@ -126,8 +134,18 @@ const loginUser = async (req, res) => {
 };
 
 
-// Logout User
+// ==========================================
+// LOGOUT USER
+// ==========================================
+
 const logoutUser = (req, res) => {
+    if (!req.session) {
+        return res.json({
+            success: true,
+            message: "Logout successful"
+        });
+    }
+
     req.session.destroy((error) => {
         if (error) {
             return res.status(500).json({
@@ -135,6 +153,8 @@ const logoutUser = (req, res) => {
                 message: "Logout failed"
             });
         }
+
+        res.clearCookie("connect.sid");
 
         res.json({
             success: true,
@@ -144,8 +164,13 @@ const logoutUser = (req, res) => {
 };
 
 
+// ==========================================
+// EXPORT CONTROLLERS
+// ==========================================
+
 module.exports = {
     registerUser,
     loginUser,
     logoutUser
 };
+

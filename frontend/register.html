@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,352 +6,636 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta
+        name="description"
+        content="Create your CityCare account and help make your city cleaner, safer, and better."
+    >
+
     <title>Create Account — CityCare</title>
 
+    <!-- Existing global styles -->
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Authentication page styles -->
     <link rel="stylesheet" href="css/auth.css">
 </head>
 
-<body>
+<body class="auth-page register-page">
 
-    <!-- Navigation -->
-    <header class="navbar">
+    <!-- ========================================== -->
+    <!-- MAIN AUTHENTICATION LAYOUT                 -->
+    <!-- ========================================== -->
 
-        <a href="index.html" class="brand">
+    <main class="auth-layout">
 
-            <img
-                src="assets/images/citycare-logo.png"
-                alt="CityCare Logo"
-                class="brand-logo"
-            >
+        <!-- ========================================== -->
+        <!-- LEFT: CITYCARE BRANDING                    -->
+        <!-- ========================================== -->
 
-            <span class="brand-name">
-                CityCare
-            </span>
+        <section class="auth-brand-panel">
 
-        </a>
+            <a href="index.html" class="auth-brand">
 
-        <nav class="nav-links">
+                <img
+                    src="assets/images/citycare-logo.png"
+                    alt="CityCare Logo"
+                    class="auth-brand-logo"
+                >
 
-            <a href="index.html">
-                Home
+                <div class="auth-brand-text">
+
+                    <span class="auth-brand-name">
+                        City<span>Care</span>
+                    </span>
+
+                    <span class="auth-brand-subtitle">
+                        Smart Civic Issue Management
+                    </span>
+
+                </div>
+
             </a>
 
-            <a href="complaints.html">
-                Complaints
-            </a>
 
-            <a href="report.html">
-                Report Issue
-            </a>
+            <!-- Brand Message -->
 
-            <a href="login.html" class="nav-login">
-                Login
-            </a>
+            <div class="auth-brand-content">
 
-        </nav>
-
-    </header>
-
-
-    <!-- Registration -->
-    <main class="auth-container">
-
-        <section class="auth-card">
-
-            <div class="auth-header">
-
-                <span class="eyebrow">
-                    CITYCARE ACCOUNT
-                </span>
-
-                <h1>
-                    Create your account.
-                </h1>
+                <h2>
+                    Build a Cleaner,<br>
+                    Safer, <span>Better India.</span>
+                </h2>
 
                 <p>
-                    Join CityCare and help make your city better.
+                    Join CityCare and be a part of the change.
+                    Report civic issues, track progress and
+                    help make your city better.
                 </p>
 
             </div>
 
 
-            <form id="registerForm">
-
-                <!-- Full Name -->
-                <div class="form-group">
-
-                    <label for="fullName">
-                        Full Name *
-                    </label>
-
-                    <input
-                        type="text"
-                        id="fullName"
-                        name="fullName"
-                        placeholder="Enter your full name"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- Email -->
-                <div class="form-group">
-
-                    <label for="email">
-                        Email Address *
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="you@example.com"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- Mobile -->
-                <div class="form-group">
-
-                    <label for="mobile">
-                        Mobile Number *
-                    </label>
-
-                    <input
-                        type="tel"
-                        id="mobile"
-                        name="mobile"
-                        placeholder="Enter your mobile number"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- Password -->
-                <div class="form-group">
-
-                    <label for="password">
-                        Password *
-                    </label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Create a password"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- State and City -->
-                <div class="form-row">
-
-                    <!-- State -->
-                    <div class="form-group">
-
-                        <label for="state">
-                            State *
-                        </label>
-
-                        <select
-                            id="state"
-                            name="state"
-                            required
-                        >
-
-                            <option value="">
-                                Select your state
-                            </option>
-
-                            <option value="Andhra Pradesh">
-                                Andhra Pradesh
-                            </option>
-
-                            <option value="Arunachal Pradesh">
-                                Arunachal Pradesh
-                            </option>
-
-                            <option value="Assam">
-                                Assam
-                            </option>
-
-                            <option value="Bihar">
-                                Bihar
-                            </option>
-
-                            <option value="Chhattisgarh">
-                                Chhattisgarh
-                            </option>
-
-                            <option value="Goa">
-                                Goa
-                            </option>
-
-                            <option value="Gujarat">
-                                Gujarat
-                            </option>
-
-                            <option value="Haryana">
-                                Haryana
-                            </option>
-
-                            <option value="Himachal Pradesh">
-                                Himachal Pradesh
-                            </option>
-
-                            <option value="Jharkhand">
-                                Jharkhand
-                            </option>
-
-                            <option value="Karnataka">
-                                Karnataka
-                            </option>
-
-                            <option value="Kerala">
-                                Kerala
-                            </option>
-
-                            <option value="Madhya Pradesh">
-                                Madhya Pradesh
-                            </option>
-
-                            <option value="Maharashtra">
-                                Maharashtra
-                            </option>
-
-                            <option value="Manipur">
-                                Manipur
-                            </option>
-
-                            <option value="Meghalaya">
-                                Meghalaya
-                            </option>
-
-                            <option value="Mizoram">
-                                Mizoram
-                            </option>
-
-                            <option value="Nagaland">
-                                Nagaland
-                            </option>
-
-                            <option value="Odisha">
-                                Odisha
-                            </option>
-
-                            <option value="Punjab">
-                                Punjab
-                            </option>
-
-                            <option value="Rajasthan">
-                                Rajasthan
-                            </option>
-
-                            <option value="Sikkim">
-                                Sikkim
-                            </option>
-
-                            <option value="Tamil Nadu">
-                                Tamil Nadu
-                            </option>
-
-                            <option value="Telangana">
-                                Telangana
-                            </option>
-
-                            <option value="Tripura">
-                                Tripura
-                            </option>
-
-                            <option value="Uttar Pradesh">
-                                Uttar Pradesh
-                            </option>
-
-                            <option value="Uttarakhand">
-                                Uttarakhand
-                            </option>
-
-                            <option value="West Bengal">
-                                West Bengal
-                            </option>
-
-                            <option value="Delhi">
-                                Delhi
-                            </option>
-
-                            <option value="Jammu and Kashmir">
-                                Jammu and Kashmir
-                            </option>
-
-                            <option value="Ladakh">
-                                Ladakh
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <!-- City -->
-                    <div class="form-group">
-
-                        <label for="city">
-                            City *
-                        </label>
-
-                        <select
-                            id="city"
-                            name="city"
-                            required
-                            disabled
-                        >
-
-                            <option value="">
-                                Select state first
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Submit -->
-                <button
-                    type="submit"
-                    class="btn btn-primary auth-submit"
+            <!-- Decorative City Illustration -->
+
+            <div
+                class="auth-city-illustration"
+                aria-hidden="true"
+            >
+
+                <svg
+                    viewBox="0 0 700 340"
+                    xmlns="http://www.w3.org/2000/svg"
+                    role="presentation"
                 >
-                    Create Account →
-                </button>
+
+                    <!-- Background clouds -->
+
+                    <g fill="#315b77" opacity="0.55">
+
+                        <path
+                            d="M70 100c0-13 11-24 24-24
+                            7-19 34-19 41 0
+                            14-1 25 10 25 24z"
+                        />
+
+                        <path
+                            d="M470 75c0-12 10-22 22-22
+                            7-17 31-17 38 0
+                            13-1 23 9 23 22z"
+                        />
+
+                    </g>
 
 
-                <!-- Registration message -->
-                <p
-                    id="registerMessage"
-                    class="auth-message"
-                ></p>
+                    <!-- Distant buildings -->
 
-            </form>
+                    <g fill="#21445f">
+
+                        <rect x="25" y="185" width="60" height="155" />
+                        <rect x="95" y="145" width="75" height="195" />
+                        <rect x="180" y="195" width="55" height="145" />
+                        <rect x="245" y="95" width="82" height="245" />
+                        <rect x="337" y="170" width="65" height="170" />
+                        <rect x="412" y="125" width="82" height="215" />
+                        <rect x="505" y="185" width="62" height="155" />
+                        <rect x="580" y="145" width="85" height="195" />
+
+                    </g>
 
 
-            <!-- Login link -->
-            <div class="auth-footer">
+                    <!-- Building highlights -->
 
-                <span>
-                    Already have an account?
-                </span>
+                    <g fill="#39708e" opacity="0.85">
 
-                <a href="login.html">
-                    Login here
-                </a>
+                        <rect x="108" y="160" width="15" height="180" />
+                        <rect x="258" y="110" width="16" height="230" />
+                        <rect x="426" y="140" width="15" height="200" />
+                        <rect x="594" y="160" width="17" height="180" />
+
+                    </g>
+
+
+                    <!-- Windows -->
+
+                    <g fill="#70a9c2" opacity="0.7">
+
+                        <path
+                            d="
+                            M40 205h12v14H40z
+                            M60 205h12v14H60z
+                            M40 235h12v14H40z
+                            M60 235h12v14H60z
+
+                            M110 170h14v17h-14z
+                            M140 170h14v17h-14z
+                            M110 200h14v17h-14z
+                            M140 200h14v17h-14z
+                            M110 230h14v17h-14z
+                            M140 230h14v17h-14z
+
+                            M260 130h16v18h-16z
+                            M292 130h16v18h-16z
+                            M260 165h16v18h-16z
+                            M292 165h16v18h-16z
+                            M260 200h16v18h-16z
+                            M292 200h16v18h-16z
+                            M260 235h16v18h-16z
+                            M292 235h16v18h-16z
+
+                            M350 190h13v15h-13z
+                            M375 190h13v15h-13z
+                            M350 220h13v15h-13z
+                            M375 220h13v15h-13z
+
+                            M430 155h15v17h-15z
+                            M460 155h15v17h-15z
+                            M430 190h15v17h-15z
+                            M460 190h15v17h-15z
+                            M430 225h15v17h-15z
+                            M460 225h15v17h-15z
+
+                            M520 205h12v14h-12z
+                            M545 205h12v14h-12z
+                            M520 235h12v14h-12z
+                            M545 235h12v14h-12z
+
+                            M595 170h15v17h-15z
+                            M625 170h15v17h-15z
+                            M595 205h15v17h-15z
+                            M625 205h15v17h-15z
+                            M595 240h15v17h-15z
+                            M625 240h15v17h-15z
+                            "
+                        />
+
+                    </g>
+
+
+                    <!-- Foreground ground -->
+
+                    <path
+                        d="M0 300
+                        Q180 270 350 300
+                        T700 295
+                        V340 H0 Z"
+                        fill="#174b45"
+                    />
+
+                    <path
+                        d="M0 315
+                        Q200 290 380 315
+                        T700 310
+                        V340 H0 Z"
+                        fill="#236d50"
+                    />
+
+
+                    <!-- Trees -->
+
+                    <g>
+
+                        <g transform="translate(95 245)">
+
+                            <rect
+                                x="18"
+                                y="35"
+                                width="8"
+                                height="60"
+                                fill="#143c42"
+                            />
+
+                            <circle
+                                cx="22"
+                                cy="25"
+                                r="30"
+                                fill="#287b51"
+                            />
+
+                            <circle
+                                cx="5"
+                                cy="42"
+                                r="22"
+                                fill="#31955a"
+                            />
+
+                            <circle
+                                cx="40"
+                                cy="42"
+                                r="23"
+                                fill="#236d4a"
+                            />
+
+                        </g>
+
+
+                        <g transform="translate(355 240)">
+
+                            <rect
+                                x="18"
+                                y="35"
+                                width="8"
+                                height="70"
+                                fill="#143c42"
+                            />
+
+                            <circle
+                                cx="22"
+                                cy="25"
+                                r="34"
+                                fill="#287b51"
+                            />
+
+                            <circle
+                                cx="0"
+                                cy="42"
+                                r="24"
+                                fill="#31955a"
+                            />
+
+                            <circle
+                                cx="43"
+                                cy="42"
+                                r="24"
+                                fill="#236d4a"
+                            />
+
+                        </g>
+
+
+                        <g transform="translate(570 265)">
+
+                            <rect
+                                x="15"
+                                y="25"
+                                width="7"
+                                height="55"
+                                fill="#143c42"
+                            />
+
+                            <circle
+                                cx="18"
+                                cy="20"
+                                r="25"
+                                fill="#287b51"
+                            />
+
+                            <circle
+                                cx="0"
+                                cy="35"
+                                r="18"
+                                fill="#31955a"
+                            />
+
+                            <circle
+                                cx="35"
+                                cy="35"
+                                r="19"
+                                fill="#236d4a"
+                            />
+
+                        </g>
+
+                    </g>
+
+                </svg>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================== -->
+        <!-- RIGHT: REGISTRATION FORM                   -->
+        <!-- ========================================== -->
+
+        <section class="auth-form-panel">
+
+            <div class="auth-card register-card">
+
+                <!-- Form Header -->
+
+                <div class="auth-header">
+
+                    <span class="eyebrow">
+                        CITYCARE ACCOUNT
+                    </span>
+
+                    <h1>
+                        Create your account.
+                    </h1>
+
+                    <p>
+                        Join CityCare and help make your city better.
+                    </p>
+
+                </div>
+
+
+                <!-- ========================================== -->
+                <!-- REGISTRATION FORM                         -->
+                <!-- ========================================== -->
+
+                <form id="registerForm">
+
+                    <!-- Full Name -->
+
+                    <div class="form-group">
+
+                        <label for="fullName">
+                            Full Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Email Address -->
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email Address <span>*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="you@example.com"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Password -->
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password <span>*</span>
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- State and City -->
+
+                    <div class="form-row">
+
+                        <!-- State -->
+
+                        <div class="form-group">
+
+                            <label for="state">
+                                State <span>*</span>
+                            </label>
+
+                            <select
+                                id="state"
+                                name="state"
+                                autocomplete="address-level1"
+                                required
+                            >
+
+                                <option value="">
+                                    Select your state
+                                </option>
+
+                                <option value="Andhra Pradesh">
+                                    Andhra Pradesh
+                                </option>
+
+                                <option value="Arunachal Pradesh">
+                                    Arunachal Pradesh
+                                </option>
+
+                                <option value="Assam">
+                                    Assam
+                                </option>
+
+                                <option value="Bihar">
+                                    Bihar
+                                </option>
+
+                                <option value="Chhattisgarh">
+                                    Chhattisgarh
+                                </option>
+
+                                <option value="Goa">
+                                    Goa
+                                </option>
+
+                                <option value="Gujarat">
+                                    Gujarat
+                                </option>
+
+                                <option value="Haryana">
+                                    Haryana
+                                </option>
+
+                                <option value="Himachal Pradesh">
+                                    Himachal Pradesh
+                                </option>
+
+                                <option value="Jharkhand">
+                                    Jharkhand
+                                </option>
+
+                                <option value="Karnataka">
+                                    Karnataka
+                                </option>
+
+                                <option value="Kerala">
+                                    Kerala
+                                </option>
+
+                                <option value="Madhya Pradesh">
+                                    Madhya Pradesh
+                                </option>
+
+                                <option value="Maharashtra">
+                                    Maharashtra
+                                </option>
+
+                                <option value="Manipur">
+                                    Manipur
+                                </option>
+
+                                <option value="Meghalaya">
+                                    Meghalaya
+                                </option>
+
+                                <option value="Mizoram">
+                                    Mizoram
+                                </option>
+
+                                <option value="Nagaland">
+                                    Nagaland
+                                </option>
+
+                                <option value="Odisha">
+                                    Odisha
+                                </option>
+
+                                <option value="Punjab">
+                                    Punjab
+                                </option>
+
+                                <option value="Rajasthan">
+                                    Rajasthan
+                                </option>
+
+                                <option value="Sikkim">
+                                    Sikkim
+                                </option>
+
+                                <option value="Tamil Nadu">
+                                    Tamil Nadu
+                                </option>
+
+                                <option value="Telangana">
+                                    Telangana
+                                </option>
+
+                                <option value="Tripura">
+                                    Tripura
+                                </option>
+
+                                <option value="Uttar Pradesh">
+                                    Uttar Pradesh
+                                </option>
+
+                                <option value="Uttarakhand">
+                                    Uttarakhand
+                                </option>
+
+                                <option value="West Bengal">
+                                    West Bengal
+                                </option>
+
+                                <option value="Delhi">
+                                    Delhi
+                                </option>
+
+                                <option value="Jammu and Kashmir">
+                                    Jammu and Kashmir
+                                </option>
+
+                                <option value="Ladakh">
+                                    Ladakh
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- City -->
+
+                        <div class="form-group">
+
+                            <label for="city">
+                                City <span>*</span>
+                            </label>
+
+                            <select
+                                id="city"
+                                name="city"
+                                autocomplete="address-level2"
+                                required
+                                disabled
+                            >
+
+                                <option value="">
+                                    Select state first
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Submit Button -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary auth-submit"
+                    >
+
+                        Create Account
+                        <span aria-hidden="true">→</span>
+
+                    </button>
+
+
+                    <!-- Registration Message -->
+
+                    <p
+                        id="registerMessage"
+                        class="auth-message"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
+
+                </form>
+
+
+                <!-- ========================================== -->
+                <!-- LOGIN LINK                                -->
+                <!-- ========================================== -->
+
+                <div class="auth-footer">
+
+                    <span>
+                        Already have an account?
+                    </span>
+
+                    <a href="login.html">
+                        Login here
+                    </a>
+
+                </div>
 
             </div>
 
@@ -359,8 +644,11 @@
     </main>
 
 
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- ========================================== -->
+    <!-- FOOTER                                     -->
+    <!-- ========================================== -->
+
+    <footer class="auth-page-footer">
 
         <span>
             © 2026 CityCare
@@ -372,6 +660,8 @@
 
     </footer>
 
+
+    <!-- Existing registration JavaScript -->
 
     <script src="js/auth.js"></script>
 

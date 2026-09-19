@@ -3,7 +3,7 @@
    CityCare — Login & Signup Interface
    ========================================= */
 
-/* ---------- Page ---------- */
+/* ---------- Authentication Page ---------- */
 
 .auth-page {
     min-height: 100vh;
@@ -15,7 +15,15 @@
     color: var(--text, #f3efe8);
 }
 
-/* ---------- Main Container ---------- */
+.auth-page *,
+.auth-page *::before,
+.auth-page *::after {
+    box-sizing: border-box;
+}
+
+/* =========================================
+   EXISTING LOGIN LAYOUT
+   ========================================= */
 
 .auth-container {
     width: 100%;
@@ -26,35 +34,27 @@
     align-items: center;
 }
 
-/* ---------- Main Card ---------- */
-
 .auth-card {
     width: 100%;
     min-height: 590px;
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
     overflow: hidden;
-
     background: var(--surface, #191e23);
-    border: 1px solid var(--border, rgba(255,255,255,0.08));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
     border-radius: 26px;
-
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
 }
 
-/* =========================================
-   LEFT WELCOME PANEL
-   ========================================= */
+/* ---------- Existing Login Welcome Panel ---------- */
 
 .auth-welcome-panel {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     padding: 38px;
     overflow: hidden;
-
     background:
         radial-gradient(
             circle at 100% 0%,
@@ -62,7 +62,6 @@
             transparent 36%
         ),
         var(--brand-blue, #013237);
-
     color: #f3efe8;
 }
 
@@ -71,11 +70,9 @@
 .auth-brand {
     position: relative;
     z-index: 2;
-
     display: flex;
     align-items: center;
     gap: 12px;
-
     width: fit-content;
     color: inherit;
     text-decoration: none;
@@ -100,12 +97,17 @@
     letter-spacing: -0.03em;
 }
 
-.auth-brand-tagline {
+.auth-brand-name span {
+    color: var(--brand-green, #4ca771);
+}
+
+.auth-brand-tagline,
+.auth-brand-subtitle {
     color: rgba(243, 239, 232, 0.72);
     font-size: 0.72rem;
 }
 
-/* ---------- Welcome Text ---------- */
+/* ---------- Existing Login Welcome Text ---------- */
 
 .welcome-content {
     position: relative;
@@ -141,12 +143,11 @@
     width: 58px;
     height: 4px;
     margin-top: 26px;
-
     background: var(--accent, #e8c9a8);
     border-radius: 99px;
 }
 
-/* ---------- Decorative Shapes ---------- */
+/* ---------- Existing Login Decorative Shapes ---------- */
 
 .welcome-decoration {
     position: absolute;
@@ -159,10 +160,8 @@
     position: absolute;
     right: -110px;
     bottom: -180px;
-
     width: 360px;
     height: 360px;
-
     border: 1px solid rgba(76, 167, 113, 0.22);
     border-radius: 50%;
     background: rgba(76, 167, 113, 0.10);
@@ -172,27 +171,21 @@
     position: absolute;
     right: 48px;
     bottom: 55px;
-
     width: 90px;
     height: 45px;
-
     border: 1px solid rgba(76, 167, 113, 0.45);
     border-radius: 100% 0 100% 0;
     background: rgba(76, 167, 113, 0.18);
     transform: rotate(-25deg);
 }
 
-/* =========================================
-   RIGHT FORM PANEL
-   ========================================= */
+/* ---------- Existing Login Form Panel ---------- */
 
 .auth-form-panel {
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 48px;
-
     background: var(--surface-light, #222930);
 }
 
@@ -207,30 +200,43 @@
     margin-bottom: 32px;
 }
 
-.auth-header h2 {
-    margin-bottom: 10px;
-
+.auth-header .eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
     color: var(--brand-green, #4ca771);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+}
+
+.auth-header h1,
+.auth-header h2 {
+    margin: 0 0 10px;
+    color: var(--text, #f3efe8);
     font-size: clamp(1.8rem, 3vw, 2.3rem);
     font-weight: 750;
     letter-spacing: -0.04em;
+    line-height: 1.2;
 }
 
 .auth-header p {
+    margin: 0;
     color: var(--text-muted, #9ca5aa);
     font-size: 0.95rem;
     line-height: 1.7;
 }
 
-/* ---------- Form Fields ---------- */
+/* ---------- Forms ---------- */
 
-#loginForm {
+#loginForm,
+#registerForm {
     display: flex;
     flex-direction: column;
     gap: 22px;
 }
 
 .form-group {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 9px;
@@ -242,62 +248,80 @@
     font-weight: 600;
 }
 
-.form-group input {
+.form-group label span {
+    color: var(--brand-green, #4ca771);
+}
+
+/* ---------- Inputs and Selects ---------- */
+
+.form-group input,
+.form-group select,
+.form-group textarea {
     width: 100%;
     min-height: 54px;
     padding: 0 17px;
-
     color: var(--text, #f3efe8);
     background: var(--surface, #191e23);
-
-    border: 1px solid var(--border, rgba(255,255,255,0.08));
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
     border-radius: 13px;
     outline: none;
-
     font: inherit;
     font-size: 0.92rem;
-
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease,
         background 0.2s ease;
 }
 
-.form-group input::placeholder {
+.form-group input::placeholder,
+.form-group textarea::placeholder {
     color: var(--text-muted, #9ca5aa);
     opacity: 0.8;
 }
 
-.form-group input:focus {
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group select:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
     border-color: var(--brand-green, #4ca771);
     box-shadow: 0 0 0 4px rgba(76, 167, 113, 0.13);
 }
 
-/* ---------- Login Button ---------- */
+/* ---------- State and City Row ---------- */
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* ---------- Submit Button ---------- */
 
 .auth-submit {
     width: 100%;
     min-height: 54px;
     margin-top: 8px;
     padding: 14px 20px;
-
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-
     background: var(--brand-green, #4ca771);
     color: #ffffff;
-
     border: 1px solid transparent;
     border-radius: 14px;
-
     font: inherit;
     font-size: 1rem;
     font-weight: 700;
-
     cursor: pointer;
-
     transition:
         transform 0.2s ease,
         background 0.2s ease,
@@ -319,16 +343,25 @@
     outline-offset: 4px;
 }
 
-/* ---------- Login Message ---------- */
+.auth-submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ---------- Form Message ---------- */
 
 .auth-message {
     min-height: 0;
+    margin: 0;
     color: var(--text-muted, #9ca5aa);
     font-size: 0.88rem;
     line-height: 1.5;
+    overflow-wrap: anywhere;
 }
 
-/* ---------- Create Account ---------- */
+/* ---------- Login / Signup Footer ---------- */
 
 .auth-footer {
     display: flex;
@@ -336,12 +369,9 @@
     justify-content: center;
     align-items: center;
     gap: 6px;
-
     margin-top: 30px;
     padding-top: 24px;
-
-    border-top: 1px solid var(--border, rgba(255,255,255,0.08));
-
+    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
     color: var(--text-muted, #9ca5aa);
     font-size: 0.9rem;
     text-align: center;
@@ -360,7 +390,7 @@
 }
 
 /* =========================================
-   Footer
+   EXISTING AUTH PAGE FOOTER
    ========================================= */
 
 .auth-page-footer {
@@ -368,109 +398,364 @@
     max-width: 1240px;
     margin: 28px auto 0;
     padding: 0 4px;
-
     display: flex;
     justify-content: space-between;
     gap: 16px;
-
     color: var(--text-muted, #9ca5aa);
     font-size: 0.75rem;
 }
 
 /* =========================================
-   Responsive — Tablet
+   NEW REGISTER PAGE LAYOUT
    ========================================= */
 
-@media (max-width: 850px) {
+/* Hide navigation if one is accidentally included */
+
+.register-page .navbar {
+    display: none !important;
+}
+
+/* Main two-column layout */
+
+.register-page .auth-layout {
+    width: 100%;
+    max-width: 1240px;
+    min-height: 690px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    overflow: hidden;
+    background: var(--surface, #191e23);
+    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    border-radius: 28px;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+/* ---------- Left Branding Panel ---------- */
+
+.register-page .auth-brand-panel {
+    position: relative;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(28px, 4vw, 52px);
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(76, 167, 113, 0.20),
+            transparent 38%
+        ),
+        linear-gradient(
+            145deg,
+            #013237 0%,
+            #102b35 55%,
+            #101316 100%
+        );
+    color: #f3efe8;
+}
+
+/* Brand link */
+
+.register-page .auth-brand {
+    gap: 14px;
+}
+
+.register-page .auth-brand-logo {
+    width: 52px;
+    height: 52px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 14px;
+}
+
+.register-page .auth-brand-name {
+    font-size: 1.45rem;
+    line-height: 1.2;
+}
+
+.register-page .auth-brand-name span {
+    color: #75c995;
+}
+
+.register-page .auth-brand-subtitle {
+    font-size: 0.68rem;
+    letter-spacing: 0.02em;
+}
+
+/* ---------- Left Main Message ---------- */
+
+.register-page .auth-brand-content {
+    position: relative;
+    z-index: 2;
+    max-width: 470px;
+    margin: 48px 0 28px;
+}
+
+.register-page .auth-brand-content h2 {
+    margin: 0 0 22px;
+    color: #f3efe8;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 750;
+    line-height: 1.12;
+    letter-spacing: -0.055em;
+}
+
+.register-page .auth-brand-content h2 span {
+    color: #79c995;
+}
+
+.register-page .auth-brand-content p {
+    max-width: 410px;
+    margin: 0;
+    color: rgba(243, 239, 232, 0.76);
+    font-size: 1rem;
+    line-height: 1.85;
+}
+
+/* ---------- City Illustration ---------- */
+
+.register-page .auth-city-illustration {
+    width: 100%;
+    max-width: 650px;
+    margin: auto -12% -52px -12%;
+    pointer-events: none;
+    opacity: 0.95;
+}
+
+.register-page .auth-city-illustration svg {
+    display: block;
+    width: 125%;
+    height: auto;
+    overflow: visible;
+}
+
+/* ---------- Right Form Panel ---------- */
+
+.register-page .auth-form-panel {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(28px, 4vw, 58px);
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(76, 167, 113, 0.06),
+            transparent 36%
+        ),
+        var(--surface-light, #222930);
+}
+
+/* Registration card */
+
+.register-page .register-card {
+    width: 100%;
+    max-width: 490px;
+    min-height: 0;
+    display: block;
+    overflow: visible;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Registration heading */
+
+.register-page .auth-header {
+    margin-bottom: 30px;
+}
+
+.register-page .auth-header .eyebrow {
+    margin-bottom: 14px;
+    color: #79c995;
+}
+
+.register-page .auth-header h1 {
+    margin-bottom: 12px;
+    font-size: clamp(2rem, 3vw, 2.7rem);
+    line-height: 1.12;
+}
+
+.register-page .auth-header p {
+    max-width: 420px;
+}
+
+/* Registration form spacing */
+
+.register-page #registerForm {
+    gap: 19px;
+}
+
+/* Registration fields */
+
+.register-page .form-group {
+    gap: 9px;
+}
+
+.register-page .form-group label {
+    font-size: 0.85rem;
+}
+
+.register-page .form-group input,
+.register-page .form-group select {
+    min-height: 52px;
+    background: #191e23;
+    border-color: rgba(255, 255, 255, 0.10);
+    border-radius: 12px;
+}
+
+.register-page .form-group input:hover,
+.register-page .form-group select:hover {
+    border-color: rgba(76, 167, 113, 0.45);
+}
+
+/* State and city */
+
+.register-page .form-row {
+    gap: 14px;
+}
+
+/* Create account button */
+
+.register-page .auth-submit {
+    min-height: 54px;
+    margin-top: 4px;
+    border-radius: 12px;
+}
+
+/* Registration footer */
+
+.register-page .auth-footer {
+    margin-top: 25px;
+    padding-top: 22px;
+    font-size: 0.88rem;
+}
+
+/* ---------- Registration Footer ---------- */
+
+.register-page .auth-page-footer {
+    max-width: 1240px;
+    margin-top: 20px;
+}
+
+/* =========================================
+   RESPONSIVE — TABLET
+   ========================================= */
+
+@media (max-width: 950px) {
     .auth-page {
         padding: 24px;
     }
 
-    .auth-card {
-        grid-template-columns: 1fr 1.1fr;
-        min-height: 540px;
+    .register-page .auth-layout {
+        min-height: 650px;
+        grid-template-columns: 0.85fr 1.15fr;
     }
 
-    .auth-welcome-panel {
-        padding: 28px;
+    .register-page .auth-brand-panel {
+        padding: 30px;
     }
 
-    .auth-form-panel {
+    .register-page .auth-form-panel {
         padding: 32px;
     }
 
-    .welcome-content h1 {
-        font-size: 2.4rem;
+    .register-page .auth-brand-content h2 {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+    }
+
+    .register-page .auth-brand-content p {
+        font-size: 0.92rem;
+    }
+
+    .register-page .auth-city-illustration {
+        margin-bottom: -30px;
     }
 }
 
 /* =========================================
-   Responsive — Mobile
+   RESPONSIVE — MOBILE
    ========================================= */
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
     .auth-page {
+        min-height: 100vh;
         padding: 16px;
     }
 
-    .auth-container {
-        margin: auto;
-    }
-
-    .auth-card {
+    .register-page .auth-layout {
+        min-height: 0;
         grid-template-columns: 1fr;
-        min-height: auto;
         border-radius: 22px;
     }
 
-    .auth-welcome-panel {
-        min-height: 250px;
+    .register-page .auth-brand-panel {
+        min-height: 0;
         padding: 24px;
     }
 
-    .auth-brand-logo {
-        width: 40px;
-        height: 40px;
+    .register-page .auth-brand-logo {
+        width: 44px;
+        height: 44px;
     }
 
-    .welcome-content {
-        margin: 30px 0 10px;
+    .register-page .auth-brand-name {
+        font-size: 1.25rem;
     }
 
-    .welcome-content .eyebrow {
-        margin-bottom: 10px;
+    .register-page .auth-brand-content {
+        margin: 36px 0 18px;
     }
 
-    .welcome-content h1 {
-        margin-bottom: 10px;
-        font-size: 2rem;
+    .register-page .auth-brand-content h2 {
+        margin-bottom: 14px;
+        font-size: clamp(2rem, 8vw, 2.7rem);
     }
 
-    .welcome-content > p:last-of-type {
+    .register-page .auth-brand-content p {
         font-size: 0.9rem;
+        line-height: 1.7;
     }
 
-    .welcome-accent {
-        margin-top: 16px;
+    .register-page .auth-city-illustration {
+        max-width: 420px;
+        margin: 0 auto -25px;
     }
 
-    .auth-form-panel {
-        padding: 28px 22px;
+    .register-page .auth-city-illustration svg {
+        width: 100%;
     }
 
-    .auth-header {
+    .register-page .auth-form-panel {
+        padding: 30px 24px;
+    }
+
+    .register-page .register-card {
+        max-width: 100%;
+    }
+
+    .register-page .auth-header {
         margin-bottom: 24px;
     }
 
-    .auth-header h2 {
-        font-size: 1.8rem;
+    .register-page .auth-header h1 {
+        font-size: 2rem;
     }
 
-    #loginForm {
+    .register-page #registerForm {
         gap: 18px;
     }
 
-    .auth-footer {
+    .register-page .form-row {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .register-page .auth-footer {
         margin-top: 24px;
         padding-top: 20px;
     }
@@ -484,7 +769,40 @@
     }
 }
 
-/* ---------- Reduced Motion ---------- */
+/* =========================================
+   RESPONSIVE — SMALL MOBILE
+   ========================================= */
+
+@media (max-width: 380px) {
+    .auth-page {
+        padding: 10px;
+    }
+
+    .register-page .auth-brand-panel {
+        padding: 20px;
+    }
+
+    .register-page .auth-form-panel {
+        padding: 24px 18px;
+    }
+
+    .register-page .auth-brand-content h2 {
+        font-size: 1.9rem;
+    }
+
+    .register-page .auth-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .register-page .form-group input,
+    .register-page .form-group select {
+        padding: 0 13px;
+    }
+}
+
+/* =========================================
+   REDUCED MOTION
+   ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
     *,

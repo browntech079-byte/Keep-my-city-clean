@@ -41,12 +41,12 @@
     grid-template-columns: 0.9fr 1.1fr;
     overflow: hidden;
     background: var(--surface, #191e23);
-    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    border: 1px solid var(--border, rgba(255,255,255,0.08));
     border-radius: 26px;
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 24px 70px rgba(0,0,0,0.22);
 }
 
-/* ---------- Existing Login Welcome Panel ---------- */
+/* ---------- Login Welcome Panel ---------- */
 
 .auth-welcome-panel {
     position: relative;
@@ -58,7 +58,7 @@
     background:
         radial-gradient(
             circle at 100% 0%,
-            rgba(76, 167, 113, 0.22),
+            rgba(76,167,113,0.22),
             transparent 36%
         ),
         var(--brand-blue, #013237);
@@ -103,11 +103,11 @@
 
 .auth-brand-tagline,
 .auth-brand-subtitle {
-    color: rgba(243, 239, 232, 0.72);
+    color: rgba(243,239,232,0.72);
     font-size: 0.72rem;
 }
 
-/* ---------- Existing Login Welcome Text ---------- */
+/* ---------- Login Welcome Text ---------- */
 
 .welcome-content {
     position: relative;
@@ -126,14 +126,14 @@
 
 .welcome-content h1 {
     margin-bottom: 18px;
-    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-size: clamp(2.2rem,4vw,3.4rem);
     line-height: 1.12;
     letter-spacing: -0.045em;
 }
 
 .welcome-content > p:last-of-type {
     max-width: 390px;
-    color: rgba(243, 239, 232, 0.78);
+    color: rgba(243,239,232,0.78);
     font-size: 1rem;
     line-height: 1.8;
 }
@@ -147,7 +147,7 @@
     border-radius: 99px;
 }
 
-/* ---------- Existing Login Decorative Shapes ---------- */
+/* ---------- Login Decorations ---------- */
 
 .welcome-decoration {
     position: absolute;
@@ -162,9 +162,9 @@
     bottom: -180px;
     width: 360px;
     height: 360px;
-    border: 1px solid rgba(76, 167, 113, 0.22);
+    border: 1px solid rgba(76,167,113,0.22);
     border-radius: 50%;
-    background: rgba(76, 167, 113, 0.10);
+    background: rgba(76,167,113,0.10);
 }
 
 .decoration-leaf {
@@ -173,13 +173,13 @@
     bottom: 55px;
     width: 90px;
     height: 45px;
-    border: 1px solid rgba(76, 167, 113, 0.45);
+    border: 1px solid rgba(76,167,113,0.45);
     border-radius: 100% 0 100% 0;
-    background: rgba(76, 167, 113, 0.18);
+    background: rgba(76,167,113,0.18);
     transform: rotate(-25deg);
 }
 
-/* ---------- Existing Login Form Panel ---------- */
+/* ---------- Login Form Panel ---------- */
 
 .auth-form-panel {
     display: flex;
@@ -213,7 +213,7 @@
 .auth-header h2 {
     margin: 0 0 10px;
     color: var(--text, #f3efe8);
-    font-size: clamp(1.8rem, 3vw, 2.3rem);
+    font-size: clamp(1.8rem,3vw,2.3rem);
     font-weight: 750;
     letter-spacing: -0.04em;
     line-height: 1.2;
@@ -260,42 +260,72 @@
     width: 100%;
     min-height: 54px;
     padding: 0 17px;
-    color: var(--text, #f3efe8);
-    background: var(--surface, #191e23);
-    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+
+    color: #f3efe8 !important;
+    -webkit-text-fill-color: #f3efe8 !important;
+
+    background-color: #191e23 !important;
+
+    border: 1px solid rgba(255,255,255,0.12);
     border-radius: 13px;
     outline: none;
-    font: inherit;
+
+    font-family: inherit;
     font-size: 0.92rem;
+
     transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease,
         background 0.2s ease;
 }
 
+/* Placeholder visibility */
+
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: var(--text-muted, #9ca5aa);
-    opacity: 0.8;
+    color: #aab3ba !important;
+    -webkit-text-fill-color: #aab3ba !important;
+    opacity: 1;
 }
 
-.form-group select {
-    cursor: pointer;
+/* Dropdown options */
+
+.form-group select option {
+    color: #f3efe8;
+    background: #191e23;
 }
+
+/* Disabled dropdown */
 
 .form-group select:disabled {
     cursor: not-allowed;
-    opacity: 0.55;
+    opacity: 0.6;
 }
+
+/* Focus effect */
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: var(--brand-green, #4ca771);
-    box-shadow: 0 0 0 4px rgba(76, 167, 113, 0.13);
+    border-color: #4ca771;
+    box-shadow: 0 0 0 4px rgba(76,167,113,0.15);
 }
 
-/* ---------- State and City Row ---------- */
+/* Browser autofill fix */
+
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #f3efe8 !important;
+    caret-color: #f3efe8;
+
+    box-shadow: 0 0 0 1000px #191e23 inset !important;
+
+    border: 1px solid rgba(255,255,255,0.12);
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+/* ---------- State and City ---------- */
 
 .form-row {
     display: grid;
@@ -310,18 +340,24 @@
     min-height: 54px;
     margin-top: 8px;
     padding: 14px 20px;
+
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
+
     background: var(--brand-green, #4ca771);
     color: #ffffff;
+
     border: 1px solid transparent;
     border-radius: 14px;
+
     font: inherit;
     font-size: 1rem;
     font-weight: 700;
+
     cursor: pointer;
+
     transition:
         transform 0.2s ease,
         background 0.2s ease,
@@ -331,7 +367,7 @@
 .auth-submit:hover {
     background: #3d9462;
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(76, 167, 113, 0.18);
+    box-shadow: 0 10px 24px rgba(76,167,113,0.18);
 }
 
 .auth-submit:active {
@@ -371,7 +407,9 @@
     gap: 6px;
     margin-top: 30px;
     padding-top: 24px;
-    border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+
+    border-top: 1px solid var(--border, rgba(255,255,255,0.08));
+
     color: var(--text-muted, #9ca5aa);
     font-size: 0.9rem;
     text-align: center;
@@ -389,46 +427,46 @@
     text-decoration: underline;
 }
 
-/* =========================================
-   EXISTING AUTH PAGE FOOTER
-   ========================================= */
+/* ---------- Existing Auth Footer ---------- */
 
 .auth-page-footer {
     width: 100%;
     max-width: 1240px;
     margin: 28px auto 0;
     padding: 0 4px;
+
     display: flex;
     justify-content: space-between;
     gap: 16px;
+
     color: var(--text-muted, #9ca5aa);
     font-size: 0.75rem;
 }
 
 /* =========================================
-   NEW REGISTER PAGE LAYOUT
+   REGISTER PAGE LAYOUT
    ========================================= */
-
-/* Hide navigation if one is accidentally included */
 
 .register-page .navbar {
     display: none !important;
 }
-
-/* Main two-column layout */
 
 .register-page .auth-layout {
     width: 100%;
     max-width: 1240px;
     min-height: 690px;
     margin: auto;
+
     display: grid;
     grid-template-columns: 0.95fr 1.05fr;
+
     overflow: hidden;
+
     background: var(--surface, #191e23);
-    border: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+    border: 1px solid var(--border, rgba(255,255,255,0.08));
     border-radius: 28px;
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+
+    box-shadow: 0 24px 80px rgba(0,0,0,0.28);
 }
 
 /* ---------- Left Branding Panel ---------- */
@@ -436,15 +474,18 @@
 .register-page .auth-brand-panel {
     position: relative;
     min-width: 0;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: clamp(28px, 4vw, 52px);
+
+    padding: clamp(28px,4vw,52px);
     overflow: hidden;
+
     background:
         radial-gradient(
             circle at 15% 15%,
-            rgba(76, 167, 113, 0.20),
+            rgba(76,167,113,0.20),
             transparent 38%
         ),
         linear-gradient(
@@ -453,10 +494,9 @@
             #102b35 55%,
             #101316 100%
         );
+
     color: #f3efe8;
 }
-
-/* Brand link */
 
 .register-page .auth-brand {
     gap: 14px;
@@ -466,7 +506,7 @@
     width: 52px;
     height: 52px;
     padding: 4px;
-    background: rgba(255, 255, 255, 0.96);
+    background: rgba(255,255,255,0.96);
     border-radius: 14px;
 }
 
@@ -484,19 +524,21 @@
     letter-spacing: 0.02em;
 }
 
-/* ---------- Left Main Message ---------- */
+/* ---------- Left Message ---------- */
 
 .register-page .auth-brand-content {
     position: relative;
     z-index: 2;
+
     max-width: 470px;
     margin: 48px 0 28px;
 }
 
 .register-page .auth-brand-content h2 {
     margin: 0 0 22px;
+
     color: #f3efe8;
-    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-size: clamp(2.2rem,4vw,3.5rem);
     font-weight: 750;
     line-height: 1.12;
     letter-spacing: -0.055em;
@@ -509,7 +551,8 @@
 .register-page .auth-brand-content p {
     max-width: 410px;
     margin: 0;
-    color: rgba(243, 239, 232, 0.76);
+
+    color: rgba(243,239,232,0.76);
     font-size: 1rem;
     line-height: 1.85;
 }
@@ -535,35 +578,41 @@
 
 .register-page .auth-form-panel {
     min-width: 0;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(28px, 4vw, 58px);
+
+    padding: clamp(28px,4vw,58px);
+
     background:
         radial-gradient(
             circle at 100% 0%,
-            rgba(76, 167, 113, 0.06),
+            rgba(76,167,113,0.06),
             transparent 36%
         ),
         var(--surface-light, #222930);
 }
 
-/* Registration card */
+/* ---------- Registration Card ---------- */
 
 .register-page .register-card {
     width: 100%;
     max-width: 490px;
     min-height: 0;
+
     display: block;
     overflow: visible;
+
     padding: 0;
+
     background: transparent;
     border: 0;
     border-radius: 0;
     box-shadow: none;
 }
 
-/* Registration heading */
+/* ---------- Registration Heading ---------- */
 
 .register-page .auth-header {
     margin-bottom: 30px;
@@ -576,7 +625,7 @@
 
 .register-page .auth-header h1 {
     margin-bottom: 12px;
-    font-size: clamp(2rem, 3vw, 2.7rem);
+    font-size: clamp(2rem,3vw,2.7rem);
     line-height: 1.12;
 }
 
@@ -584,13 +633,11 @@
     max-width: 420px;
 }
 
-/* Registration form spacing */
+/* ---------- Registration Form ---------- */
 
 .register-page #registerForm {
     gap: 19px;
 }
-
-/* Registration fields */
 
 .register-page .form-group {
     gap: 9px;
@@ -600,26 +647,36 @@
     font-size: 0.85rem;
 }
 
+/* Explicit registration input colors */
+
 .register-page .form-group input,
 .register-page .form-group select {
     min-height: 52px;
-    background: #191e23;
-    border-color: rgba(255, 255, 255, 0.10);
+
+    color: #f3efe8 !important;
+    -webkit-text-fill-color: #f3efe8 !important;
+
+    background-color: #191e23 !important;
+
+    border-color: rgba(255,255,255,0.12);
     border-radius: 12px;
 }
 
-.register-page .form-group input:hover,
-.register-page .form-group select:hover {
-    border-color: rgba(76, 167, 113, 0.45);
+.register-page .form-group input::placeholder {
+    color: #aab3ba !important;
+    -webkit-text-fill-color: #aab3ba !important;
+    opacity: 1;
 }
 
-/* State and city */
+.register-page .form-group input:focus,
+.register-page .form-group select:focus {
+    border-color: #4ca771;
+    box-shadow: 0 0 0 4px rgba(76,167,113,0.15);
+}
 
 .register-page .form-row {
     gap: 14px;
 }
-
-/* Create account button */
 
 .register-page .auth-submit {
     min-height: 54px;
@@ -627,15 +684,11 @@
     border-radius: 12px;
 }
 
-/* Registration footer */
-
 .register-page .auth-footer {
     margin-top: 25px;
     padding-top: 22px;
     font-size: 0.88rem;
 }
-
-/* ---------- Registration Footer ---------- */
 
 .register-page .auth-page-footer {
     max-width: 1240px;
@@ -665,7 +718,7 @@
     }
 
     .register-page .auth-brand-content h2 {
-        font-size: clamp(2rem, 4vw, 2.8rem);
+        font-size: clamp(2rem,4vw,2.8rem);
     }
 
     .register-page .auth-brand-content p {
@@ -713,7 +766,7 @@
 
     .register-page .auth-brand-content h2 {
         margin-bottom: 14px;
-        font-size: clamp(2rem, 8vw, 2.7rem);
+        font-size: clamp(2rem,8vw,2.7rem);
     }
 
     .register-page .auth-brand-content p {

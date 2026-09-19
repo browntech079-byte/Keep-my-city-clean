@@ -3,7 +3,8 @@ const express = require("express");
 const {
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    getCurrentUser
 } = require("../controllers/authController");
 
 const router = express.Router();
@@ -16,5 +17,9 @@ router.post("/login", loginUser);
 
 // Logout
 router.post("/logout", logoutUser);
+
+// Current logged-in user (used by profile.html and any page
+// that needs to know if someone is signed in)
+router.get("/me", getCurrentUser);
 
 module.exports = router;

@@ -165,12 +165,63 @@ const logoutUser = (req, res) => {
 
 
 // ==========================================
+// GET CURRENT LOGGED-IN USER
+// ==========================================
+
+const getCurrentUser = async (req, res) => {
+    try {
+        if (!req.session || !req.session.user) {
+            return res.status(401).json({
+                success: false,
+                message: "Not logged in"
+            });
+        }
+
+        const user = await User.findById(
+            req.session.user.id
+        ).select("-password");
+
+        if (!user) {
+            // The account behind this session no longer exists
+            req.session.destroy(() => {});
+
+            return res.status(401).json({
+                success: false,
+                message: "Not logged in"
+            });
+        }
+
+        res.json({
+            success: true,
+            user: {
+                id: user._id,
+                fullName: user.fullName,
+                email: user.email,
+                city: user.city,
+                state: user.state,
+                role: user.role,
+                createdAt: user.createdAt
+            }
+        });
+
+    } catch (error) {
+        console.error("Get current user error:", error);
+
+        res.status(500).json({
+            success: false,
+            message: "Server error while fetching profile"
+        });
+    }
+};
+
+
+// ==========================================
 // EXPORT CONTROLLERS
 // ==========================================
 
 module.exports = {
     registerUser,
     loginUser,
-    logoutUser
+    logoutUser,
+    getCurrentUser
 };
-

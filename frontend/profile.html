@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile — CityCare</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body class="complaints-page">
+
+    <div class="complaints-layout">
+
+        <!-- =====================================
+             LEFT SIDEBAR
+        ====================================== -->
+
+        <aside class="report-sidebar">
+
+            <!-- CityCare Logo -->
+            <a href="index.html" class="report-sidebar-brand">
+
+                <img
+                    src="assets/images/citycare-logo.png"
+                    alt="CityCare Logo"
+                    class="report-sidebar-logo"
+                >
+
+                <div class="report-sidebar-brand-text">
+                    <strong>CityCare</strong>
+                    <span>Smart Civic Issue Management</span>
+                </div>
+
+            </a>
+
+
+            <!-- Navigation -->
+            <div class="report-sidebar-section">
+
+                <p class="report-sidebar-label">
+                    WORKSPACE
+                </p>
+
+                <nav class="report-sidebar-nav">
+
+                    <a href="index.html">
+                        <span class="sidebar-icon" aria-hidden="true">⌂</span>
+                        <span>Home</span>
+                    </a>
+
+                    <a href="report.html">
+                        <span class="sidebar-icon" aria-hidden="true">＋</span>
+                        <span>Report Issue</span>
+                    </a>
+
+                    <a href="complaints.html">
+                        <span class="sidebar-icon" aria-hidden="true">▤</span>
+                        <span>Complaints</span>
+                    </a>
+
+                    <a
+                        href="profile.html"
+                        class="active"
+                        aria-current="page"
+                    >
+                        <span class="sidebar-icon" aria-hidden="true">♙</span>
+                        <span>My Profile</span>
+                    </a>
+
+                </nav>
+
+            </div>
+
+
+            <!-- Sidebar Bottom -->
+            <div class="report-sidebar-bottom">
+
+                <div class="report-sidebar-message">
+                    <span>Better infrastructure</span>
+                    <strong>for a brighter tomorrow.</strong>
+                </div>
+
+                <a
+                    href="#"
+                    id="sidebarLogout"
+                    class="report-sidebar-login"
+                >
+                    <span aria-hidden="true">↪</span>
+                    <span>Logout</span>
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================
+             MAIN PROFILE CONTENT
+        ====================================== -->
+
+        <div class="complaints-main">
+
+            <main class="complaints-container">
+
+                <!-- Page Header -->
+                <section class="page-header">
+
+                    <div>
+                        <span class="eyebrow">
+                            YOUR ACCOUNT
+                        </span>
+
+                        <h1>
+                            My profile<span>.</span>
+                        </h1>
+
+                        <p>
+                            Your CityCare account details and activity.
+                        </p>
+                    </div>
+
+                    <button
+                        id="logoutButton"
+                        class="btn btn-secondary"
+                    >
+                        Logout
+                    </button>
+
+                </section>
+
+
+                <!-- Profile status message (loading / error) -->
+                <div
+                    id="profileMessage"
+                    class="complaints-message"
+                >
+                    Loading your profile...
+                </div>
+
+
+                <!-- Profile Card -->
+                <section
+                    id="profileCard"
+                    class="profile-panel"
+                    hidden
+                >
+
+                    <div class="profile-identity">
+
+                        <div
+                            id="profileAvatar"
+                            class="profile-avatar"
+                        ></div>
+
+                        <div class="profile-identity-text">
+                            <h2 id="profileName">—</h2>
+                            <span
+                                id="profileRoleBadge"
+                                class="profile-role-badge"
+                            ></span>
+                        </div>
+
+                    </div>
+
+                    <div class="profile-details-grid">
+
+                        <div class="profile-detail">
+                            <span>Email</span>
+                            <strong id="profileEmail">—</strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>City</span>
+                            <strong id="profileCity">—</strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>State</span>
+                            <strong id="profileState">—</strong>
+                        </div>
+
+                        <div class="profile-detail">
+                            <span>Member since</span>
+                            <strong id="profileJoined">—</strong>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Activity Summary -->
+                <section
+                    id="profileStats"
+                    class="complaint-stats"
+                    hidden
+                >
+
+                    <article class="stat-card">
+                        <span>Total complaints</span>
+                        <strong id="profileTotalCount">0</strong>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>Pending</span>
+                        <strong id="profilePendingCount">0</strong>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>In progress</span>
+                        <strong id="profileProgressCount">0</strong>
+                    </article>
+
+                    <article class="stat-card">
+                        <span>Resolved</span>
+                        <strong id="profileResolvedCount">0</strong>
+                    </article>
+
+                </section>
+
+            </main>
+
+
+            <!-- Footer -->
+            <footer class="footer">
+
+                <span>© 2026 CityCare</span>
+
+                <span>
+                    Smart Civic Issue Management Platform
+                </span>
+
+            </footer>
+
+        </div>
+
+    </div>
+
+
+    <!-- Existing JavaScript -->
+    <script src="js/profile.js"></script>
+
+</body>
+</html>

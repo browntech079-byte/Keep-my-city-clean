@@ -30,19 +30,14 @@ const app = express();
 // TRUST PROXY (REQUIRED ON RENDER)
 // ==========================================
 
-// Render terminates TLS at its edge and forwards requests to this app
-// over plain HTTP internally. Without this, Express can't see that the
-// original request was HTTPS, so req.secure stays false and
-// express-session silently refuses to send cookies marked
-// cookie.secure: true — which breaks login in production even though
-// the request itself succeeds.
+// Render terminates HTTPS at its edge and forwards
+// requests to this app over HTTP internally.
 app.set("trust proxy", 1);
 
 // ==========================================
-// MIDDLEWARE
+// CORS CONFIGURATION
 // ==========================================
 
-// Allowed frontend origins
 const allowedOrigins = [
     "http://localhost:3000",
     "http://127.0.0.1:5500",
@@ -50,30 +45,63 @@ const allowedOrigins = [
     "https://clean-my-city-vm.onrender.com"
 ];
 
-// CORS configuration
 app.use(
     cors({
         origin: function (origin, callback) {
-            // Allow requests without an origin
-            // (useful for Postman/server-to-server requests)
+            // Allow requests without an Origin header,
+            // such as server-to-server or Postman requests.
             if (!origin) {
                 return callback(null, true);
             }
 
-            if (allowedOrigins.includes(origin)) {
+            // Normalize the origin before comparison.
+            const normalizedOrigin = origin
+                .trim()
+                .replace(/\/$/, "");
+
+            if (allowedOrigins.includes(normalizedOrigin)) {
+                console.log("CORS allowed:", normalizedOrigin);
                 return callback(null, true);
             }
+
+            console.error("CORS blocked origin:", origin);
 
             return callback(
                 new Error("Not allowed by CORS")
             );
         },
-        credentials: true
+
+        credentials: true,
+
+        methods: [
+            "GET",
+            "POST",
+            "PUT",
+            "PATCH",
+            "DELETE",
+            "OPTIONS"
+        ],
+
+        allowedHeaders: [
+            "Content-Type",
+            "Authorization"
+        ],
+
+        optionsSuccessStatus: 204
     })
 );
 
+// ==========================================
+// BODY PARSING MIDDLEWARE
+// ==========================================
+
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+app.use(
+    express.urlencoded({
+        extended: true
+    })
+);
 
 // ==========================================
 // SESSION CONFIGURATION
@@ -89,7 +117,9 @@ const isProduction = process.env.NODE_ENV === "production";
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
+
         resave: false,
+
         saveUninitialized: false,
 
         cookie: {

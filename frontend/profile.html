@@ -149,6 +149,8 @@
                     hidden
                 >
 
+                    <div class="profile-banner"></div>
+
                     <div class="profile-identity">
 
                         <div
@@ -158,6 +160,7 @@
 
                         <div class="profile-identity-text">
                             <h2 id="profileName">—</h2>
+                            <p id="profileLocation">—</p>
                             <span
                                 id="profileRoleBadge"
                                 class="profile-role-badge"
@@ -166,25 +169,29 @@
 
                     </div>
 
-                    <div class="profile-details-grid">
+                    <div class="profile-details-list">
 
-                        <div class="profile-detail">
-                            <span>Email</span>
+                        <div class="profile-detail-row">
+                            <span class="profile-detail-icon" aria-hidden="true">✉</span>
+                            <span class="profile-detail-label">Email</span>
                             <strong id="profileEmail">—</strong>
                         </div>
 
-                        <div class="profile-detail">
-                            <span>City</span>
+                        <div class="profile-detail-row">
+                            <span class="profile-detail-icon" aria-hidden="true">⌖</span>
+                            <span class="profile-detail-label">City</span>
                             <strong id="profileCity">—</strong>
                         </div>
 
-                        <div class="profile-detail">
-                            <span>State</span>
+                        <div class="profile-detail-row">
+                            <span class="profile-detail-icon" aria-hidden="true">⬡</span>
+                            <span class="profile-detail-label">State</span>
                             <strong id="profileState">—</strong>
                         </div>
 
-                        <div class="profile-detail">
-                            <span>Member since</span>
+                        <div class="profile-detail-row">
+                            <span class="profile-detail-icon" aria-hidden="true">◷</span>
+                            <span class="profile-detail-label">Member since</span>
                             <strong id="profileJoined">—</strong>
                         </div>
 
@@ -196,7 +203,7 @@
                 <!-- Activity Summary -->
                 <section
                     id="profileStats"
-                    class="complaint-stats"
+                    class="complaint-stats profile-stats"
                     hidden
                 >
 

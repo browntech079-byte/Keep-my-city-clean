@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const profileAvatar = document.getElementById("profileAvatar");
     const profileName = document.getElementById("profileName");
+    const profileLocation = document.getElementById("profileLocation");
     const profileRoleBadge = document.getElementById("profileRoleBadge");
     const profileEmail = document.getElementById("profileEmail");
     const profileCity = document.getElementById("profileCity");
@@ -124,6 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderProfile(user) {
         profileAvatar.textContent = getInitials(user.fullName);
         profileName.textContent = user.fullName || "Unnamed user";
+
+        const locationParts = [user.city, user.state].filter(Boolean);
+        profileLocation.textContent =
+            locationParts.length ? locationParts.join(", ") : "—";
 
         profileRoleBadge.textContent =
             user.role === "admin" ? "Administrator" : "Citizen";

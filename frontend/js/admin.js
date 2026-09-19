@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const API_URL = "https://citycare-gov.onrender.com/api/complaints";
+    const API_BASE_URL = "https://citycare-gov.onrender.com";
+    const API_URL = `${API_BASE_URL}/api/complaints`;
 
     const searchInput = document.getElementById("adminSearch");
     const totalCount = document.getElementById("adminTotalCount");
@@ -16,6 +17,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
     // HELPER FUNCTIONS
     // ==========================================
+
+    function resolveImageUrl(image) {
+        if (!image) return image;
+        if (/^https?:\/\//i.test(image)) {
+            return image;
+        }
+        return `${API_BASE_URL}${image.startsWith("/") ? "" : "/"}${image}`;
+    }
 
     function getText(value) {
         if (value === null || value === undefined) return "";
@@ -122,6 +131,45 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
+    // CREATE PHOTO THUMBNAIL
+    // ==========================================
+
+    function createThumbnailCell(complaint) {
+
+        const cell = document.createElement("td");
+
+        if (!complaint.image) {
+            cell.className = "admin-thumb-cell admin-thumb-empty";
+            cell.textContent = "—";
+            return cell;
+        }
+
+        cell.className = "admin-thumb-cell";
+
+        const link = document.createElement("a");
+        link.href = resolveImageUrl(complaint.image);
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+
+        const thumb = document.createElement("img");
+        thumb.className = "admin-thumb";
+        thumb.src = resolveImageUrl(complaint.image);
+        thumb.alt = complaint.title || "Complaint photo";
+        thumb.loading = "lazy";
+
+        thumb.onerror = () => {
+            cell.innerHTML = "";
+            cell.className = "admin-thumb-cell admin-thumb-empty";
+            cell.textContent = "—";
+        };
+
+        link.appendChild(thumb);
+        cell.appendChild(link);
+
+        return cell;
+    }
+
+    // ==========================================
     // CREATE STATUS BADGE
     // ==========================================
 
@@ -207,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const cell = document.createElement("td");
 
-            cell.colSpan = 8;
+            cell.colSpan = 9;
 
             cell.textContent = "No complaints found.";
 
@@ -233,7 +281,15 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
             // ==================================
-            // COLUMN 2: COMPLAINT
+            // COLUMN 2: PHOTO
+            // ==================================
+
+            row.appendChild(
+                createThumbnailCell(complaint)
+            );
+
+            // ==================================
+            // COLUMN 3: COMPLAINT
             // ==================================
 
             const complaintCell =

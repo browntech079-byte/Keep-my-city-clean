@@ -289,6 +289,28 @@
 .admin-table td:first-child { color: #777781; font-weight: 700; }
 .admin-table td[colspan] { padding: 28px; color: #686873; text-align: center; }
 
+/* Photo thumbnail cell created by admin.js */
+.admin-thumb-cell {
+  width: 64px;
+  padding: 8px !important;
+}
+.admin-thumb {
+  display: block;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #E8E8EB;
+}
+.admin-thumb-cell a {
+  display: block;
+  line-height: 0;
+}
+.admin-thumb-empty {
+  text-align: center;
+  color: #A3A3AD;
+}
+
 /* Inputs and status controls created by admin.js */
 .admin-table select,
 .admin-table input,

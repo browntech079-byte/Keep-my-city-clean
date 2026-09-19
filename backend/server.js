@@ -44,9 +44,10 @@ app.set("trust proxy", 1);
 
 // Allowed frontend origins
 const allowedOrigins = [
+    "http://localhost:3000",
     "http://127.0.0.1:5500",
-    "http://localhost:5500",
-    "https://citycare-frontend-5i4h.onrender.com"
+    "https://citycare-frontend-5i4h.onrender.com",
+    "https://clean-my-city-vm.onrender.com"
 ];
 
 // CORS configuration

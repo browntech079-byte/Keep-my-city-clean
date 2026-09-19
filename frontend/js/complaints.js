@@ -179,13 +179,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = document.createElement("article");
         card.className = "complaint-card";
 
+        const imageWrapper = document.createElement("div");
+        imageWrapper.className = "complaint-image-wrapper";
+
         if (complaint.image) {
-            const imageWrapper =
-                document.createElement("div");
-
-            imageWrapper.className =
-                "complaint-image-wrapper";
-
             const image = document.createElement("img");
             image.className = "complaint-image";
             image.src = resolveImageUrl(complaint.image);
@@ -195,13 +192,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
             image.loading = "lazy";
 
+            // If the photo URL fails to load, fall back to the
+            // same placeholder shown for complaints with no photo
+            // at all, instead of leaving a broken-image icon.
             image.onerror = () => {
-                imageWrapper.remove();
+                imageWrapper.innerHTML = "";
+                imageWrapper.classList.add("complaint-image-empty");
+                imageWrapper.textContent = "No photo";
             };
 
             imageWrapper.appendChild(image);
-            card.appendChild(imageWrapper);
+
+        } else {
+            imageWrapper.classList.add("complaint-image-empty");
+            imageWrapper.textContent = "No photo";
         }
+
+        card.appendChild(imageWrapper);
 
         const details = document.createElement("div");
         details.className = "complaint-details";
@@ -281,8 +288,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         details.appendChild(title);
         details.appendChild(description);
-        details.appendChild(category);
-        details.appendChild(department);
+
+        const tags = document.createElement("div");
+        tags.className = "complaint-tags";
+        tags.appendChild(category);
+        tags.appendChild(department);
+        details.appendChild(tags);
+
         details.appendChild(location);
         details.appendChild(meta);
 

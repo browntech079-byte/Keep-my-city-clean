@@ -22,23 +22,25 @@
   min-height: 100vh;
   display: grid;
   grid-template-columns: 270px minmax(0, 1fr);
-  gap: 20px;
-  padding: 20px;
+  gap: 0;
+  padding: 0;
 }
 
-/* Sidebar */
+/* Sidebar — flush against the top and bottom of the viewport,
+   matching the citizen-facing pages' sidebar */
 .admin-sidebar {
   position: sticky;
-  top: 20px;
-  height: calc(100vh - 40px);
-  min-height: 620px;
+  top: 0;
+  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 24px 18px;
   background: #6E8FC7;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 24px;
-  box-shadow: 0 12px 35px rgba(30, 30, 45, 0.08);
+  border: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0;
+  box-shadow: 4px 0 24px rgba(30, 30, 45, 0.08);
 }
 
 .admin-logo {
@@ -135,7 +137,7 @@
 }
 
 /* Main content */
-.admin-main { min-width: 0; }
+.admin-main { min-width: 0; padding: 20px; }
 .admin-topbar {
   min-height: 76px;
   display: flex;
@@ -393,8 +395,9 @@
 
 /* Responsive */
 @media (max-width: 1150px) {
-  .admin-layout { grid-template-columns: 235px minmax(0, 1fr); gap: 14px; padding: 14px; }
-  .admin-sidebar { top: 14px; height: calc(100vh - 28px); padding: 20px 14px; }
+  .admin-layout { grid-template-columns: 235px minmax(0, 1fr); }
+  .admin-sidebar { padding: 20px 14px; }
+  .admin-main { padding: 14px; }
   .admin-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .admin-stat-card { padding: 20px; }
 }
@@ -406,8 +409,8 @@
   .admin-date { align-self: flex-start; }
 }
 @media (max-width: 560px) {
-  .admin-layout { padding: 9px; gap: 12px; }
-  .admin-sidebar { padding: 17px 13px; border-radius: 18px; }
+  .admin-main { padding: 9px; }
+  .admin-sidebar { padding: 17px 13px; }
   .admin-logo { padding-bottom: 18px; }
   .admin-logo img { width: 42px; height: 42px; flex-basis: 42px; }
   .sidebar-nav { grid-template-columns: 1fr; }

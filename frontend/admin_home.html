@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CityCare | Admin Home</title>
+
+    <!-- Main and Admin Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body class="admin-page">
+
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="admin-sidebar">
+
+            <a href="admin-home.html" class="admin-logo">
+                <img
+                    src="assets/images/citycare-logo.png"
+                    alt="CityCare Logo"
+                >
+
+                <div>
+                    <h1>CityCare</h1>
+                    <p>Smart Civic Management</p>
+                </div>
+            </a>
+
+            <p class="sidebar-label">WORKSPACE</p>
+
+            <nav class="sidebar-nav">
+
+                <a href="admin-home.html" class="active">
+                    <span>⌂</span>
+                    Home
+                </a>
+
+                <a href="admin.html">
+                    <span>▦</span>
+                    Dashboard
+                </a>
+
+                <a href="about.html">
+                    <span>ℹ</span>
+                    About
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <div class="sidebar-message">
+                    <span>Better infrastructure</span>
+                    <strong>for a brighter tomorrow.</strong>
+                </div>
+
+                <div class="admin-panel-label">
+
+                    <span class="admin-shield">✓</span>
+
+                    <div>
+                        <strong>Admin Panel</strong>
+                        <small>CityCare Municipal Portal</small>
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="adminLogoutBtn"
+                    class="admin-logout-btn"
+                >
+                    <span aria-hidden="true">↪</span>
+                    <span>Logout</span>
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="admin-main">
+
+            <!-- TOP BAR -->
+            <header class="admin-topbar">
+
+                <div class="admin-search">
+                    <span>⌕</span>
+                    <input
+                        type="text"
+                        placeholder="Search complaints, locations, categories..."
+                        disabled
+                    >
+                </div>
+
+                <div class="admin-user">
+                    <span class="admin-user-icon">👤</span>
+                    <div>
+                        <strong>Administrator</strong>
+                        <small>CityCare Admin</small>
+                    </div>
+                </div>
+
+            </header>
+
+
+            <div class="admin-content">
+
+                <section class="admin-page-heading">
+                    <div>
+                        <p class="admin-eyebrow">ADMIN HOME</p>
+                        <h2>Welcome, Administrator.</h2>
+                        <p>
+                            Manage civic issues reported by citizens,
+                            assign them to the right department, and
+                            track resolution — all from one place.
+                        </p>
+                    </div>
+                </section>
+
+
+                <!-- Quick actions, styled like the dashboard's
+                     stat cards, but each one is a link -->
+                <section class="admin-stats">
+
+                    <a href="admin.html" class="admin-stat-card total-card">
+                        <span class="stat-icon">▦</span>
+                        <span>
+                            <span>Go to</span>
+                            <strong style="font-size:1.15rem;">Dashboard</strong>
+                        </span>
+                    </a>
+
+                    <a href="admin.html#adminComplaintsList" class="admin-stat-card progress-card">
+                        <span class="stat-icon">▤</span>
+                        <span>
+                            <span>Review</span>
+                            <strong style="font-size:1.15rem;">Complaints</strong>
+                        </span>
+                    </a>
+
+                    <a href="admin.html#adminComplaintsList" class="admin-stat-card resolved-card">
+                        <span class="stat-icon">✓</span>
+                        <span>
+                            <span>Track</span>
+                            <strong style="font-size:1.15rem;">Resolution</strong>
+                        </span>
+                    </a>
+
+                    <a href="about.html" class="admin-stat-card pending-card">
+                        <span class="stat-icon">ℹ</span>
+                        <span>
+                            <span>Learn</span>
+                            <strong style="font-size:1.15rem;">About CityCare</strong>
+                        </span>
+                    </a>
+
+                </section>
+
+
+                <!-- Info panel -->
+                <section class="admin-complaints-panel">
+
+                    <div class="admin-panel-heading">
+                        <div>
+                            <h2>What you can do here</h2>
+                            <p>A quick overview of the admin toolkit.</p>
+                        </div>
+                    </div>
+
+                    <div style="padding: 24px 26px; display: grid; gap: 14px;">
+
+                        <p>
+                            <strong>Dashboard:</strong>
+                            see every complaint submitted by citizens
+                            across the city, filter by status, and
+                            update each one's status or department
+                            directly from the table.
+                        </p>
+
+                        <p>
+                            <strong>Complaints:</strong>
+                            reported issues come in with a photo,
+                            category, and exact location, so you
+                            can route them to the correct department
+                            quickly.
+                        </p>
+
+                        <p>
+                            <strong>About:</strong>
+                            a quick reference on what CityCare does
+                            and how a report moves from submission
+                            to resolution.
+                        </p>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- Minimal script: this page only needs auth-guarding and
+         a working Logout button, not the full dashboard logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!localStorage.getItem("citycare_token")) {
+                window.location.href = "login.html";
+                return;
+            }
+
+            const logoutBtn = document.getElementById("adminLogoutBtn");
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", () => {
+                    localStorage.removeItem("citycare_token");
+                    localStorage.removeItem("citycare_user");
+                    window.location.href = "login.html";
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -32,6 +32,16 @@ document.addEventListener("DOMContentLoaded", () => {
         goToLogin();
     }
 
+    const logoutBtn = document.getElementById("adminLogoutBtn");
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+            localStorage.removeItem("citycare_token");
+            localStorage.removeItem("citycare_user");
+            goToLogin();
+        });
+    }
+
     function resolveImageUrl(image) {
         if (!image) return image;
         if (/^https?:\/\//i.test(image)) {

@@ -1,12 +1,12 @@
 /* =========================================
    CityCare — Admin Dashboard Styles
-   Light lavender-gray theme
+   Lime green theme
    ========================================= */
 
 .admin-page {
   min-height: 100vh;
   margin: 0;
-  background: #9FA0AE;
+  background: #A6CC5E;
   color: #17171B;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
@@ -77,7 +77,7 @@
 }
 .sidebar-nav a span { width: 22px; text-align: center; font-size: 1.1rem; }
 .sidebar-nav a:hover { background: #E8E8EB; color: #17171B; }
-.sidebar-nav a.active { background: #DEE4F7; color: #1B2A63; }
+.sidebar-nav a.active { background: #E9F3D6; color: #4E7A22; }
 
 .sidebar-bottom { margin-top: auto; }
 .sidebar-message {
@@ -106,8 +106,8 @@
   place-items: center;
   flex: 0 0 36px;
   border-radius: 11px;
-  background: #DEE4F7;
-  color: #1B2A63;
+  background: #E9F3D6;
+  color: #4E7A22;
   font-weight: 800;
 }
 .admin-panel-label strong { display: block; color: #303039; font-size: 0.82rem; }
@@ -172,7 +172,7 @@
   font-size: 0.82rem;
 }
 .admin-search input::placeholder { color: #777781; }
-.admin-search:focus-within { border-color: #3B57A6; box-shadow: 0 0 0 3px rgba(59, 87, 166, 0.12); }
+.admin-search:focus-within { border-color: #6FA030; box-shadow: 0 0 0 3px rgba(111, 160, 48, 0.12); }
 .admin-user { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .admin-user-icon {
   width: 42px;
@@ -196,7 +196,7 @@
   margin: 8px 0 24px;
   padding: 8px 4px;
 }
-.admin-eyebrow { margin: 0 0 10px; color: #1B2A63; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; }
+.admin-eyebrow { margin: 0 0 10px; color: #4E7A22; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; }
 .admin-page-heading h2 { margin: 0; color: #17171B; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -0.055em; }
 .admin-page-heading > div:first-child > p:last-child { max-width: 620px; margin: 12px 0 0; color: #686873; font-size: 0.92rem; }
 .admin-date {
@@ -209,7 +209,7 @@
   border: 1px solid rgba(35, 35, 45, 0.12);
   border-radius: 15px;
 }
-.admin-date > span { color: #1B2A63; font-size: 1.25rem; }
+.admin-date > span { color: #4E7A22; font-size: 1.25rem; }
 .admin-date strong { display: block; color: #303039; font-size: 0.8rem; }
 .admin-date small { display: block; margin-top: 3px; color: #777781; font-size: 0.7rem; }
 
@@ -248,7 +248,7 @@
 .total-card .stat-icon { background: #E4E8F4; color: #425C9C; }
 .pending-card .stat-icon { background: #F5E8D7; color: #98651E; }
 .progress-card .stat-icon { background: #E3EAF8; color: #4168A5; }
-.resolved-card .stat-icon { background: #DEE4F7; color: #1B2A63; }
+.resolved-card .stat-icon { background: #E9F3D6; color: #4E7A22; }
 
 /* Complaints panel and table */
 .admin-complaints-panel {
@@ -282,7 +282,7 @@
   transition: background 0.2s ease, transform 0.2s ease;
 }
 .admin-panel-heading button:hover { background: #DEDEE3; transform: translateY(-1px); }
-#adminMessage { margin: 0; padding: 0 26px; color: #1B2A63; font-size: 0.82rem; }
+#adminMessage { margin: 0; padding: 0 26px; color: #4E7A22; font-size: 0.82rem; }
 #adminMessage:empty { display: none; }
 
 .admin-table-wrapper { width: 100%; overflow-x: auto; }
@@ -348,19 +348,19 @@
 }
 .admin-table select:focus,
 .admin-table input:focus,
-.admin-table textarea:focus { border-color: #3B57A6; box-shadow: 0 0 0 3px rgba(59, 87, 166, 0.12); }
+.admin-table textarea:focus { border-color: #6FA030; box-shadow: 0 0 0 3px rgba(111, 160, 48, 0.12); }
 .admin-table button {
   padding: 8px 11px;
   border: 0;
   border-radius: 9px;
-  background: #DEE4F7;
-  color: #1B2A63;
+  background: #E9F3D6;
+  color: #4E7A22;
   font: inherit;
   font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
 }
-.admin-table button:hover { background: #C7D2EF; }
+.admin-table button:hover { background: #DCEAC0; }
 
 /* Common status labels, if rendered by admin.js */
 .status,
@@ -377,7 +377,7 @@
 }
 .status-pending, .status-badge.pending { background: #F5E8D7; color: #855719; }
 .status-in-progress, .status-badge.in-progress { background: #E3EAF8; color: #345B98; }
-.status-resolved, .status-badge.resolved { background: #DEE4F7; color: #1B2A63; }
+.status-resolved, .status-badge.resolved { background: #E9F3D6; color: #4E7A22; }
 .status-rejected, .status-badge.rejected { background: #F4DEDE; color: #9A3838; }
 
 /* Responsive */

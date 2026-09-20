@@ -38,8 +38,7 @@ app.set("trust proxy", 1);
 const allowedOrigins = [
     "http://localhost:3000",
     "http://127.0.0.1:5500",
-    "https://citycare-frontend-5i4h.onrender.com",
-    "https://clean-my-city-vm.onrender.com"
+    "https://clean-my-city-vvmu.onrender.com"
 ];
 
 app.use(

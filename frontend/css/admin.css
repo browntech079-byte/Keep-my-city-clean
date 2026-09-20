@@ -1,12 +1,12 @@
 /* =========================================
    CityCare — Admin Dashboard Styles
-   Lime green theme
+   Forest green theme
    ========================================= */
 
 .admin-page {
   min-height: 100vh;
   margin: 0;
-  background: #E9E9EC;
+  background: #eae9e0;
   color: #17171B;
   font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
@@ -36,7 +36,7 @@
   display: flex;
   flex-direction: column;
   padding: 24px 18px;
-  background: #6E8FC7;
+  background: #063104;
   border: 0;
   border-right: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 0;
@@ -79,7 +79,7 @@
 }
 .sidebar-nav a span { width: 22px; text-align: center; font-size: 1.1rem; }
 .sidebar-nav a:hover { background: rgba(255, 255, 255, 0.16); color: #FFFFFF; }
-.sidebar-nav a.active { background: #F0D766; color: #2C3B5C; }
+.sidebar-nav a.active { background: #77a160; color: #063104; }
 
 .sidebar-bottom { margin-top: auto; }
 .sidebar-message {
@@ -108,8 +108,8 @@
   place-items: center;
   flex: 0 0 36px;
   border-radius: 11px;
-  background: #F0D766;
-  color: #2C3B5C;
+  background: #77a160;
+  color: #063104;
   font-weight: 800;
 }
 .admin-panel-label strong { display: block; color: #FFFFFF; font-size: 0.82rem; }
@@ -147,7 +147,7 @@
   margin-bottom: 20px;
   padding: 14px 22px;
   background: #FFFFFF;
-  border: 1px solid rgba(53, 71, 107, 0.16);
+  border: 1px solid rgba(6, 49, 4, 0.16);
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(30, 30, 45, 0.06);
 }
@@ -157,11 +157,11 @@
   align-items: center;
   gap: 12px;
   padding: 0 15px;
-  background: #E4ECF8;
-  border: 1px solid rgba(53, 71, 107, 0.14);
+  background: rgba(97, 134, 105, 0.12);
+  border: 1px solid rgba(6, 49, 4, 0.14);
   border-radius: 12px;
 }
-.admin-search span { color: #4E6FA8; font-size: 1.45rem; }
+.admin-search span { color: #618669; font-size: 1.45rem; }
 .admin-search input {
   width: 100%;
   min-width: 0;
@@ -174,7 +174,7 @@
   font-size: 0.82rem;
 }
 .admin-search input::placeholder { color: #777781; }
-.admin-search:focus-within { border-color: #4E6FA8; box-shadow: 0 0 0 3px rgba(78, 111, 168, 0.12); }
+.admin-search:focus-within { border-color: #618669; box-shadow: 0 0 0 3px rgba(97, 134, 105, 0.18); }
 .admin-user { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .admin-user-icon {
   width: 42px;
@@ -182,8 +182,8 @@
   display: grid;
   place-items: center;
   border-radius: 13px;
-  background: #E4ECF8;
-  color: #35476B;
+  background: rgba(97, 134, 105, 0.12);
+  color: #063104;
   font-size: 1.25rem;
 }
 .admin-user strong { display: block; color: #25252D; font-size: 0.84rem; }
@@ -198,7 +198,7 @@
   margin: 8px 0 24px;
   padding: 8px 4px;
 }
-.admin-eyebrow { margin: 0 0 10px; color: #35476B; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; }
+.admin-eyebrow { margin: 0 0 10px; color: #618669; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.15em; }
 .admin-page-heading h2 { margin: 0; color: #17171B; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -0.055em; }
 .admin-page-heading > div:first-child > p:last-child { max-width: 620px; margin: 12px 0 0; color: #686873; font-size: 0.92rem; }
 .admin-date {
@@ -208,10 +208,10 @@
   flex-shrink: 0;
   padding: 14px 17px;
   background: #FFFFFF;
-  border: 1px solid rgba(53, 71, 107, 0.14);
+  border: 1px solid rgba(6, 49, 4, 0.14);
   border-radius: 15px;
 }
-.admin-date > span { color: #35476B; font-size: 1.25rem; }
+.admin-date > span { color: #618669; font-size: 1.25rem; }
 .admin-date strong { display: block; color: #303039; font-size: 0.8rem; }
 .admin-date small { display: block; margin-top: 3px; color: #777781; font-size: 0.7rem; }
 
@@ -229,7 +229,7 @@
   gap: 16px;
   padding: 23px;
   background: #FFFFFF;
-  border: 1px solid rgba(53, 71, 107, 0.12);
+  border: 1px solid rgba(6, 49, 4, 0.12);
   border-radius: 20px;
   box-shadow: 0 10px 28px rgba(30, 30, 45, 0.05);
 }
@@ -250,24 +250,24 @@
 
 /* Bold solid color blocks — each stat card is a distinct fill,
    not a white card with a pastel icon chip */
-.total-card { background: #2C3B5C; border-color: #2C3B5C; }
+.total-card { background: #063104; border-color: #063104; }
 .total-card span, .total-card strong { color: #FFFFFF; }
 
-.pending-card { background: #F0D766; border-color: #F0D766; }
-.pending-card span, .pending-card strong { color: #2C3B5C; }
-.pending-card .stat-icon { background: rgba(44, 59, 92, 0.14); color: #2C3B5C; }
+.pending-card { background: #eae9e0; border-color: #eae9e0; }
+.pending-card span, .pending-card strong { color: #063104; }
+.pending-card .stat-icon { background: rgba(6, 49, 4, 0.1); color: #063104; }
 
-.progress-card { background: #4168A5; border-color: #4168A5; }
-.progress-card span, .progress-card strong { color: #FFFFFF; }
+.progress-card { background: #77a160; border-color: #77a160; }
+.progress-card span, .progress-card strong { color: #063104; }
 
-.resolved-card { background: #35476B; border-color: #35476B; }
+.resolved-card { background: #618669; border-color: #618669; }
 .resolved-card span, .resolved-card strong { color: #FFFFFF; }
 
 /* Complaints panel and table */
 .admin-complaints-panel {
   overflow: hidden;
   background: #FFFFFF;
-  border: 1px solid rgba(53, 71, 107, 0.16);
+  border: 1px solid rgba(6, 49, 4, 0.16);
   border-radius: 22px;
   box-shadow: 0 12px 35px rgba(30, 30, 45, 0.06);
 }
@@ -277,30 +277,30 @@
   justify-content: space-between;
   gap: 20px;
   padding: 24px 26px;
-  border-bottom: 1px solid rgba(53, 71, 107, 0.14);
+  border-bottom: 1px solid rgba(6, 49, 4, 0.14);
 }
 .admin-panel-heading h2 { margin: 0; color: #202027; font-size: 1.25rem; letter-spacing: -0.035em; }
 .admin-panel-heading p { margin: 7px 0 0; color: #686873; font-size: 0.82rem; }
 .admin-panel-heading button {
   flex-shrink: 0;
   padding: 10px 15px;
-  border: 1px solid #F0D766;
+  border: 1px solid #77a160;
   border-radius: 11px;
-  background: #F0D766;
-  color: #2C3B5C;
+  background: #77a160;
+  color: #063104;
   font: inherit;
   font-size: 0.8rem;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
 }
-.admin-panel-heading button:hover { background: #E3C74E; transform: translateY(-1px); }
-#adminMessage { margin: 0; padding: 0 26px; color: #35476B; font-size: 0.82rem; }
+.admin-panel-heading button:hover { background: #618669; color: #FFFFFF; transform: translateY(-1px); }
+#adminMessage { margin: 0; padding: 0 26px; color: #618669; font-size: 0.82rem; }
 #adminMessage:empty { display: none; }
 
 .admin-table-wrapper { width: 100%; overflow-x: auto; }
 .admin-table { width: 100%; border-collapse: collapse; min-width: 1000px; }
-.admin-table thead { background: #35476B; }
+.admin-table thead { background: #063104; }
 .admin-table th {
   padding: 15px 16px;
   color: #FFFFFF;
@@ -312,15 +312,15 @@
 }
 .admin-table td {
   padding: 16px;
-  border-top: 1px solid rgba(53, 71, 107, 0.12);
+  border-top: 1px solid rgba(6, 49, 4, 0.12);
   color: #44444E;
   font-size: 0.8rem;
   vertical-align: middle;
 }
 .admin-table tbody tr { background: #FFFFFF; transition: background 0.15s ease; }
-.admin-table tbody tr:nth-child(even) { background: #EEF2FA; }
-.admin-table tbody tr:hover { background: #E4ECF8; }
-.admin-table td:first-child { color: #35476B; font-weight: 700; }
+.admin-table tbody tr:nth-child(even) { background: rgba(97, 134, 105, 0.07); }
+.admin-table tbody tr:hover { background: rgba(97, 134, 105, 0.14); }
+.admin-table td:first-child { color: #063104; font-weight: 700; }
 .admin-table td[colspan] { padding: 28px; color: #686873; text-align: center; }
 
 /* Photo thumbnail cell created by admin.js */
@@ -334,7 +334,7 @@
   height: 56px;
   border-radius: 8px;
   object-fit: cover;
-  background: #E4ECF8;
+  background: rgba(97, 134, 105, 0.12);
 }
 .admin-thumb-cell a {
   display: block;
@@ -351,29 +351,29 @@
 .admin-table textarea {
   max-width: 100%;
   padding: 9px 10px;
-  border: 1px solid rgba(53, 71, 107, 0.22);
+  border: 1px solid rgba(6, 49, 4, 0.22);
   border-radius: 9px;
   outline: none;
-  background: #E4ECF8;
+  background: rgba(97, 134, 105, 0.12);
   color: #25252D;
   font: inherit;
   font-size: 0.76rem;
 }
 .admin-table select:focus,
 .admin-table input:focus,
-.admin-table textarea:focus { border-color: #4E6FA8; box-shadow: 0 0 0 3px rgba(78, 111, 168, 0.12); }
+.admin-table textarea:focus { border-color: #618669; box-shadow: 0 0 0 3px rgba(97, 134, 105, 0.18); }
 .admin-table button {
   padding: 8px 11px;
   border: 0;
   border-radius: 9px;
-  background: #DDE3EE;
-  color: #35476B;
+  background: rgba(97, 134, 105, 0.16);
+  color: #063104;
   font: inherit;
   font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
 }
-.admin-table button:hover { background: #D6E1F4; }
+.admin-table button:hover { background: rgba(97, 134, 105, 0.26); }
 
 /* Common status labels, if rendered by admin.js */
 .status,
@@ -382,8 +382,8 @@
   align-items: center;
   padding: 5px 9px;
   border-radius: 999px;
-  background: #E4ECF8;
-  color: #35476B;
+  background: rgba(97, 134, 105, 0.14);
+  color: #063104;
   font-size: 0.7rem;
   font-weight: 700;
   white-space: nowrap;

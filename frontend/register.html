@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +17,9 @@
 
     <!-- Authentication page styles -->
     <link rel="stylesheet" href="css/auth.css">
+
+    <!-- Applied early to avoid a light-mode flash on reload -->
+    <script src="js/theme.js"></script>
 </head>
 
 <body class="auth-page register-page">
@@ -55,6 +57,11 @@
                 </div>
 
             </a>
+
+            <button type="button" class="theme-toggle theme-toggle-standalone" data-theme-toggle style="align-self: flex-start; margin: 6px 0 0;">
+                <span class="theme-toggle-icon">☾</span>
+                <span class="theme-toggle-current">Light</span>
+            </button>
 
 
             <!-- Brand Message -->

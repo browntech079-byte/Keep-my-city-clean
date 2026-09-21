@@ -20,6 +20,59 @@
   --max-width: 1240px;
 }
 
+/* =========================================
+   Dark mode — same variables, dark values.
+   Applied via [data-theme="dark"] on <html>,
+   toggled and persisted by js/theme.js
+   ========================================= */
+:root[data-theme="dark"] {
+  --bg: #14171A;
+  --surface: #1E2226;
+  --surface-light: #262B30;
+  --surface-hover: #323940;
+  --text: #F2F2F3;
+  --text-muted: #A0A6AC;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+/* Theme toggle button — reused in every sidebar/panel */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  padding: 13px 14px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s ease;
+}
+.theme-toggle:hover { background: rgba(255, 255, 255, 0.12); }
+.theme-toggle .theme-toggle-icon { width: 22px; text-align: center; font-size: 1.05rem; flex-shrink: 0; }
+.theme-toggle .theme-toggle-label { flex: 1; }
+.theme-toggle .theme-toggle-current { font-size: 0.72rem; opacity: 0.75; }
+
+/* Standalone variant for pages without a sidebar nav (login/register) —
+   a small pill instead of a full-width nav-style row */
+.theme-toggle-standalone {
+  display: inline-flex;
+  width: auto;
+  gap: 9px;
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  color: #ffffff;
+  font-size: 0.78rem;
+}
+.theme-toggle-standalone:hover { background: rgba(255, 255, 255, 0.14); }
+.theme-toggle-standalone .theme-toggle-icon { width: auto; font-size: 0.95rem; }
+
 /* Reset */
 * {
   margin: 0;

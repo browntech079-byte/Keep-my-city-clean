@@ -9,6 +9,9 @@
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
+
+    <!-- Applied early to avoid a light-mode flash on reload -->
+    <script src="js/theme.js"></script>
 </head>
 
 <body class="complaints-page">
@@ -70,6 +73,12 @@
                         <span class="sidebar-icon" aria-hidden="true">♙</span>
                         <span>My Profile</span>
                     </a>
+
+                    <button type="button" class="theme-toggle" data-theme-toggle>
+                        <span class="theme-toggle-icon">☾</span>
+                        <span class="theme-toggle-label">Theme</span>
+                        <span class="theme-toggle-current">Light</span>
+                    </button>
 
                 </nav>
 

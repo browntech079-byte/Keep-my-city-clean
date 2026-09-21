@@ -379,7 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const destination =
                     data.user && data.user.role === "admin"
                         ? "admin.html"
-                        : "report.html";
+                        : "index.html";
 
                 setTimeout(() => {
                     window.location.href = destination;

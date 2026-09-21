@@ -170,8 +170,8 @@
 }
 
 .profile-role-badge.admin {
-    background: rgba(76, 167, 113, 0.15);
-    color: #267447;
+    background: rgba(96, 125, 81, 0.15);
+    color: #47603B;
 }
 
 .profile-details-list {
@@ -248,7 +248,7 @@
 }
 
 .complaint-card:hover {
-    border-color: rgba(76, 167, 113, 0.4);
+    border-color: rgba(96, 125, 81, 0.4);
     box-shadow: 0 6px 18px rgba(23, 23, 27, 0.06);
 }
 
@@ -427,7 +427,7 @@
     box-sizing: border-box;
     padding: 24px 16px;
 
-    background: #67A576;
+    background: #607D51;
     color: #F5F5F6;
 
     border: none;
@@ -602,7 +602,7 @@
     min-height: 44px;
     padding: 12px;
 
-    background: #D9B18C;
+    background: #C9BF97;
     color: #17171B;
 
     border-radius: 12px;
@@ -614,7 +614,7 @@
 }
 
 .complaints-page .report-sidebar-login:hover {
-    background: #E8C9A8;
+    background: #DCD5B4;
 }
 
 

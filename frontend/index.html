@@ -99,6 +99,58 @@
 
         <div class="home-main">
 
+            <!-- ================= USER TOP BAR ================= -->
+            <header class="user-topbar">
+                <!-- Animated Greeting -->
+                <div class="user-welcome">
+                    <h1 id="userGreeting" class="greeting-text">
+                        Hello, <span id="userNameDisplay">Citizen</span>!
+                    </h1>
+                </div>
+
+                <!-- Right Actions: Search Bar, Notifications, Avatar -->
+                <div class="topbar-actions">
+                    <!-- Pill Search Bar -->
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="topbarSearchInput" placeholder="Search anything here..." autocomplete="off">
+                    </div>
+
+                    <!-- Working Notification Bell with Dropdown -->
+                    <div class="notification-wrapper">
+                        <button class="notification-btn" id="notifBtn" aria-label="Notifications" type="button">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                            </svg>
+                            <span class="notif-badge" id="notifBadge" style="display: none;">0</span>
+                        </button>
+
+                        <!-- Notification Dropdown Menu -->
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <div class="notif-header">
+                                <span>Notifications</span>
+                                <button id="clearNotifsBtn" class="clear-notifs" type="button">Clear all</button>
+                            </div>
+                            <div class="notif-list" id="notifList">
+                                <div class="notif-empty">No status updates yet.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Avatar (Separate for Male & Female) -->
+                    <div class="user-avatar-container">
+                        <a href="profile.html" title="View Profile">
+                            <img id="userAvatarImg" class="user-avatar" src="https://avatar.iran.liara.run/public/boy" alt="User Avatar">
+                        </a>
+                    </div>
+                </div>
+            </header>
+            <!-- ================= END USER TOP BAR ================= -->
+
             <main class="home-container">
 
                 <!-- Hero Bento Card -->
@@ -283,7 +335,8 @@
     </div>
 
 
-    <!-- Existing JavaScript -->
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
     <script src="js/main.js"></script>
 
 </body>

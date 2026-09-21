@@ -42,11 +42,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let marker = null;
 
-    // Bumped on every click so an in-flight reverse-geocode response from
-    // an older click can be told apart from the most recent one — without
-    // this, a slow response to an earlier click can arrive after a faster
-    // response to a later click and overwrite the correct address/marker
-    // with stale data.
+    // Bumped on every location change (map click OR pincode search) so an
+    // in-flight reverse-geocode response from an older selection can be
+    // told apart from the most recent one — without this, a slow response
+    // to an earlier selection can arrive after a faster response to a
+    // later one and overwrite the correct address/marker with stale data.
     let locationRequestId = 0;
 
     const latitudeInput = document.getElementById("latitude");
@@ -54,10 +54,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const addressInput = document.getElementById("address");
     const locationText = document.getElementById("locationText");
 
-    map.on("click", async (event) => {
+    // ==========================================
+    // SHARED LOCATION SELECTION
+    // ==========================================
+    // Places the marker, saves the coordinates and reverse-geocodes the
+    // address. Used by both a direct map click and a PIN code search, so
+    // the two stay in sync.
 
-        const latitude = event.latlng.lat;
-        const longitude = event.latlng.lng;
+    async function selectLocation(latitude, longitude) {
 
         const requestId = ++locationRequestId;
 
@@ -67,10 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Add new marker — kept as a local reference so the popup below
-        // always binds to the marker THIS click created, even if a later
-        // click has since reassigned the shared `marker` variable.
-        const clickMarker = L.marker([latitude, longitude]).addTo(map);
-        marker = clickMarker;
+        // always binds to the marker THIS selection created, even if a
+        // later selection has since reassigned the shared `marker` variable.
+        const newMarker = L.marker([latitude, longitude]).addTo(map);
+        marker = newMarker;
 
         // Save coordinates
         latitudeInput.value = latitude;
@@ -98,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const data = await response.json();
 
-            // A newer click has happened since this request started —
+            // A newer selection has happened since this request started —
             // discard this result so it can't overwrite fresher data.
             if (requestId !== locationRequestId) {
                 return;
@@ -125,13 +129,13 @@ document.addEventListener("DOMContentLoaded", () => {
             popupContent.appendChild(popupTitle);
             popupContent.appendChild(popupAddress);
 
-            clickMarker
+            newMarker
                 .bindPopup(popupContent)
                 .openPopup();
 
         } catch (error) {
 
-            // Also discard a stale failure — a newer click already
+            // Also discard a stale failure — a newer selection already
             // replaced this one, so there's nothing left to update.
             if (requestId !== locationRequestId) {
                 return;
@@ -145,11 +149,161 @@ document.addEventListener("DOMContentLoaded", () => {
             locationText.textContent =
                 `Location selected: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
 
-            clickMarker
+            newMarker
                 .bindPopup("Selected Location")
                 .openPopup();
         }
+    }
+
+    map.on("click", (event) => {
+        selectLocation(event.latlng.lat, event.latlng.lng);
     });
+
+
+    // ==========================================
+    // 2B. PIN CODE SEARCH (ALL-INDIA)
+    // ==========================================
+    // Looks the PIN code up via India Post's public API to get the
+    // post office/district/state, then geocodes that place name via
+    // Nominatim so the map can jump straight to it. Falls back to a
+    // district-level match if the precise post office isn't found.
+
+    const pincodeInput = document.getElementById("pincodeInput");
+    const pincodeSearchBtn = document.getElementById("pincodeSearchBtn");
+    const pincodeStatus = document.getElementById("pincodeStatus");
+
+    function setPincodeStatus(message, type) {
+
+        if (!pincodeStatus) {
+            return;
+        }
+
+        pincodeStatus.textContent = message;
+        pincodeStatus.classList.remove("error", "success");
+
+        if (type) {
+            pincodeStatus.classList.add(type);
+        }
+    }
+
+    async function geocodePlace(query) {
+
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=in&q=${encodeURIComponent(query)}`
+        );
+
+        if (!response.ok) {
+            return null;
+        }
+
+        const results = await response.json();
+
+        if (!Array.isArray(results) || results.length === 0) {
+            return null;
+        }
+
+        return {
+            latitude: parseFloat(results[0].lat),
+            longitude: parseFloat(results[0].lon)
+        };
+    }
+
+    async function handlePincodeSearch() {
+
+        const pincode = pincodeInput.value.trim();
+
+        if (!/^\d{6}$/.test(pincode)) {
+            setPincodeStatus("Enter a valid 6-digit PIN code.", "error");
+            return;
+        }
+
+        if (pincodeSearchBtn) {
+            pincodeSearchBtn.disabled = true;
+            pincodeSearchBtn.textContent = "Locating...";
+        }
+
+        setPincodeStatus("Looking up PIN code...", null);
+
+        try {
+
+            const postResponse = await fetch(
+                `https://api.postalpincode.in/pincode/${pincode}`
+            );
+
+            if (!postResponse.ok) {
+                throw new Error("PIN code lookup failed.");
+            }
+
+            const postData = await postResponse.json();
+
+            const lookup =
+                Array.isArray(postData) ? postData[0] : null;
+
+            if (!lookup || lookup.Status !== "Success" || !Array.isArray(lookup.PostOffice) || lookup.PostOffice.length === 0) {
+                setPincodeStatus("No location found for that PIN code.", "error");
+                return;
+            }
+
+            const office = lookup.PostOffice[0];
+            const district = office.District || "";
+            const state = office.State || "";
+
+            // Try the precise post office name first, then fall back to
+            // a district-level match so every valid Indian PIN code
+            // resolves to at least an approximate area.
+            let place =
+                await geocodePlace(`${office.Name}, ${district}, ${state}, India`);
+
+            if (!place) {
+                place = await geocodePlace(`${district}, ${state}, India`);
+            }
+
+            if (!place) {
+                setPincodeStatus(
+                    `Found ${office.Name}, ${district}, ${state}, but couldn't place it on the map. Please click the location manually.`,
+                    "error"
+                );
+                return;
+            }
+
+            map.setView([place.latitude, place.longitude], 14);
+
+            await selectLocation(place.latitude, place.longitude);
+
+            setPincodeStatus(
+                `Located ${office.Name}, ${district}, ${state}.`,
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error("PIN code search failed:", error);
+            setPincodeStatus(
+                "Couldn't look up that PIN code. Please try again or click the map.",
+                "error"
+            );
+
+        } finally {
+
+            if (pincodeSearchBtn) {
+                pincodeSearchBtn.disabled = false;
+                pincodeSearchBtn.textContent = "Locate";
+            }
+        }
+    }
+
+    if (pincodeSearchBtn) {
+        pincodeSearchBtn.addEventListener("click", handlePincodeSearch);
+    }
+
+    if (pincodeInput) {
+        pincodeInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                handlePincodeSearch();
+            }
+        });
+    }
 
 
     // ==========================================

@@ -329,6 +329,7 @@
 
 
                         <!-- Map Instruction -->
+                                            <!-- Map Instruction -->
                         <div class="map-instruction">
 
                             <span class="instruction-icon">
@@ -339,6 +340,40 @@
                                 Click anywhere on the map to place the
                                 complaint location.
                             </p>
+
+                        </div>
+
+
+                        <!-- PIN Code Search -->
+                        <div class="pincode-search">
+
+                            <label for="pincodeInput">
+                                Or find it by PIN code
+                            </label>
+
+                            <div class="pincode-search-row">
+
+                                <input
+                                    type="text"
+                                    id="pincodeInput"
+                                    name="pincode"
+                                    inputmode="numeric"
+                                    maxlength="6"
+                                    placeholder="e.g. 110001"
+                                    autocomplete="postal-code"
+                                >
+
+                                <button
+                                    type="button"
+                                    id="pincodeSearchBtn"
+                                    class="pincode-search-btn"
+                                >
+                                    Locate
+                                </button>
+
+                            </div>
+
+                            <small id="pincodeStatus"></small>
 
                         </div>
 

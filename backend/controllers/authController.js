@@ -28,16 +28,27 @@ const registerUser = async (req, res) => {
         const {
             fullName,
             email,
+            mobile,
             password,
             city,
             state
         } = req.body;
 
         // Check required fields
-        if (!fullName || !email || !password || !city || !state) {
+        if (!fullName || !email || !mobile || !password || !city || !state) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
+            });
+        }
+
+        // Basic Indian mobile number format check: 10 digits, starting 6-9
+        const cleanedMobile = mobile.trim();
+
+        if (!/^[6-9]\d{9}$/.test(cleanedMobile)) {
+            return res.status(400).json({
+                success: false,
+                message: "Please enter a valid 10-digit mobile number"
             });
         }
 
@@ -60,6 +71,7 @@ const registerUser = async (req, res) => {
         const user = await User.create({
             fullName: fullName.trim(),
             email: email.trim().toLowerCase(),
+            mobile: cleanedMobile,
             password: hashedPassword,
             city: city.trim(),
             state: state.trim()
@@ -72,6 +84,7 @@ const registerUser = async (req, res) => {
                 id: user._id,
                 fullName: user.fullName,
                 email: user.email,
+                mobile: user.mobile,
                 role: user.role
             }
         });

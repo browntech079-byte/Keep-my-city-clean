@@ -222,14 +222,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const fullName = document.getElementById("fullName")?.value.trim();
             const email = document.getElementById("email")?.value.trim();
+            const mobile = document.getElementById("mobile")?.value.trim();
             const password = document.getElementById("password")?.value;
             const city = document.getElementById("city")?.value.trim();
             const state = document.getElementById("state")?.value.trim();
 
             const message = document.getElementById("registerMessage");
 
-            if (!fullName || !email || !password || !city || !state) {
+            if (!fullName || !email || !mobile || !password || !city || !state) {
                 showMessage(message, "Please fill in all required fields.");
+                return;
+            }
+
+            if (!/^[6-9]\d{9}$/.test(mobile)) {
+                showMessage(message, "Please enter a valid 10-digit mobile number.");
                 return;
             }
 
@@ -250,6 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         body: JSON.stringify({
                             fullName,
                             email,
+                            mobile,
                             password,
                             city,
                             state
@@ -379,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const destination =
                     data.user && data.user.role === "admin"
                         ? "admin.html"
-                        : "index.html";
+                        : "report.html";
 
                 setTimeout(() => {
                     window.location.href = destination;

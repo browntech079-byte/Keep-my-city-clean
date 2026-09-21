@@ -16,6 +16,12 @@ const userSchema = new mongoose.Schema(
             trim: true
         },
 
+        mobile: {
+            type: String,
+            required: true,
+            trim: true
+        },
+
         password: {
             type: String,
             required: true
@@ -45,4 +51,3 @@ const userSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("User", userSchema);
-

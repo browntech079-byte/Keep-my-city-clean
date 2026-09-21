@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const cell = document.createElement("td");
 
-            cell.colSpan = 9;
+            cell.colSpan = 10;
 
             cell.textContent = "No complaints found.";
 
@@ -341,6 +341,24 @@ document.addEventListener("DOMContentLoaded", () => {
             complaintCell.appendChild(citizen);
 
             row.appendChild(complaintCell);
+
+            // ==================================
+            // COLUMN 3B: DESCRIPTION
+            // ==================================
+            // The details the citizen typed when reporting the issue
+
+            const descriptionCell =
+                document.createElement("td");
+
+            descriptionCell.className = "admin-description-cell";
+
+            descriptionCell.textContent =
+                complaint.description &&
+                complaint.description.trim()
+                    ? complaint.description
+                    : "No description provided";
+
+            row.appendChild(descriptionCell);
 
             // ==================================
             // COLUMN 3: CATEGORY

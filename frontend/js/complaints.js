@@ -31,6 +31,29 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "login.html";
     }
 
+    // Reads ?search= from a link like complaints.html?search=pothole,
+    // sent here from the Home page's search bar
+    function getSearchQuery() {
+        const params = new URLSearchParams(window.location.search);
+        return (params.get("search") || "").trim().toLowerCase();
+    }
+
+    function matchesSearch(complaint, query) {
+        if (!query) return true;
+
+        const haystack = [
+            complaint.title,
+            complaint.category,
+            complaint.location,
+            complaint.address
+        ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+
+        return haystack.includes(query);
+    }
+
     function resolveImageUrl(image) {
         if (!image) return image;
         if (/^https?:\/\//i.test(image)) {
@@ -97,6 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 ? data.complaints
                 : [];
 
+            // Stats always reflect ALL of the citizen's complaints —
+            // only the list below is narrowed by a search query
+            const searchQuery = getSearchQuery();
+
+            const visibleComplaints = complaints.filter(
+                (complaint) => matchesSearch(complaint, searchQuery)
+            );
+
             if (totalCount) {
                 totalCount.textContent = complaints.length;
             }
@@ -141,12 +172,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            if (complaintsMessage) {
-                complaintsMessage.textContent =
-                    `${complaints.length} complaint(s) found.`;
+            if (searchQuery && visibleComplaints.length === 0) {
+                if (complaintsMessage) {
+                    complaintsMessage.textContent =
+                        `No complaints match "${searchQuery}".`;
+                }
+
+                const emptyMessage = document.createElement("div");
+                emptyMessage.className = "complaint-empty";
+
+                emptyMessage.innerHTML = `
+                    <h3>No matching complaints</h3>
+                    <p>
+                        Nothing matched your search. Try a different
+                        keyword, or view all your complaints.
+                    </p>
+                    <a href="complaints.html" class="btn btn-primary">
+                        View all complaints
+                    </a>
+                `;
+
+                complaintsList.appendChild(emptyMessage);
+                return;
             }
 
-            complaints.forEach(complaint => {
+            if (complaintsMessage) {
+                complaintsMessage.textContent = searchQuery
+                    ? `${visibleComplaints.length} complaint(s) match "${searchQuery}".`
+                    : `${complaints.length} complaint(s) found.`;
+            }
+
+            visibleComplaints.forEach(complaint => {
                 complaintsList.appendChild(
                     createComplaintCard(complaint)
                 );

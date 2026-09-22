@@ -12,7 +12,8 @@ function generateToken(user) {
             id: user._id,
             fullName: user.fullName,
             email: user.email,
-            role: user.role
+            role: user.role,
+            gender: user.gender
         },
         process.env.SESSION_SECRET,
         { expiresIn: "7d" }
@@ -28,27 +29,26 @@ const registerUser = async (req, res) => {
         const {
             fullName,
             email,
-            mobile,
             password,
             city,
-            state
+            state,
+            gender
         } = req.body;
 
         // Check required fields
-        if (!fullName || !email || !mobile || !password || !city || !state) {
+        if (!fullName || !email || !password || !city || !state) {
             return res.status(400).json({
                 success: false,
                 message: "All fields are required"
             });
         }
 
-        // Basic Indian mobile number format check: 10 digits, starting 6-9
-        const cleanedMobile = mobile.trim();
-
-        if (!/^[6-9]\d{9}$/.test(cleanedMobile)) {
+        // Gender is optional at the API level (defaults to "male" on
+        // the model) but only "male"/"female" are valid if provided
+        if (gender && !["male", "female"].includes(gender)) {
             return res.status(400).json({
                 success: false,
-                message: "Please enter a valid 10-digit mobile number"
+                message: "Gender must be male or female"
             });
         }
 
@@ -71,10 +71,10 @@ const registerUser = async (req, res) => {
         const user = await User.create({
             fullName: fullName.trim(),
             email: email.trim().toLowerCase(),
-            mobile: cleanedMobile,
             password: hashedPassword,
             city: city.trim(),
-            state: state.trim()
+            state: state.trim(),
+            gender: gender || "male"
         });
 
         res.status(201).json({
@@ -84,8 +84,8 @@ const registerUser = async (req, res) => {
                 id: user._id,
                 fullName: user.fullName,
                 email: user.email,
-                mobile: user.mobile,
-                role: user.role
+                role: user.role,
+                gender: user.gender
             }
         });
 
@@ -149,7 +149,8 @@ const loginUser = async (req, res) => {
             id: user._id,
             fullName: user.fullName,
             email: user.email,
-            role: user.role
+            role: user.role,
+            gender: user.gender
         };
 
         res.json({
@@ -221,6 +222,7 @@ const getCurrentUser = async (req, res) => {
                 city: user.city,
                 state: user.state,
                 role: user.role,
+                gender: user.gender,
                 createdAt: user.createdAt
             }
         });

@@ -376,6 +376,29 @@
                     </div>
 
 
+                    <!-- Gender -->
+
+                    <div class="form-group">
+
+                        <label for="gender">
+                            Gender <span>*</span>
+                        </label>
+
+                        <select
+                            id="gender"
+                            name="gender"
+                            required
+                        >
+                            <option value="" disabled selected>
+                                Select your gender
+                            </option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+
+                    </div>
+
+
                     <!-- Email Address -->
 
                     <div class="form-group">
@@ -390,29 +413,6 @@
                             name="email"
                             placeholder="you@example.com"
                             autocomplete="email"
-                            required
-                        >
-
-                    </div>
-
-
-                    <!-- Mobile Number -->
-
-                    <div class="form-group">
-
-                        <label for="mobile">
-                            Mobile Number <span>*</span>
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="mobile"
-                            name="mobile"
-                            placeholder="10-digit mobile number"
-                            inputmode="numeric"
-                            maxlength="10"
-                            pattern="[6-9]{1}[0-9]{9}"
-                            autocomplete="tel"
                             required
                         >
 

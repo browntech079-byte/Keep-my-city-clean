@@ -77,6 +77,253 @@ a { color: inherit; text-decoration: none; }
   margin: 36px auto 80px;
 }
 
+/* =========================================
+   Home Topbar — greeting, search, notifications, avatar
+   (only shown once js/home.js confirms someone is logged in)
+   ========================================= */
+
+.home-topbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding: 16px 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+}
+
+.home-topbar-greeting {
+  flex-shrink: 0;
+}
+
+.home-topbar-greeting h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  letter-spacing: -0.03em;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+/* Greeting animation — fades and slides in once the name loads */
+.home-greeting-in {
+  animation: homeGreetingIn 0.55s ease forwards;
+}
+
+@keyframes homeGreetingIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Search */
+.home-topbar-search {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.home-topbar-search input {
+  width: 100%;
+  padding: 11px 16px 11px 42px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-light);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.home-topbar-search input:focus {
+  border-color: var(--brand-green);
+  background: var(--surface);
+}
+
+.home-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.home-search-results {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 14px 34px rgba(23, 23, 27, 0.12);
+}
+
+.home-search-result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--text);
+}
+
+.home-search-result:hover {
+  background: var(--surface-light);
+}
+
+.home-search-result strong {
+  font-size: 0.86rem;
+}
+
+.home-search-result span {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+}
+
+.home-search-empty {
+  padding: 12px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+/* Actions: bell + avatar */
+.home-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.home-notif-wrapper {
+  position: relative;
+}
+
+.home-notif-btn {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface-light);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.home-notif-btn:hover {
+  background: var(--surface-hover);
+}
+
+.home-notif-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #C1443B;
+  border: 2px solid var(--surface);
+}
+
+.home-notif-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 40;
+  width: 280px;
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 14px 34px rgba(23, 23, 27, 0.12);
+}
+
+.home-notif-heading {
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.home-notif-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.home-notif-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--surface-light);
+}
+
+.home-notif-item strong {
+  font-size: 0.82rem;
+  color: var(--text);
+}
+
+.home-notif-item span {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.home-notif-empty {
+  margin: 0;
+  padding: 10px 4px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.home-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.home-avatar svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 700px) {
+  .home-topbar {
+    flex-wrap: wrap;
+  }
+
+  .home-topbar-search {
+    order: 3;
+    flex: 1 1 100%;
+  }
+}
+
+
 /* Hero Bento Card */
 .hero-card {
   min-height: 520px;
@@ -302,17 +549,6 @@ a { color: inherit; text-decoration: none; }
 .map-instruction { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 13px 15px; border-radius: 14px; background: rgba(35, 35, 45, 0.045); }
 .instruction-icon { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 50%; background: var(--brand-green); color: white; font-size: 18px; font-weight: 500; }
 .map-instruction p { margin: 0; color: var(--text-muted); font-size: 0.75rem; line-height: 1.5; }
-.pincode-search { margin-top: 14px; padding: 13px 15px; border-radius: 14px; background: rgba(35, 35, 45, 0.045); }
-.pincode-search label { display: block; margin-bottom: 9px; color: var(--text); font-size: 0.78rem; font-weight: 600; }
-.pincode-search-row { display: flex; gap: 10px; }
-.pincode-search-row input { flex: 1; min-width: 0; padding: 11px 13px; border: 1px solid var(--border); border-radius: var(--radius-medium); outline: none; background: #FFFFFF; color: var(--text); font: inherit; font-size: 0.85rem; }
-.pincode-search-row input:focus { border-color: var(--brand-green); box-shadow: 0 0 0 3px rgba(35, 35, 45, 0.08); }
-.pincode-search-btn { flex-shrink: 0; padding: 0 18px; border: none; border-radius: var(--radius-medium); background: var(--accent); color: #FFFFFF; font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: background 0.2s ease, opacity 0.2s ease; }
-.pincode-search-btn:hover { background: var(--accent-light); }
-.pincode-search-btn:disabled { opacity: 0.6; cursor: default; }
-.pincode-search #pincodeStatus { display: block; margin-top: 8px; font-size: 0.72rem; line-height: 1.5; }
-.pincode-search #pincodeStatus.error { color: #B3261E; }
-.pincode-search #pincodeStatus.success { color: var(--brand-green); }
 .leaflet-container { font-family: inherit; background: #D9D9D9; }
 .leaflet-control-zoom a { background: var(--surface) !important; color: var(--text) !important; border-color: var(--border) !important; }
 .leaflet-control-attribution { font-size: 9px; }

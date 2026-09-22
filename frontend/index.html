@@ -101,6 +101,65 @@
 
             <main class="home-container">
 
+                <!-- User Topbar: greeting, search, notifications, avatar.
+                     Hidden by default; js/home.js reveals it only once
+                     it confirms someone is actually logged in. -->
+                <section id="homeTopbar" class="home-topbar" hidden>
+
+                    <div class="home-topbar-greeting">
+                        <h2 id="homeGreeting">Hello!</h2>
+                    </div>
+
+                    <div class="home-topbar-search">
+
+                        <span class="home-search-icon" aria-hidden="true">⌕</span>
+
+                        <input
+                            type="text"
+                            id="homeSearchInput"
+                            placeholder="Search your complaints..."
+                            autocomplete="off"
+                        >
+
+                        <div id="homeSearchResults" class="home-search-results" hidden></div>
+
+                    </div>
+
+                    <div class="home-topbar-actions">
+
+                        <div class="home-notif-wrapper">
+
+                            <button
+                                type="button"
+                                id="homeNotifBtn"
+                                class="home-notif-btn"
+                                aria-label="Notifications"
+                            >
+                                <span aria-hidden="true">🔔</span>
+                                <span id="homeNotifDot" class="home-notif-dot" hidden></span>
+                            </button>
+
+                            <div id="homeNotifDropdown" class="home-notif-dropdown" hidden>
+
+                                <p class="home-notif-heading">Notifications</p>
+
+                                <div id="homeNotifList" class="home-notif-list">
+                                    <p class="home-notif-empty">
+                                        No new notifications
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div id="homeAvatar" class="home-avatar"></div>
+
+                    </div>
+
+                </section>
+
+
                 <!-- Hero Bento Card -->
                 <section class="hero-card">
 
@@ -284,7 +343,7 @@
 
 
     <!-- Existing JavaScript -->
-    <script src="js/main.js"></script>
+    <script src="js/home.js"></script>
 
 </body>
 </html>

@@ -16,12 +16,6 @@ const userSchema = new mongoose.Schema(
             trim: true
         },
 
-        mobile: {
-            type: String,
-            required: true,
-            trim: true
-        },
-
         password: {
             type: String,
             required: true
@@ -37,6 +31,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true
+        },
+
+        // Used only to pick a male/female avatar on the Home page.
+        // Accounts created before this field existed default to "male".
+        gender: {
+            type: String,
+            enum: ["male", "female"],
+            default: "male"
         },
 
         role: {

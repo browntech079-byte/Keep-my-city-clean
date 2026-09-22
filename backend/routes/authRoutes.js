@@ -1,6 +1,7 @@
 const express = require("express");
 
 const {
+    sendRegistrationOtp,
     registerUser,
     loginUser,
     logoutUser,
@@ -10,6 +11,9 @@ const {
 const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
+
+// Send email verification code (before registering)
+router.post("/send-otp", sendRegistrationOtp);
 
 // Register
 router.post("/register", registerUser);

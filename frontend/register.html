@@ -376,29 +376,6 @@
                     </div>
 
 
-                    <!-- Gender -->
-
-                    <div class="form-group">
-
-                        <label for="gender">
-                            Gender <span>*</span>
-                        </label>
-
-                        <select
-                            id="gender"
-                            name="gender"
-                            required
-                        >
-                            <option value="" disabled selected>
-                                Select your gender
-                            </option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-
-                    </div>
-
-
                     <!-- Email Address -->
 
                     <div class="form-group">
@@ -407,12 +384,70 @@
                             Email Address <span>*</span>
                         </label>
 
+                        <div class="otp-input-row">
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="you@example.com"
+                                autocomplete="email"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                id="sendOtpBtn"
+                                class="otp-send-btn"
+                            >
+                                Send OTP
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Email OTP -->
+
+                    <div class="form-group" id="otpGroup" hidden>
+
+                        <label for="otp">
+                            Verification Code <span>*</span>
+                        </label>
+
                         <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="you@example.com"
-                            autocomplete="email"
+                            type="text"
+                            id="otp"
+                            name="otp"
+                            placeholder="6-digit code"
+                            inputmode="numeric"
+                            maxlength="6"
+                            autocomplete="one-time-code"
+                        >
+
+                        <small id="otpStatus"></small>
+
+                    </div>
+
+
+                    <!-- Mobile Number -->
+
+                    <div class="form-group">
+
+                        <label for="mobile">
+                            Mobile Number <span>*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="mobile"
+                            name="mobile"
+                            placeholder="10-digit mobile number"
+                            inputmode="numeric"
+                            maxlength="10"
+                            pattern="[6-9]{1}[0-9]{9}"
+                            autocomplete="tel"
                             required
                         >
 

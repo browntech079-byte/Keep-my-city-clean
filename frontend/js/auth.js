@@ -205,6 +205,121 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ==========================================
+    // EMAIL OTP VERIFICATION
+    // ==========================================
+
+    const emailInput = document.getElementById("email");
+    const sendOtpBtn = document.getElementById("sendOtpBtn");
+    const otpGroup = document.getElementById("otpGroup");
+    const otpInput = document.getElementById("otp");
+    const otpStatus = document.getElementById("otpStatus");
+
+    let otpSentForEmail = null;
+
+    function setOtpStatus(text, type) {
+        if (!otpStatus) return;
+        otpStatus.textContent = text;
+        otpStatus.classList.remove("error", "success");
+        if (type) {
+            otpStatus.classList.add(type);
+        }
+    }
+
+    function startResendCooldown(seconds) {
+        if (!sendOtpBtn) return;
+
+        let remaining = seconds;
+        sendOtpBtn.disabled = true;
+        sendOtpBtn.textContent = `Resend in ${remaining}s`;
+
+        const timer = setInterval(() => {
+            remaining -= 1;
+
+            if (remaining <= 0) {
+                clearInterval(timer);
+                sendOtpBtn.disabled = false;
+                sendOtpBtn.textContent = "Resend OTP";
+                return;
+            }
+
+            sendOtpBtn.textContent = `Resend in ${remaining}s`;
+        }, 1000);
+    }
+
+    if (sendOtpBtn && emailInput) {
+        sendOtpBtn.addEventListener("click", async () => {
+
+            const email = emailInput.value.trim();
+
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                setOtpStatus("Enter a valid email address first.", "error");
+                return;
+            }
+
+            sendOtpBtn.disabled = true;
+            sendOtpBtn.textContent = "Sending...";
+            setOtpStatus("Sending verification code...", null);
+
+            try {
+                const response = await fetch(
+                    API_BASE_URL + "/api/auth/send-otp",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email })
+                    }
+                );
+
+                const data = await readJsonSafe(response);
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message || `Could not send OTP (${response.status})`
+                    );
+                }
+
+                otpSentForEmail = email;
+
+                if (otpGroup) {
+                    otpGroup.hidden = false;
+                }
+
+                if (otpInput) {
+                    otpInput.value = "";
+                    otpInput.focus();
+                }
+
+                setOtpStatus(`Code sent to ${email}.`, "success");
+                startResendCooldown(30);
+
+            } catch (error) {
+                console.error("Send OTP error:", error);
+
+                setOtpStatus(
+                    error.message || "Could not send OTP. Please try again.",
+                    "error"
+                );
+
+                sendOtpBtn.disabled = false;
+                sendOtpBtn.textContent = "Send OTP";
+            }
+        });
+    }
+
+    // If the person changes the email after getting a code, the old
+    // code no longer applies to the new address.
+    if (emailInput) {
+        emailInput.addEventListener("input", () => {
+            if (otpSentForEmail && emailInput.value.trim() !== otpSentForEmail) {
+                setOtpStatus("Email changed — please resend the code.", "error");
+            }
+        });
+    }
+
+
+    // ==========================================
     // REGISTER USER
     // ==========================================
 
@@ -221,16 +336,27 @@ document.addEventListener("DOMContentLoaded", () => {
             event.preventDefault();
 
             const fullName = document.getElementById("fullName")?.value.trim();
-            const gender = document.getElementById("gender")?.value;
             const email = document.getElementById("email")?.value.trim();
+            const otp = document.getElementById("otp")?.value.trim();
+            const mobile = document.getElementById("mobile")?.value.trim();
             const password = document.getElementById("password")?.value;
             const city = document.getElementById("city")?.value.trim();
             const state = document.getElementById("state")?.value.trim();
 
             const message = document.getElementById("registerMessage");
 
-            if (!fullName || !gender || !email || !password || !city || !state) {
+            if (!otpSentForEmail || otpSentForEmail !== email) {
+                showMessage(message, "Please verify your email with the Send OTP button first.");
+                return;
+            }
+
+            if (!fullName || !email || !otp || !mobile || !password || !city || !state) {
                 showMessage(message, "Please fill in all required fields.");
+                return;
+            }
+
+            if (!/^[6-9]\d{9}$/.test(mobile)) {
+                showMessage(message, "Please enter a valid 10-digit mobile number.");
                 return;
             }
 
@@ -250,8 +376,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         },
                         body: JSON.stringify({
                             fullName,
-                            gender,
                             email,
+                            otp,
+                            mobile,
                             password,
                             city,
                             state
@@ -274,6 +401,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
 
                 registerForm.reset();
+                otpSentForEmail = null;
+
+                if (otpGroup) {
+                    otpGroup.hidden = true;
+                }
 
                 if (citySelect) {
                     citySelect.innerHTML =
@@ -381,7 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const destination =
                     data.user && data.user.role === "admin"
                         ? "admin.html"
-                        : "index.html";
+                        : "report.html";
 
                 setTimeout(() => {
                     window.location.href = destination;

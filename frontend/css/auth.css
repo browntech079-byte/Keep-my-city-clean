@@ -333,6 +333,59 @@
     gap: 16px;
 }
 
+/* ---------- Email OTP ---------- */
+
+.otp-input-row {
+    display: flex;
+    gap: 10px;
+}
+
+.otp-input-row input {
+    flex: 1;
+    min-width: 0;
+}
+
+.otp-send-btn {
+    flex-shrink: 0;
+    padding: 0 18px;
+    border: 1px solid rgba(76,167,113,0.45);
+    border-radius: 13px;
+    background: transparent;
+    color: var(--brand-green, #4ca771);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.otp-send-btn:hover {
+    background: rgba(76,167,113,0.12);
+}
+
+.otp-send-btn:disabled {
+    opacity: 0.55;
+    cursor: default;
+}
+
+#otpGroup small {
+    display: block;
+    margin-top: 8px;
+    font-size: 0.76rem;
+    line-height: 1.5;
+    color: #aab3ba;
+}
+
+#otpGroup small.error {
+    color: #e39494;
+}
+
+#otpGroup small.success {
+    color: var(--brand-green, #4ca771);
+}
+
+/* ---------- Submit Button ---------- */
+
 /* ---------- Submit Button ---------- */
 
 .auth-submit {

@@ -176,6 +176,14 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 14px 34px rgba(23, 23, 27, 0.12);
 }
 
+/* The class above sets display:flex, which otherwise overrides the
+   browser's default "invisible while hidden" behavior — this
+   restores it so the empty box doesn't show as a bar under the
+   search field until there's actually something to display */
+.home-search-results[hidden] {
+  display: none;
+}
+
 .home-search-result {
   display: flex;
   flex-direction: column;

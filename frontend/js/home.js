@@ -24,9 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const avatarEl = document.getElementById("homeAvatar");
 
-    // This page works fine for a signed-out visitor too — the
-    // topbar just never appears, and the rest of the homepage
-    // (hero, bento cards) stays exactly as it was.
+    // This page works fine for a signed-out visitor too.
+    // The topbar remains hidden until a valid user is loaded.
     if (!topbar) return;
 
     // ==========================================
@@ -44,11 +43,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function authHeaders() {
-        return { Authorization: `Bearer ${token}` };
+        return {
+            Authorization: `Bearer ${token}`
+        };
     }
 
     // ==========================================
-    // AVATAR ICONS (male / female)
+    // AVATAR ICONS
     // ==========================================
 
     const AVATAR_SVG = {
@@ -65,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       fill="#F2EFE6"/>
             </svg>
         `,
+
         female: `
             <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="32" cy="32" r="32" fill="#847A56"/>
@@ -87,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderAvatar(gender) {
         if (!avatarEl) return;
+
         avatarEl.innerHTML =
             AVATAR_SVG[gender === "female" ? "female" : "male"];
     }
@@ -97,19 +100,136 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getFirstName(fullName) {
         if (!fullName) return "there";
-        return fullName.trim().split(/\s+/)[0];
+
+        return fullName
+            .trim()
+            .split(/\s+/)[0];
     }
+
+    let greetingTypeTimer = null;
 
     function showGreeting(fullName) {
         if (!greeting) return;
 
-        greeting.textContent = `Hello, ${getFirstName(fullName)}!`;
+        const firstName = getFirstName(fullName);
+        const greetingText = `Hello, ${firstName}!`;
 
-        // Restart the animation even if this ever runs twice
-        greeting.classList.remove("home-greeting-in");
-        // Force reflow so the class removal actually takes effect
+        // Stop any previous animation
+        if (greetingTypeTimer) {
+            clearTimeout(greetingTypeTimer);
+            greetingTypeTimer = null;
+        }
+
+        // Check accessibility preference
+        const prefersReducedMotion =
+            window.matchMedia &&
+            window.matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches;
+
+        greeting.classList.remove(
+            "home-greeting-in",
+            "home-greeting-complete"
+        );
+
+        greeting.innerHTML = "";
+
+        // If user prefers reduced motion,
+        // display the greeting normally.
+        if (prefersReducedMotion) {
+            greeting.textContent = greetingText;
+
+            greeting.classList.add(
+                "home-greeting-in",
+                "home-greeting-complete"
+            );
+
+            return;
+        }
+
+        // ==========================================
+        // CREATE TEXT + CURSOR
+        // ==========================================
+
+        const textEl = document.createElement("span");
+
+        textEl.className = "home-greeting-text";
+
+        const cursorEl = document.createElement("span");
+
+        cursorEl.className = "home-greeting-cursor";
+
+        cursorEl.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        greeting.appendChild(textEl);
+        greeting.appendChild(cursorEl);
+
+        // Force browser to recognize the initial state
+        // before starting the entrance animation.
         void greeting.offsetWidth;
-        greeting.classList.add("home-greeting-in");
+
+        greeting.classList.add(
+            "home-greeting-in"
+        );
+
+        // ==========================================
+        // TYPEWRITER ANIMATION
+        // ==========================================
+
+        let index = 0;
+
+        const typeNextCharacter = () => {
+
+            if (index < greetingText.length) {
+
+                textEl.textContent +=
+                    greetingText.charAt(index);
+
+                index += 1;
+
+                const character =
+                    greetingText.charAt(index - 1);
+
+                // Slight pause after punctuation
+                const delay =
+                    character === "," ||
+                    character === "!"
+                        ? 150
+                        : 48;
+
+                greetingTypeTimer =
+                    setTimeout(
+                        typeNextCharacter,
+                        delay
+                    );
+
+                return;
+            }
+
+            // Once typing is complete,
+            // softly finish the cursor animation.
+            greetingTypeTimer =
+                setTimeout(() => {
+
+                    greeting.classList.add(
+                        "home-greeting-complete"
+                    );
+
+                    greetingTypeTimer = null;
+
+                }, 420);
+        };
+
+        // Small delay before typing begins
+        // so the greeting first enters smoothly.
+        greetingTypeTimer =
+            setTimeout(
+                typeNextCharacter,
+                260
+            );
     }
 
     // ==========================================
@@ -117,59 +237,92 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================
 
     async function loadUser() {
+
         try {
+
             const response = await fetch(
                 `${API_BASE_URL}/api/auth/me`,
-                { headers: authHeaders() }
+                {
+                    headers: authHeaders()
+                }
             );
 
             if (!response.ok) {
-                // Not logged in (or token expired) — quietly leave
-                // the topbar hidden rather than forcing a redirect
-                // away from the public Home page
+
+                // Token expired or user is not logged in.
                 return null;
             }
 
             const data = await response.json();
-            if (!data.user) return null;
 
+            if (!data.user) {
+                return null;
+            }
+
+            // Show the topbar after successful authentication.
             topbar.hidden = false;
-            showGreeting(data.user.fullName);
-            renderAvatar(data.user.gender);
+
+            // Animated:
+            // Hello, FirstName!
+            showGreeting(
+                data.user.fullName
+            );
+
+            // Render gender-based avatar
+            renderAvatar(
+                data.user.gender
+            );
 
             return data.user;
 
         } catch (error) {
-            console.error("Home: failed to load user", error);
+
+            console.error(
+                "Home: failed to load user",
+                error
+            );
+
             return null;
         }
     }
 
     // ==========================================
-    // COMPLAINTS (shared by search + notifications,
-    // fetched once per page load)
+    // COMPLAINTS
     // ==========================================
 
     let myComplaints = [];
 
     async function loadMyComplaints() {
+
         try {
+
             const response = await fetch(
                 `${API_BASE_URL}/api/complaints/my`,
-                { headers: authHeaders() }
+                {
+                    headers: authHeaders()
+                }
             );
 
-            if (!response.ok) return [];
+            if (!response.ok) {
+                return [];
+            }
 
             const data = await response.json();
-            myComplaints = Array.isArray(data.complaints)
-                ? data.complaints
-                : [];
+
+            myComplaints =
+                Array.isArray(data.complaints)
+                    ? data.complaints
+                    : [];
 
             return myComplaints;
 
         } catch (error) {
-            console.error("Home: failed to load complaints", error);
+
+            console.error(
+                "Home: failed to load complaints",
+                error
+            );
+
             return [];
         }
     }
@@ -178,12 +331,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // SEARCH
     // ==========================================
 
-    function matchesQuery(complaint, query) {
+    function matchesQuery(
+        complaint,
+        query
+    ) {
+
         const haystack = [
+
             complaint.title,
             complaint.category,
             complaint.location,
             complaint.address
+
         ]
             .filter(Boolean)
             .join(" ")
@@ -193,216 +352,431 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderSearchPreview(query) {
-        if (!searchResults) return;
 
-        if (!query) {
-            searchResults.hidden = true;
-            searchResults.innerHTML = "";
+        if (!searchResults) {
             return;
         }
 
-        const matches = myComplaints
-            .filter((c) => matchesQuery(c, query))
-            .slice(0, 5);
+        if (!query) {
+
+            searchResults.hidden = true;
+            searchResults.innerHTML = "";
+
+            return;
+        }
+
+        const matches =
+            myComplaints
+                .filter(
+                    (c) =>
+                        matchesQuery(c, query)
+                )
+                .slice(0, 5);
 
         searchResults.innerHTML = "";
 
         if (matches.length === 0) {
-            const empty = document.createElement("p");
-            empty.className = "home-search-empty";
-            empty.textContent = "No matching complaints";
-            searchResults.appendChild(empty);
+
+            const empty =
+                document.createElement("p");
+
+            empty.className =
+                "home-search-empty";
+
+            empty.textContent =
+                "No matching complaints";
+
+            searchResults.appendChild(
+                empty
+            );
+
             searchResults.hidden = false;
+
             return;
         }
 
-        matches.forEach((complaint) => {
-            const link = document.createElement("a");
-            link.className = "home-search-result";
-            link.href = `complaints.html?search=${encodeURIComponent(query)}`;
+        matches.forEach(
+            (complaint) => {
 
-            const title = document.createElement("strong");
-            title.textContent = complaint.title || "Untitled complaint";
+                const link =
+                    document.createElement("a");
 
-            const meta = document.createElement("span");
-            meta.textContent =
-                [complaint.category, complaint.status]
-                    .filter(Boolean)
-                    .join(" · ");
+                link.className =
+                    "home-search-result";
 
-            link.appendChild(title);
-            link.appendChild(meta);
-            searchResults.appendChild(link);
-        });
+                link.href =
+                    `complaints.html?search=${encodeURIComponent(query)}`;
+
+                const title =
+                    document.createElement("strong");
+
+                title.textContent =
+                    complaint.title ||
+                    "Untitled complaint";
+
+                const meta =
+                    document.createElement("span");
+
+                meta.textContent =
+                    [
+                        complaint.category,
+                        complaint.status
+                    ]
+                        .filter(Boolean)
+                        .join(" · ");
+
+                link.appendChild(title);
+                link.appendChild(meta);
+
+                searchResults.appendChild(
+                    link
+                );
+            }
+        );
 
         searchResults.hidden = false;
     }
 
     function goToSearchPage() {
-        const query = (searchInput.value || "").trim();
-        if (!query) return;
+
+        const query =
+            (searchInput.value || "").trim();
+
+        if (!query) {
+            return;
+        }
+
         window.location.href =
             `complaints.html?search=${encodeURIComponent(query)}`;
     }
 
+    // ==========================================
+    // SEARCH EVENTS
+    // ==========================================
+
     if (searchInput) {
+
         let debounceTimer = null;
 
-        searchInput.addEventListener("input", () => {
-            clearTimeout(debounceTimer);
-            const query = searchInput.value.trim().toLowerCase();
+        searchInput.addEventListener(
+            "input",
+            () => {
 
-            debounceTimer = setTimeout(() => {
-                renderSearchPreview(query);
-            }, 200);
-        });
+                clearTimeout(
+                    debounceTimer
+                );
 
-        searchInput.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                goToSearchPage();
+                const query =
+                    searchInput.value
+                        .trim()
+                        .toLowerCase();
+
+                debounceTimer =
+                    setTimeout(
+                        () => {
+
+                            renderSearchPreview(
+                                query
+                            );
+
+                        },
+                        200
+                    );
             }
-        });
+        );
+
+        searchInput.addEventListener(
+            "keydown",
+            (event) => {
+
+                if (
+                    event.key === "Enter"
+                ) {
+
+                    goToSearchPage();
+                }
+            }
+        );
     }
 
     if (searchIcon) {
-        searchIcon.addEventListener("click", goToSearchPage);
+
+        searchIcon.addEventListener(
+            "click",
+            goToSearchPage
+        );
     }
 
-    document.addEventListener("click", (event) => {
-        if (
-            searchResults &&
-            !searchResults.hidden &&
-            searchInput &&
-            !searchInput.contains(event.target) &&
-            !searchResults.contains(event.target)
-        ) {
-            searchResults.hidden = true;
+    document.addEventListener(
+        "click",
+        (event) => {
+
+            if (
+                searchResults &&
+                !searchResults.hidden &&
+                searchInput &&
+                !searchInput.contains(
+                    event.target
+                ) &&
+                !searchResults.contains(
+                    event.target
+                )
+            ) {
+
+                searchResults.hidden = true;
+            }
         }
-    });
+    );
 
     // ==========================================
     // NOTIFICATIONS
-    // (detects status changes since the citizen's
-    // last visit, using a per-user snapshot in
-    // localStorage — no backend changes needed)
     // ==========================================
 
     function normalizeStatus(status) {
-        return (status || "").toLowerCase().trim();
+
+        return (
+            status || ""
+        )
+            .toLowerCase()
+            .trim();
     }
 
-    function checkForStatusChanges(userId) {
-        if (!userId || !notifList) return;
+    function checkForStatusChanges(
+        userId
+    ) {
 
-        const snapshotKey = `citycare_status_snapshot_${userId}`;
+        if (
+            !userId ||
+            !notifList
+        ) {
+            return;
+        }
+
+        const snapshotKey =
+            `citycare_status_snapshot_${userId}`;
 
         let previousSnapshot = {};
+
         try {
+
             previousSnapshot =
-                JSON.parse(localStorage.getItem(snapshotKey) || "{}");
+                JSON.parse(
+                    localStorage.getItem(
+                        snapshotKey
+                    ) || "{}"
+                );
+
         } catch (error) {
+
             previousSnapshot = {};
         }
 
         const currentSnapshot = {};
         const changes = [];
 
-        myComplaints.forEach((complaint) => {
-            const id = complaint._id || complaint.id;
-            if (!id) return;
+        myComplaints.forEach(
+            (complaint) => {
 
-            const status = normalizeStatus(complaint.status);
-            currentSnapshot[id] = status;
+                const id =
+                    complaint._id ||
+                    complaint.id;
 
-            const previousStatus = previousSnapshot[id];
+                if (!id) {
+                    return;
+                }
 
-            // Only counts as a "change" if we've genuinely seen this
-            // complaint before with a DIFFERENT status — a brand-new
-            // complaint (no previous entry) isn't a change to report
-            if (previousStatus && previousStatus !== status) {
-                changes.push({
-                    title: complaint.title || "Untitled complaint",
-                    status: complaint.status
-                });
+                const status =
+                    normalizeStatus(
+                        complaint.status
+                    );
+
+                currentSnapshot[id] =
+                    status;
+
+                const previousStatus =
+                    previousSnapshot[id];
+
+                // Only report genuine status changes.
+                if (
+                    previousStatus &&
+                    previousStatus !== status
+                ) {
+
+                    changes.push({
+
+                        title:
+                            complaint.title ||
+                            "Untitled complaint",
+
+                        status:
+                            complaint.status
+
+                    });
+                }
             }
-        });
+        );
 
         localStorage.setItem(
             snapshotKey,
-            JSON.stringify(currentSnapshot)
+            JSON.stringify(
+                currentSnapshot
+            )
         );
 
-        renderNotifications(changes);
+        renderNotifications(
+            changes
+        );
     }
 
-    function renderNotifications(changes) {
-        if (!notifList || !notifDot) return;
+    function renderNotifications(
+        changes
+    ) {
+
+        if (
+            !notifList ||
+            !notifDot
+        ) {
+            return;
+        }
 
         notifList.innerHTML = "";
 
-        if (changes.length === 0) {
+        if (
+            changes.length === 0
+        ) {
+
             notifDot.hidden = true;
 
-            const empty = document.createElement("p");
-            empty.className = "home-notif-empty";
-            empty.textContent = "No new notifications";
-            notifList.appendChild(empty);
+            const empty =
+                document.createElement("p");
+
+            empty.className =
+                "home-notif-empty";
+
+            empty.textContent =
+                "No new notifications";
+
+            notifList.appendChild(
+                empty
+            );
+
             return;
         }
 
         notifDot.hidden = false;
 
-        changes.forEach((change) => {
-            const item = document.createElement("div");
-            item.className = "home-notif-item";
+        changes.forEach(
+            (change) => {
 
-            const title = document.createElement("strong");
-            title.textContent = change.title;
+                const item =
+                    document.createElement("div");
 
-            const statusLine = document.createElement("span");
-            statusLine.textContent =
-                `Status changed to ${change.status}`;
+                item.className =
+                    "home-notif-item";
 
-            item.appendChild(title);
-            item.appendChild(statusLine);
-            notifList.appendChild(item);
-        });
+                const title =
+                    document.createElement(
+                        "strong"
+                    );
+
+                title.textContent =
+                    change.title;
+
+                const statusLine =
+                    document.createElement(
+                        "span"
+                    );
+
+                statusLine.textContent =
+                    `Status changed to ${change.status}`;
+
+                item.appendChild(
+                    title
+                );
+
+                item.appendChild(
+                    statusLine
+                );
+
+                notifList.appendChild(
+                    item
+                );
+            }
+        );
     }
 
-    if (notifBtn && notifDropdown) {
-        notifBtn.addEventListener("click", (event) => {
-            event.stopPropagation();
+    // ==========================================
+    // NOTIFICATION EVENTS
+    // ==========================================
 
-            const wasHidden = notifDropdown.hidden;
-            notifDropdown.hidden = !wasHidden;
+    if (
+        notifBtn &&
+        notifDropdown
+    ) {
 
-            // Opening the dropdown counts as "read"
-            if (wasHidden) {
-                notifDot.hidden = true;
+        notifBtn.addEventListener(
+            "click",
+            (event) => {
+
+                event.stopPropagation();
+
+                const wasHidden =
+                    notifDropdown.hidden;
+
+                notifDropdown.hidden =
+                    !wasHidden;
+
+                // Opening notifications marks
+                // them as read.
+                if (wasHidden) {
+
+                    notifDot.hidden = true;
+                }
             }
-        });
+        );
 
-        document.addEventListener("click", (event) => {
-            if (
-                !notifDropdown.hidden &&
-                !notifBtn.contains(event.target) &&
-                !notifDropdown.contains(event.target)
-            ) {
-                notifDropdown.hidden = true;
+        document.addEventListener(
+            "click",
+            (event) => {
+
+                if (
+                    !notifDropdown.hidden &&
+                    !notifBtn.contains(
+                        event.target
+                    ) &&
+                    !notifDropdown.contains(
+                        event.target
+                    )
+                ) {
+
+                    notifDropdown.hidden =
+                        true;
+                }
             }
-        });
+        );
     }
 
     // ==========================================
     // INITIAL LOAD
     // ==========================================
 
-    loadUser().then((user) => {
-        if (!user) return;
+    loadUser().then(
+        (user) => {
 
-        loadMyComplaints().then(() => {
-            checkForStatusChanges(user.id);
-        });
-    });
+            if (!user) {
+                return;
+            }
+
+            loadMyComplaints().then(
+                () => {
+
+                    checkForStatusChanges(
+                        user.id
+                    );
+
+                }
+            );
+        }
+    );
 
 });

@@ -7,9 +7,14 @@
 
     <title>Report Issue — CityCare</title>
 
+    <!-- Existing global styles -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/auth.css">
 
+    <!-- New Report page design -->
+    <link rel="stylesheet" href="css/report-redesign.css">
+
+    <!-- Leaflet -->
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -20,13 +25,13 @@
 
     <div class="report-layout">
 
-        <!-- =====================================
-             LEFT SIDEBAR
-        ====================================== -->
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
 
         <aside class="report-sidebar">
 
-            <!-- CityCare Logo -->
+            <!-- Brand -->
             <a href="index.html" class="report-sidebar-brand">
 
                 <img
@@ -53,30 +58,73 @@
                 <nav class="report-sidebar-nav">
 
                     <a href="index.html">
-                        <span class="sidebar-icon" aria-hidden="true">⌂</span>
-                        <span>Home</span>
+                        <span class="sidebar-icon" aria-hidden="true">
+                            ⌂
+                        </span>
+
+                        <span>
+                            Home
+                        </span>
                     </a>
+
 
                     <a
                         href="report.html"
                         class="active"
                         aria-current="page"
                     >
-                        <span class="sidebar-icon" aria-hidden="true">＋</span>
-                        <span>Report Issue</span>
+                        <span class="sidebar-icon" aria-hidden="true">
+                            +
+                        </span>
+
+                        <span>
+                            Report Issue
+                        </span>
                     </a>
+
 
                     <a href="complaints.html">
-                        <span class="sidebar-icon" aria-hidden="true">▤</span>
-                        <span>Complaints</span>
+
+                        <span class="sidebar-icon" aria-hidden="true">
+                            ▤
+                        </span>
+
+                        <span>
+                            Complaints
+                        </span>
+
                     </a>
 
+
                     <a href="profile.html">
-                        <span class="sidebar-icon" aria-hidden="true">♙</span>
-                        <span>My Profile</span>
+
+                        <span class="sidebar-icon" aria-hidden="true">
+                            ♙
+                        </span>
+
+                        <span>
+                            My Profile
+                        </span>
+
                     </a>
 
                 </nav>
+
+            </div>
+
+
+            <!-- Sidebar decorative city -->
+            <div class="sidebar-city-art" aria-hidden="true">
+
+                <div class="city-building city-building-1"></div>
+                <div class="city-building city-building-2"></div>
+                <div class="city-building city-building-3"></div>
+                <div class="city-building city-building-4"></div>
+                <div class="city-building city-building-5"></div>
+
+                <div class="city-tree tree-one"></div>
+                <div class="city-tree tree-two"></div>
+                <div class="city-tree tree-three"></div>
 
             </div>
 
@@ -85,13 +133,31 @@
             <div class="report-sidebar-bottom">
 
                 <div class="report-sidebar-message">
-                    <span>Better infrastructure</span>
-                    <strong>for a brighter tomorrow.</strong>
+
+                    <span>
+                        Better infrastructure
+                    </span>
+
+                    <strong>
+                        for a brighter tomorrow.
+                    </strong>
+
                 </div>
 
-                <a href="login.html" class="report-sidebar-login">
-                    <span aria-hidden="true">↪</span>
-                    <span>Login</span>
+
+                <a
+                    href="login.html"
+                    class="report-sidebar-login"
+                >
+
+                    <span aria-hidden="true">
+                        ↪
+                    </span>
+
+                    <span>
+                        Login
+                    </span>
+
                 </a>
 
             </div>
@@ -99,43 +165,131 @@
         </aside>
 
 
-        <!-- =====================================
+        <!-- =====================================================
              MAIN CONTENT
-        ====================================== -->
+        ====================================================== -->
 
         <div class="report-main">
 
             <main class="report-container">
 
-                <!-- Page Header -->
-                <section class="page-header">
 
-                    <h1>
-                        Report a civic issue.
-                    </h1>
+                <!-- =================================================
+                     HERO HEADER
+                ================================================== -->
 
-                    <p>
-                        Help improve your city by reporting problems
-                        directly to the appropriate authorities.
-                    </p>
+                <section class="report-hero">
+
+                    <div class="report-hero-content">
+
+                        <span class="report-hero-badge">
+                            REPORT A CIVIC ISSUE
+                        </span>
+
+
+                        <h1>
+                            Report a civic issue.
+                            <br>
+                            Make your city better.
+                        </h1>
+
+
+                        <p>
+                            Help improve your city by reporting problems
+                            directly to the appropriate authorities.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Decorative city illustration -->
+                    <div
+                        class="report-hero-art"
+                        aria-hidden="true"
+                    >
+
+                        <div class="hero-sun"></div>
+
+                        <div class="hero-cloud cloud-one"></div>
+                        <div class="hero-cloud cloud-two"></div>
+
+                        <div class="hero-city">
+
+                            <span class="hero-building b1"></span>
+                            <span class="hero-building b2"></span>
+                            <span class="hero-building b3"></span>
+                            <span class="hero-building b4"></span>
+                            <span class="hero-building b5"></span>
+                            <span class="hero-building b6"></span>
+
+                        </div>
+
+                        <div class="hero-trees">
+
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+
+                        </div>
+
+                        <div class="hero-birds">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="hero-slogan">
+
+                        <strong>
+                            Clean Cities
+                        </strong>
+
+                        <strong>
+                            Stronger Communities
+                        </strong>
+
+                        <span></span>
+
+                    </div>
 
                 </section>
 
 
-                <!-- Report Bento Layout -->
+                <!-- =================================================
+                     REPORT GRID
+                ================================================== -->
+
                 <section class="report-grid">
 
-                    <!-- Complaint Form -->
+
+                    <!-- =================================================
+                         LEFT — ISSUE DETAILS
+                    ================================================== -->
+
                     <div class="report-form-card">
 
-                        <div class="card-header">
 
-                            <span class="card-label">
-                                ISSUE DETAILS
-                            </span>
+                        <div class="report-card-heading">
+
+                            <div class="heading-icon">
+                                <span>▤</span>
+                            </div>
+
+                            <div>
+
+                                <h2>
+                                    Issue Details
+                                </h2>
+
+                            </div>
 
                             <span class="required-note">
-                                * Required
+                                <b>*</b> Required
                             </span>
 
                         </div>
@@ -143,11 +297,13 @@
 
                         <form id="complaintForm">
 
+
                             <!-- Issue Title -->
+
                             <div class="form-group">
 
                                 <label for="title">
-                                    Issue Title *
+                                    Issue Title <span>*</span>
                                 </label>
 
                                 <input
@@ -162,10 +318,11 @@
 
 
                             <!-- Category -->
+
                             <div class="form-group">
 
                                 <label for="category">
-                                    Category *
+                                    Category <span>*</span>
                                 </label>
 
                                 <select
@@ -212,10 +369,11 @@
 
 
                             <!-- Description -->
+
                             <div class="form-group">
 
                                 <label for="description">
-                                    Description *
+                                    Description <span>*</span>
                                 </label>
 
                                 <textarea
@@ -230,18 +388,40 @@
 
 
                             <!-- Image Upload -->
-                            <div class="form-group">
+
+                            <div class="form-group report-upload-group">
 
                                 <label for="image">
                                     Add Photo
                                 </label>
 
-                                <input
-                                    type="file"
-                                    id="image"
-                                    name="image"
-                                    accept="image/*"
-                                >
+
+                                <div class="custom-file-upload">
+
+                                    <span
+                                        class="upload-icon"
+                                        aria-hidden="true"
+                                    >
+                                        ⇧
+                                    </span>
+
+                                    <input
+                                        type="file"
+                                        id="image"
+                                        name="image"
+                                        accept="image/*"
+                                    >
+
+                                    <span class="file-upload-text">
+                                        Choose File
+                                    </span>
+
+                                    <span class="file-name">
+                                        No file chosen
+                                    </span>
+
+                                </div>
+
 
                                 <small>
                                     Upload a clear photo of the civic issue.
@@ -250,7 +430,8 @@
                             </div>
 
 
-                            <!-- Hidden Location Fields -->
+                            <!-- Hidden location fields -->
+
                             <input
                                 type="hidden"
                                 id="latitude"
@@ -271,11 +452,21 @@
 
 
                             <!-- Selected Location -->
+
                             <div class="selected-location">
 
-                                <span class="card-label">
-                                    SELECTED LOCATION
-                                </span>
+                                <div class="selected-location-heading">
+
+                                    <span class="location-mini-icon">
+                                        ●
+                                    </span>
+
+                                    <span class="card-label">
+                                        SELECTED LOCATION
+                                    </span>
+
+                                </div>
+
 
                                 <p id="locationText">
                                     Click on the map to select the issue location.
@@ -285,11 +476,24 @@
 
 
                             <!-- Submit -->
+
                             <button
                                 type="submit"
                                 class="btn btn-primary submit-btn"
                             >
-                                Submit Complaint →
+
+                                <span class="submit-icon">
+                                    ➤
+                                </span>
+
+                                <span>
+                                    Submit Complaint
+                                </span>
+
+                                <span class="submit-arrow">
+                                    →
+                                </span>
+
                             </button>
 
                         </form>
@@ -297,31 +501,48 @@
                     </div>
 
 
-                    <!-- Map Card -->
+                    <!-- =================================================
+                         RIGHT — LOCATION
+                    ================================================== -->
+
                     <div class="report-map-card">
 
-                        <div class="card-header">
 
-                            <div>
+                        <div class="report-map-heading">
 
-                                <span class="card-label">
-                                    LOCATION
-                                </span>
+                            <div class="map-title-area">
 
-                                <h2>
-                                    Where is the issue?
-                                </h2>
+                                <div class="heading-icon map-heading-icon">
+                                    <span>
+                                        ●
+                                    </span>
+                                </div>
+
+                                <div>
+
+                                    <span class="card-label">
+                                        LOCATION
+                                    </span>
+
+                                    <h2>
+                                        Where is the issue?
+                                    </h2>
+
+                                </div>
 
                             </div>
 
+
                             <span class="map-status">
-                                ● Interactive Map
+                                <span>▣</span>
+                                Interactive Map
                             </span>
 
                         </div>
 
 
                         <!-- Interactive Map -->
+
                         <div
                             id="reportMap"
                             class="report-map"
@@ -329,7 +550,7 @@
 
 
                         <!-- Map Instruction -->
-                                            <!-- Map Instruction -->
+
                         <div class="map-instruction">
 
                             <span class="instruction-icon">
@@ -345,11 +566,13 @@
 
 
                         <!-- PIN Code Search -->
+
                         <div class="pincode-search">
 
                             <label for="pincodeInput">
                                 Or find it by PIN code
                             </label>
+
 
                             <div class="pincode-search-row">
 
@@ -363,18 +586,38 @@
                                     autocomplete="postal-code"
                                 >
 
+
                                 <button
                                     type="button"
                                     id="pincodeSearchBtn"
                                     class="pincode-search-btn"
                                 >
-                                    Locate
+
+                                    <span>
+                                        ⌕
+                                    </span>
+
+                                    Search
+
                                 </button>
 
                             </div>
 
+
                             <small id="pincodeStatus"></small>
 
+                        </div>
+
+
+                        <!-- Decorative leaf -->
+
+                        <div
+                            class="map-leaf-decoration"
+                            aria-hidden="true"
+                        >
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
 
                     </div>
@@ -384,7 +627,10 @@
             </main>
 
 
-            <!-- Footer -->
+            <!-- =====================================================
+                 FOOTER
+            ====================================================== -->
+
             <footer class="footer">
 
                 <span>
@@ -402,10 +648,19 @@
     </div>
 
 
-    <!-- Leaflet Map -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- =========================================================
+         LEAFLET MAP
+    ========================================================== -->
 
-    <!-- Existing Report JavaScript -->
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+    <!-- =========================================================
+         EXISTING REPORT JAVASCRIPT — DO NOT CHANGE
+    ========================================================== -->
+
     <script src="js/report.js"></script>
 
 </body>

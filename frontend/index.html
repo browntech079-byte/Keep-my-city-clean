@@ -1,350 +1,419 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CityCare — Smart Civic Issue Management</title>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/home-redesign.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CityCare - Home</title>
+  
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Google Fonts: Caveat & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Standalone Home Redesign CSS -->
+  <link rel="stylesheet" href="css/home-redesign.css" />
 </head>
-
-<body class="home-page">
-
-    <div class="home-layout">
-
-        <!-- ==========================================
-             LEFT GREEN SIDEBAR
-        =========================================== -->
-
-        <aside class="home-sidebar">
-
-            <!-- CityCare Branding -->
-            <a href="index.html" class="home-sidebar-brand">
-
-                <img
-                    src="assets/images/citycare-logo.png"
-                    alt="CityCare Logo"
-                    class="home-sidebar-logo"
-                >
-
-                <div class="home-sidebar-brand-text">
-                    <strong>CityCare</strong>
-                    <span>Smart Civic Issue Management</span>
-                </div>
-
-            </a>
-
-
-            <!-- Sidebar Navigation -->
-            <div class="home-sidebar-section">
-
-                <p class="home-sidebar-label">
-                    WORKSPACE
-                </p>
-
-                <nav class="home-sidebar-nav">
-
-                    <a
-                        href="index.html"
-                        class="active"
-                        aria-current="page"
-                    >
-                        <span class="home-sidebar-icon" aria-hidden="true">⌂</span>
-                        <span>Home</span>
-                    </a>
-
-                    <a href="report.html">
-                        <span class="home-sidebar-icon" aria-hidden="true">＋</span>
-                        <span>Report Issue</span>
-                    </a>
-
-                    <a href="complaints.html">
-                        <span class="home-sidebar-icon" aria-hidden="true">▤</span>
-                        <span>Complaints</span>
-                    </a>
-
-                    <a href="profile.html">
-                        <span class="home-sidebar-icon" aria-hidden="true">♙</span>
-                        <span>My Profile</span>
-                    </a>
-
-                </nav>
-
-            </div>
-
-
-            <!-- Sidebar Bottom -->
-            <div class="home-sidebar-bottom">
-
-                <div class="home-sidebar-message">
-                    <span>Better infrastructure</span>
-                    <strong>for a brighter tomorrow.</strong>
-                </div>
-
-                <a href="login.html" class="home-sidebar-login">
-                    <span aria-hidden="true">↪</span>
-                    <span>Login</span>
-                </a>
-
-            </div>
-
-        </aside>
-
-
-        <!-- ==========================================
-             MAIN CONTENT
-        =========================================== -->
-
-        <div class="home-main">
-
-            <main class="home-container">
-
-                <!-- User Topbar: greeting, search, notifications, avatar.
-                     Hidden by default; js/home.js reveals it only once
-                     it confirms someone is actually logged in. -->
-                <section id="homeTopbar" class="home-topbar" hidden>
-
-                    <div class="home-topbar-greeting">
-                        <h2 id="homeGreeting">Hello!</h2>
-                    </div>
-
-                    <div class="home-topbar-search">
-
-                        <span class="home-search-icon" aria-hidden="true">⌕</span>
-
-                        <input
-                            type="text"
-                            id="homeSearchInput"
-                            placeholder="Search your complaints..."
-                            autocomplete="off"
-                        >
-
-                        <div id="homeSearchResults" class="home-search-results" hidden></div>
-
-                    </div>
-
-                    <div class="home-topbar-actions">
-
-                        <div class="home-notif-wrapper">
-
-                            <button
-                                type="button"
-                                id="homeNotifBtn"
-                                class="home-notif-btn"
-                                aria-label="Notifications"
-                            >
-                                <span aria-hidden="true">🔔</span>
-                                <span id="homeNotifDot" class="home-notif-dot" hidden></span>
-                            </button>
-
-                            <div id="homeNotifDropdown" class="home-notif-dropdown" hidden>
-
-                                <p class="home-notif-heading">Notifications</p>
-
-                                <div id="homeNotifList" class="home-notif-list">
-                                    <p class="home-notif-empty">
-                                        No new notifications
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div id="homeAvatar" class="home-avatar"></div>
-
-                    </div>
-
-                </section>
-
-
-                <!-- Hero Bento Card -->
-                <section class="hero-card">
-
-                    <div class="hero-content">
-
-                        <span class="eyebrow">
-                            SMART CIVIC ISSUE MANAGEMENT
-                        </span>
-
-                        <h1>
-                            Report problems.<br>
-                            Improve your city.
-                        </h1>
-
-                        <p>
-                            CityCare helps citizens report civic issues,
-                            track complaints and connect problems with
-                            the right authorities.
-                        </p>
-
-                        <div class="hero-actions">
-
-                            <a href="report.html" class="btn btn-primary">
-                                Report an Issue
-                            </a>
-
-                            <a href="complaints.html" class="btn btn-secondary">
-                                View Complaints
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                    <div class="hero-visual">
-
-                        <div class="map-preview">
-
-                            <div class="map-grid"></div>
-
-                            <div class="map-pin">
-                                <span></span>
-                            </div>
-
-                            <div class="map-label">
-                                <strong>CityCare Map</strong>
-                                <small>Locate civic issues</small>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </section>
-
-
-                <!-- Bento Grid -->
-                <section class="bento-grid">
-
-                    <!-- Report Card -->
-                    <article class="bento-card report-card">
-
-                        <div class="card-icon">+</div>
-
-                        <span class="card-label">
-                            REPORT
-                        </span>
-
-                        <h2>
-                            Report a civic issue
-                        </h2>
-
-                        <p>
-                            Submit problems such as potholes,
-                            garbage, streetlights and water issues.
-                        </p>
-
-                        <a href="report.html" class="card-link">
-                            Report now →
-                        </a>
-
-                    </article>
-
-
-                    <!-- Map Card -->
-                    <article class="bento-card map-card">
-
-                        <div class="card-top">
-
-                            <span class="card-label">
-                                LIVE MAP
-                            </span>
-
-                            <span class="status-dot"></span>
-
-                        </div>
-
-                        <h2>
-                            Issues around your city
-                        </h2>
-
-                        <p>
-                            Explore reported civic problems
-                            through an interactive map.
-                        </p>
-
-                        <div class="mini-map">
-
-                            <div class="mini-pin pin-one"></div>
-                            <div class="mini-pin pin-two"></div>
-                            <div class="mini-pin pin-three"></div>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- Tracking Card -->
-                    <article class="bento-card tracking-card">
-
-                        <span class="card-label">
-                            TRACKING
-                        </span>
-
-                        <h2>
-                            Follow your complaint
-                        </h2>
-
-                        <p>
-                            Track the progress of your submitted
-                            complaint from pending to resolved.
-                        </p>
-
-                        <div class="status-flow">
-
-                            <span class="active">Submitted</span>
-                            <span>In Progress</span>
-                            <span>Resolved</span>
-
-                        </div>
-
-                    </article>
-
-
-                    <!-- Community Card -->
-                    <article class="bento-card community-card">
-
-                        <div class="community-number">
-                            24/7
-                        </div>
-
-                        <span class="card-label">
-                            COMMUNITY
-                        </span>
-
-                        <h2>
-                            Better cities start with citizens.
-                        </h2>
-
-                    </article>
-
-                </section>
-
-            </main>
-
-
-            <!-- Footer -->
-            <footer class="footer">
-
-                <span>© 2026 CityCare</span>
-
-                <span>
-                    Smart Civic Issue Management Platform
-                </span>
-
-            </footer>
-
+<body class="citycare-app">
+
+  <!-- ================= LEFT SIDEBAR ================= -->
+  <aside class="sidebar">
+    <!-- Faint background leaves -->
+    <div class="sidebar-leaves-bg">
+      <svg viewBox="0 0 200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path opacity="0.08" d="M30 60C30 60 80 80 70 140C60 200 10 210 10 210C10 210 5 150 15 110C25 70 30 60 30 60Z" fill="#ffffff"/>
+        <path opacity="0.06" d="M140 180C140 180 190 200 180 260C170 320 120 330 120 330C120 330 115 270 125 230C135 190 140 180 140 180Z" fill="#ffffff"/>
+        <path opacity="0.07" d="M120 40C120 40 160 55 150 100C140 145 105 155 105 155C105 155 100 110 110 80C120 50 120 40 120 40Z" fill="#ffffff"/>
+      </svg>
+    </div>
+
+    <!-- Brand Header with Official CityCare Pin & Skyline Logo -->
+    <div class="brand-container">
+      <div class="brand-logo-wrap">
+        <div class="brand-logo-card">
+          <svg class="brand-icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="pinRingGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#72c416"/>
+                <stop offset="50%" stop-color="#2ca12d"/>
+                <stop offset="100%" stop-color="#0b6b33"/>
+              </linearGradient>
+              <linearGradient id="skyBldgGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#084282"/>
+                <stop offset="50%" stop-color="#0e62b8"/>
+                <stop offset="100%" stop-color="#0a70c9"/>
+              </linearGradient>
+              <linearGradient id="riverStreamGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0a71ca"/>
+                <stop offset="100%" stop-color="#064082"/>
+              </linearGradient>
+              <linearGradient id="hillSlopeGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#55b81a"/>
+                <stop offset="100%" stop-color="#147526"/>
+              </linearGradient>
+            </defs>
+            <path d="M50 4C30 4 14 20 14 40C14 55 35 77 50 94C65 77 86 55 86 40C86 20 70 4 50 4Z" 
+                  stroke="url(#pinRingGrad)" stroke-width="8" stroke-linejoin="round" fill="none"/>
+            <g clip-path="url(#innerClip)">
+              <clipPath id="innerClip">
+                <path d="M50 8C33 8 19 22 19 40C19 53 37 72 50 87C63 72 81 53 81 40C81 22 67 8 50 8Z"/>
+              </clipPath>
+              <!-- Center Spire -->
+              <polygon points="50,14 46,20 54,20" fill="#0b488a"/>
+              <rect x="46" y="20" width="8" height="35" fill="url(#skyBldgGrad)"/>
+              <rect x="48" y="24" width="1.5" height="2" fill="#fff" opacity="0.9"/>
+              <rect x="51" y="24" width="1.5" height="2" fill="#fff" opacity="0.9"/>
+              <rect x="48" y="28" width="1.5" height="2" fill="#fff" opacity="0.9"/>
+              <rect x="51" y="28" width="1.5" height="2" fill="#fff" opacity="0.9"/>
+              <!-- Left Tower -->
+              <polygon points="38,27 34,30 42,30" fill="#083a74"/>
+              <rect x="34" y="30" width="8" height="26" fill="url(#skyBldgGrad)"/>
+              <rect x="36" y="33" width="1.5" height="2" fill="#fff" opacity="0.9"/>
+              <rect x="39" y="33" width="1.5" height="2" fill="#fff" opacity="0.9"/>
+              <!-- Right Tower -->
+              <polygon points="62,27 58,30 66,30" fill="#083a74"/>
+              <rect x="58" y="30" width="8" height="26" fill="url(#skyBldgGrad)"/>
+              <rect x="60" y="33" width="1.5" height="2" fill="#fff" opacity="0.9"/>
+              <rect x="63" y="33" width="1.5" height="2" fill="#fff" opacity="0.9"/>
+              <!-- Outer Flanks -->
+              <rect x="26" y="36" width="7" height="20" fill="#0a59a7"/>
+              <rect x="67" y="36" width="7" height="20" fill="#0a59a7"/>
+              <!-- Hills & River -->
+              <path d="M14 46 C25 43 40 45 50 51 C62 43 78 44 86 47 L86 80 L14 80 Z" fill="url(#hillSlopeGrad)"/>
+              <path d="M50 51 C60 56 68 66 50 90 C62 82 78 68 76 52 C68 53 58 52 50 51 Z" fill="url(#riverStreamGrad)"/>
+              <!-- Sprout Leaves -->
+              <path d="M37 53 C33 50 31 46 31 46 C31 46 35 48 37 53 Z" fill="#ffffff"/>
+              <path d="M38 54 C42 49 45 47 45 47 C45 47 43 51 38 54 Z" fill="#ffffff"/>
+            </g>
+          </svg>
         </div>
+        <div class="brand-text">
+          <h2>CityCare</h2>
+          <span>Civic Management System</span>
+        </div>
+      </div>
+      <p class="brand-subtext">Smarter City. Happier Citizens.</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-item active">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+      <a href="report.html" class="nav-item">
+        <i class="fa-regular fa-square-plus"></i>
+        <span>Report Issue</span>
+      </a>
+      <a href="complaints.html" class="nav-item">
+        <i class="fa-regular fa-clipboard"></i>
+        <span>Complaints</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i class="fa-regular fa-user"></i>
+        <span>My Profile</span>
+      </a>
+    </nav>
+
+    <!-- Sidebar Bottom Card -->
+    <div class="sidebar-footer">
+      <div class="city-promo-card">
+        <div class="city-illustration">
+          <svg viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="32" width="14" height="48" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+            <rect x="33" y="20" width="16" height="60" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="41,8 33,20 49,20" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <rect x="53" y="38" width="12" height="42" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+            <rect x="69" y="16" width="18" height="64" stroke="#4ade80" stroke-width="1.2" opacity="0.8"/>
+            <line x1="78" y1="4" x2="78" y2="16" stroke="#4ade80" stroke-width="1.5" opacity="0.8"/>
+            <rect x="91" y="28" width="15" height="52" stroke="#4ade80" stroke-width="1.2" opacity="0.65"/>
+            <rect x="110" y="22" width="16" height="58" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="118,10 110,22 126,22" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <rect x="130" y="35" width="14" height="45" stroke="#4ade80" stroke-width="1.2" opacity="0.5"/>
+            <path d="M0 78 Q 80 72 160 78" stroke="#4ade80" stroke-width="1.2" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="promo-text-box">
+          <div class="promo-pin-icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <span>Together for a cleaner, safer and better city.</span>
+        </div>
+      </div>
+
+      <button id="logoutBtn" class="logout-pill-btn">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN CONTENT WRAPPER ================= -->
+  <main class="main-content">
+    
+    <!-- Top Greeting Bar with Search, Notification Bell, and Avatar -->
+    <header class="home-top-bar">
+      <div class="greeting-text-wrap">
+        <h1 id="userGreeting" class="greeting-script">
+          <span class="greeting-prefix">Hello, </span><span class="greeting-name">Risabh!</span>
+        </h1>
+        <p class="greeting-subtitle">Here's what's happening in your city.</p>
+      </div>
+
+      <div class="top-bar-actions">
+        <div class="search-pill-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="headerSearch" placeholder="Search your complaints..." class="search-input" />
+        </div>
+        <button class="notification-circle-btn" title="Notifications">
+          <i class="fa-solid fa-bell"></i>
+          <span class="notif-dot"></span>
+        </button>
+        <a href="profile.html" class="user-avatar-pill" title="My Profile">
+          <div class="avatar-img-circle">
+            <i class="fa-solid fa-user"></i>
+          </div>
+        </a>
+      </div>
+    </header>
+
+    <!-- LARGE HERO FEATURE CARD -->
+    <section class="home-hero-card">
+      <div class="hero-content-col">
+        <span class="hero-overline">SMART CIVIC ISSUE MANAGEMENT</span>
+        <h2 class="hero-main-title">
+          Report problems.<br />
+          Improve your<br />
+          city.
+        </h2>
+        <p class="hero-description">
+          CityCare helps citizens report civic issues, track complaints and connect problems with the right authorities.
+        </p>
+        <div class="hero-buttons-row">
+          <a href="report.html" class="btn-hero-primary">
+            <span>Report an Issue</span>
+            <i class="fa-solid fa-arrow-right-long"></i>
+          </a>
+          <a href="complaints.html" class="btn-hero-secondary">
+            <span>View Complaints</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Sprout leaves illustration -->
+      <div class="hero-sprout-art">
+        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M35 55 C30 35 15 25 5 25 C5 25 15 45 35 55 Z" fill="#88b595" opacity="0.8"/>
+          <path d="M35 55 C40 30 55 20 65 20 C65 20 55 45 35 55 Z" fill="#a4c9b0" opacity="0.7"/>
+          <path d="M35 55 L35 25" stroke="#315c3e" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+      </div>
+
+      <!-- Panoramic City Waterfront Landscape -->
+      <div class="hero-panoramic-skyline">
+        <svg viewBox="0 0 700 320" fill="none" xmlns="http://www.w3.org/2000/svg" class="skyline-panorama-svg">
+          <defs>
+            <linearGradient id="pWaterGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#6ba07c"/>
+              <stop offset="100%" stop-color="#345e41"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Back Towers (Pastel Mint) -->
+          <rect x="80" y="80" width="35" height="180" fill="#cbe6d4" rx="2"/>
+          <rect x="125" y="50" width="40" height="210" fill="#b9dec6" rx="2"/>
+          <polygon points="145,25 125,50 165,50" fill="#a8d4b7"/>
+          <rect x="180" y="100" width="45" height="160" fill="#cbe6d4" rx="2"/>
+          <rect x="240" y="70" width="55" height="190" fill="#b4dac1" rx="2"/>
+          <polygon points="267,40 240,70 295,70" fill="#9ecfae"/>
+          <rect x="310" y="110" width="40" height="150" fill="#cbe6d4" rx="2"/>
+          <rect x="360" y="45" width="48" height="215" fill="#a4cca7" rx="3"/>
+          <line x1="384" y1="18" x2="384" y2="45" stroke="#7aa88a" stroke-width="2.5"/>
+
+          <!-- Window lines -->
+          <g stroke="#ffffff" stroke-width="1.2" opacity="0.6">
+            <line x1="135" y1="60" x2="135" y2="200" stroke-dasharray="4 4"/>
+            <line x1="145" y1="60" x2="145" y2="200" stroke-dasharray="4 4"/>
+            <line x1="155" y1="60" x2="155" y2="200" stroke-dasharray="4 4"/>
+            <line x1="255" y1="80" x2="255" y2="200" stroke-dasharray="5 5"/>
+            <line x1="267" y1="80" x2="267" y2="200" stroke-dasharray="5 5"/>
+            <line x1="280" y1="80" x2="280" y2="200" stroke-dasharray="5 5"/>
+          </g>
+
+          <!-- Middle-Right High-Rise Cluster -->
+          <rect x="420" y="90" width="42" height="170" fill="#bfe0cc" rx="2"/>
+          <rect x="475" y="60" width="50" height="200" fill="#a4cca7" rx="2"/>
+          <rect x="540" y="30" width="55" height="230" fill="#88b595" rx="3"/>
+          <polygon points="567,10 540,30 595,30" fill="#72a882"/>
+          <rect x="610" y="70" width="60" height="190" fill="#b4dac1" rx="2"/>
+
+          <!-- Parkland Base & Tree Clusters -->
+          <path d="M0 240 C100 230 220 220 380 235 C520 250 620 230 700 240 L700 320 L0 320 Z" fill="#2e5439"/>
+          <circle cx="50" cy="220" r="30" fill="#3b694b"/>
+          <circle cx="95" cy="210" r="38" fill="#4d7f5e"/>
+          <circle cx="150" cy="218" r="34" fill="#3b694b"/>
+          <circle cx="210" cy="210" r="40" fill="#5a906d"/>
+          <circle cx="275" cy="215" r="36" fill="#3b694b"/>
+          <circle cx="340" cy="222" r="32" fill="#4d7f5e"/>
+          <circle cx="410" cy="212" r="38" fill="#5a906d"/>
+          <circle cx="480" cy="218" r="36" fill="#3b694b"/>
+          <circle cx="550" cy="208" r="42" fill="#4d7f5e"/>
+          <circle cx="620" cy="215" r="36" fill="#3b694b"/>
+          <circle cx="675" cy="210" r="38" fill="#5a906d"/>
+
+          <!-- Waterfront Stream -->
+          <rect x="0" y="270" width="700" height="50" fill="url(#pWaterGrad)" opacity="0.9"/>
+          <ellipse cx="380" cy="290" rx="260" ry="8" fill="#ffffff" opacity="0.15"/>
+        </svg>
+      </div>
+
+      <!-- Floating CityCare Map Card -->
+      <div class="floating-map-card">
+        <div class="mini-map-screen">
+          <svg class="map-grid-svg" viewBox="0 0 200 180" fill="none">
+            <rect width="200" height="180" fill="#eef5f0"/>
+            <line x1="0" y1="30" x2="200" y2="30" stroke="#ffffff" stroke-width="4"/>
+            <line x1="0" y1="80" x2="200" y2="80" stroke="#ffffff" stroke-width="5"/>
+            <line x1="0" y1="130" x2="200" y2="130" stroke="#ffffff" stroke-width="4"/>
+            <line x1="40" y1="0" x2="40" y2="180" stroke="#ffffff" stroke-width="4"/>
+            <line x1="110" y1="0" x2="110" y2="180" stroke="#ffffff" stroke-width="6"/>
+            <line x1="165" y1="0" x2="165" y2="180" stroke="#ffffff" stroke-width="4"/>
+            <line x1="0" y1="180" x2="200" y2="0" stroke="#ffffff" stroke-width="5"/>
+            <circle cx="110" cy="80" r="5" fill="#a4c9b0"/>
+          </svg>
+
+          <!-- Center Map Pin Marker -->
+          <div class="floating-pin-marker">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+
+          <!-- Bottom Pill Tag -->
+          <div class="floating-map-label">
+            <span class="map-label-title">CityCare Map</span>
+            <span class="map-label-sub">Locate civic issues</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 2x2 CARDS + TALL RIGHT CARD ================= -->
+    <div class="bottom-workspace-layout">
+      
+      <!-- 2x2 Grid for Civic Cards -->
+      <div class="civic-cards-2x2">
+        
+        <!-- Card 1: Report a civic issue -->
+        <div class="grid-card">
+          <div class="card-icon-badge green-soft">
+            <i class="fa-solid fa-file-circle-plus"></i>
+          </div>
+          <span class="card-overline">REPORT</span>
+          <h3 class="card-heading">Report a civic issue</h3>
+          <p class="card-subtext">Submit problems such as potholes, garbage, streetlights and water issues.</p>
+          <a href="report.html" class="card-action-link">
+            <span>Report now</span>
+            <i class="fa-solid fa-arrow-right-long"></i>
+          </a>
+        </div>
+
+        <!-- Card 2: Issues around your city (Live Map) -->
+        <div class="grid-card">
+          <div class="card-top-row">
+            <div class="card-icon-badge green-soft">
+              <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <a href="report.html" class="circle-chevron-btn" title="View interactive map">
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+          <span class="card-overline">LIVE MAP</span>
+          <h3 class="card-heading">Issues around your city</h3>
+          <p class="card-subtext">Explore reported civic problems through an interactive map.</p>
+          
+          <div class="map-strip-preview">
+            <svg viewBox="0 0 320 60" fill="none" class="strip-svg">
+              <rect width="320" height="60" rx="8" fill="#f0f6f2"/>
+              <line x1="0" y1="20" x2="320" y2="20" stroke="#ffffff" stroke-width="3"/>
+              <line x1="0" y1="45" x2="320" y2="45" stroke="#ffffff" stroke-width="3"/>
+              <line x1="60" y1="0" x2="60" y2="60" stroke="#ffffff" stroke-width="3"/>
+              <line x1="160" y1="0" x2="160" y2="60" stroke="#ffffff" stroke-width="4"/>
+              <line x1="250" y1="0" x2="250" y2="60" stroke="#ffffff" stroke-width="3"/>
+              <line x1="0" y1="60" x2="320" y2="0" stroke="#ffffff" stroke-width="3"/>
+            </svg>
+            <div class="radar-dot dot-1"><span class="dot-pulse"></span></div>
+            <div class="radar-dot dot-2"><span class="dot-pulse"></span></div>
+            <div class="radar-dot dot-3"><span class="dot-pulse"></span></div>
+          </div>
+        </div>
+
+        <!-- Card 3: Follow your complaint (Tracking) -->
+        <div class="grid-card">
+          <div class="card-icon-badge green-soft">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+          </div>
+          <span class="card-overline">TRACKING</span>
+          <h3 class="card-heading">Follow your complaint</h3>
+          <p class="card-subtext">Track the progress of your submitted complaint from pending to resolved.</p>
+          <div class="status-pills-row">
+            <span class="pill-chip chip-submitted">Submitted</span>
+            <span class="pill-chip chip-progress">In Progress</span>
+            <span class="pill-chip chip-resolved">Resolved</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Community 24/7 with Skyline Silhouettes -->
+        <div class="grid-card community-card">
+          <span class="card-overline">COMMUNITY</span>
+          <div class="community-metric">24/7</div>
+          <p class="community-quote">Better cities start with citizens.</p>
+          
+          <div class="community-skyline-silhouette">
+            <svg viewBox="0 0 240 70" fill="none" class="community-svg">
+              <rect x="20" y="30" width="16" height="40" fill="#a4cca7" opacity="0.6"/>
+              <rect x="42" y="18" width="18" height="52" fill="#72a882" opacity="0.7"/>
+              <polygon points="51,8 42,18 60,18" fill="#5a906d"/>
+              <rect x="68" y="26" width="20" height="44" fill="#a4cca7" opacity="0.6"/>
+              <rect x="95" y="12" width="22" height="58" fill="#5a906d" opacity="0.8"/>
+              <line x1="106" y1="2" x2="106" y2="12" stroke="#315c3e" stroke-width="1.5"/>
+              <rect x="125" y="24" width="18" height="46" fill="#72a882" opacity="0.7"/>
+              <rect x="150" y="16" width="20" height="54" fill="#a4cca7" opacity="0.6"/>
+              <rect x="178" y="28" width="16" height="42" fill="#72a882" opacity="0.6"/>
+              <path d="M0 65 C60 55 160 55 240 65 L240 70 L0 70 Z" fill="#315c3e"/>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Card 5: Right Tall Promo Card Spanning Both Rows -->
+      <div class="grid-card promo-tall-card">
+        <h4 class="promo-banner-heading">Together for a cleaner, safer and better city.</h4>
+        <div class="promo-sprout-hands">
+          <svg width="86" height="70" viewBox="0 0 86 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M43 45 C38 28 22 20 14 20 C14 20 22 36 38 45 Z" stroke="#254d36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M43 45 C48 24 64 16 72 16 C72 16 64 34 48 45 Z" stroke="#254d36" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M43 45 L43 20" stroke="#254d36" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Hands cradle -->
+            <path d="M18 50 C26 58 36 62 43 62 C50 62 60 58 68 50" stroke="#254d36" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M12 44 L18 50" stroke="#254d36" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M74 44 L68 50" stroke="#254d36" stroke-width="2.2" stroke-linecap="round"/>
+            <!-- Plus Sparkle -->
+            <path d="M43 8 V14 M40 11 H46" stroke="#254d36" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <button id="inCardLogoutBtn" class="incard-logout-pill">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Logout</span>
+        </button>
+      </div>
 
     </div>
 
+  </main>
 
-    <!-- Existing JavaScript -->
-    <script src="js/home.js"></script>
-
+  <script src="js/config.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

@@ -1,220 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>My Complaints — CityCare</title>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css">
-
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CityCare - My Complaints</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
+<body class="citycare-app">
 
-<body class="complaints-page">
-
-    <div class="complaints-layout">
-
-        <!-- =====================================
-             LEFT SIDEBAR
-        ====================================== -->
-
-        <aside class="report-sidebar">
-
-            <!-- CityCare Logo -->
-            <a href="index.html" class="report-sidebar-brand">
-
-                <img
-                    src="assets/images/citycare-logo.png"
-                    alt="CityCare Logo"
-                    class="report-sidebar-logo"
-                >
-
-                <div class="report-sidebar-brand-text">
-                    <strong>CityCare</strong>
-                    <span>Smart Civic Issue Management</span>
-                </div>
-
-            </a>
-
-
-            <!-- Navigation -->
-            <div class="report-sidebar-section">
-
-                <p class="report-sidebar-label">
-                    WORKSPACE
-                </p>
-
-                <nav class="report-sidebar-nav">
-
-                    <a href="index.html">
-                        <span class="sidebar-icon" aria-hidden="true">⌂</span>
-                        <span>Home</span>
-                    </a>
-
-                    <a href="report.html">
-                        <span class="sidebar-icon" aria-hidden="true">＋</span>
-                        <span>Report Issue</span>
-                    </a>
-
-                    <a
-                        href="complaints.html"
-                        class="active"
-                        aria-current="page"
-                    >
-                        <span class="sidebar-icon" aria-hidden="true">▤</span>
-                        <span>Complaints</span>
-                    </a>
-
-                    <a href="profile.html">
-                        <span class="sidebar-icon" aria-hidden="true">♙</span>
-                        <span>My Profile</span>
-                    </a>
-
-                </nav>
-
-            </div>
-
-
-            <!-- Sidebar Bottom -->
-            <div class="report-sidebar-bottom">
-
-                <div class="report-sidebar-message">
-                    <span>Better infrastructure</span>
-                    <strong>for a brighter tomorrow.</strong>
-                </div>
-
-                <a href="login.html" class="report-sidebar-login">
-                    <span aria-hidden="true">↪</span>
-                    <span>Login</span>
-                </a>
-
-            </div>
-
-        </aside>
-
-
-        <!-- =====================================
-             MAIN COMPLAINTS CONTENT
-        ====================================== -->
-
-        <div class="complaints-main">
-
-            <main class="complaints-container">
-
-                <!-- Page Header -->
-                <section class="page-header">
-
-                    <div>
-                        <span class="eyebrow">
-                            YOUR CITY, YOUR VOICE
-                        </span>
-
-                        <h1>
-                            My complaints<span>.</span>
-                        </h1>
-
-                        <p>
-                            Track the civic issues you've reported to CityCare.
-                        </p>
-                    </div>
-
-                    <a href="report.html" class="btn btn-primary">
-                        + Report an issue
-                    </a>
-
-                </section>
-
-
-                <!-- Complaint Statistics -->
-                <section class="complaint-stats">
-
-                    <article class="stat-card">
-                        <span>Total complaints</span>
-                        <strong id="totalCount">0</strong>
-                    </article>
-
-                    <article class="stat-card">
-                        <span>Pending</span>
-                        <strong id="pendingCount">0</strong>
-                    </article>
-
-                    <article class="stat-card">
-                        <span>In progress</span>
-                        <strong id="progressCount">0</strong>
-                    </article>
-
-                    <article class="stat-card">
-                        <span>Resolved</span>
-                        <strong id="resolvedCount">0</strong>
-                    </article>
-
-                </section>
-
-
-                <!-- Reported Complaints -->
-                <section class="complaints-panel">
-
-                    <div class="panel-heading">
-
-                        <div>
-                            <h2>Reported issues</h2>
-                            <p>
-                                Your submitted complaints and their latest status.
-                            </p>
-                        </div>
-
-                        <button
-                            id="refreshComplaints"
-                            class="btn btn-secondary"
-                        >
-                            Refresh
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        id="complaintsMessage"
-                        class="complaints-message"
-                    >
-                        Loading your complaints...
-                    </div>
-
-                    <div
-                        id="complaintsList"
-                        class="complaints-list"
-                    ></div>
-
-                </section>
-
-            </main>
-
-
-            <!-- Footer -->
-            <footer class="footer">
-
-                <span>© 2026 CityCare</span>
-
-                <span>
-                    Smart Civic Issue Management Platform
-                </span>
-
-            </footer>
-
-        </div>
-
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <!-- Background leaf silhouettes -->
+    <div class="sidebar-leaves-bg">
+      <svg viewBox="0 0 200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path opacity="0.07" d="M30 60C30 60 80 80 70 140C60 200 10 210 10 210C10 210 5 150 15 110C25 70 30 60 30 60Z" fill="white"/>
+        <path opacity="0.05" d="M140 180C140 180 190 200 180 260C170 320 120 330 120 330C120 330 115 270 125 230C135 190 140 180 140 180Z" fill="white"/>
+        <path opacity="0.06" d="M120 40C120 40 160 55 150 100C140 145 105 155 105 155C105 155 100 110 110 80C120 50 120 40 120 40Z" fill="white"/>
+      </svg>
     </div>
 
+    <!-- Brand Header -->
+    <div class="brand-container">
+      <div class="brand-logo-wrap">
+        <!-- OFFICIAL CITYCARE EMBLEM -->
+        <div class="brand-logo-card">
+          <svg class="brand-icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="pinRingGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#72c416"/>
+                <stop offset="50%" stop-color="#2ca12d"/>
+                <stop offset="100%" stop-color="#0b6b33"/>
+              </linearGradient>
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#084282"/>
+                <stop offset="50%" stop-color="#0e62b8"/>
+                <stop offset="100%" stop-color="#0a70c9"/>
+              </linearGradient>
+              <linearGradient id="riverGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0a71ca"/>
+                <stop offset="100%" stop-color="#064082"/>
+              </linearGradient>
+              <linearGradient id="hillGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#55b81a"/>
+                <stop offset="100%" stop-color="#147526"/>
+              </linearGradient>
+            </defs>
+            <path d="M50 4C30 4 14 20 14 40C14 55 35 77 50 94C65 77 86 55 86 40C86 20 70 4 50 4Z" 
+                  stroke="url(#pinRingGrad)" stroke-width="8" stroke-linejoin="round" fill="none"/>
+            <g clip-path="url(#innerClip)">
+              <clipPath id="innerClip">
+                <path d="M50 8C33 8 19 22 19 40C19 53 37 72 50 87C63 72 81 53 81 40C81 22 67 8 50 8Z"/>
+              </clipPath>
+              <polygon points="50,14 46,20 54,20" fill="#0b488a"/>
+              <rect x="46" y="20" width="8" height="35" fill="url(#skyGrad)"/>
+              <rect x="48" y="24" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="51" y="24" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="48" y="28" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="51" y="28" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="48" y="32" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="51" y="32" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <polygon points="38,27 34,30 42,30" fill="#083a74"/>
+              <rect x="34" y="30" width="8" height="26" fill="url(#skyGrad)"/>
+              <rect x="36" y="33" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="39" y="33" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="36" y="37" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="39" y="37" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="26" y="36" width="7" height="20" fill="#0a59a7"/>
+              <rect x="28" y="39" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="28" y="43" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <polygon points="62,27 58,30 66,30" fill="#083a74"/>
+              <rect x="58" y="30" width="8" height="26" fill="url(#skyGrad)"/>
+              <rect x="60" y="33" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="63" y="33" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="60" y="37" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="63" y="37" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="67" y="36" width="7" height="20" fill="#0a59a7"/>
+              <rect x="69" y="39" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="69" y="43" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <path d="M14 46 C25 43 40 45 50 51 C62 43 78 44 86 47 L86 80 L14 80 Z" fill="url(#hillGrad)"/>
+              <path d="M50 51 C60 56 68 66 50 90 C62 82 78 68 76 52 C68 53 58 52 50 51 Z" fill="url(#riverGrad)"/>
+              <path d="M37 53 C33 50 31 46 31 46 C31 46 35 48 37 53 Z" fill="#ffffff"/>
+              <path d="M38 54 C42 49 45 47 45 47 C45 47 43 51 38 54 Z" fill="#ffffff"/>
+            </g>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h2>CityCare</h2>
+          <span>Civic Management System</span>
+        </div>
+      </div>
+      <p class="brand-subtext">Smarter City. Happier Citizens.</p>
+    </div>
 
-    <!-- Existing JavaScript -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/complaints.js"></script>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+      <a href="report.html" class="nav-item">
+        <i class="fa-regular fa-square-plus"></i>
+        <span>Report Issue</span>
+      </a>
+      <a href="complaints.html" class="nav-item active">
+        <i class="fa-regular fa-clipboard"></i>
+        <span>Complaints</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i class="fa-regular fa-user"></i>
+        <span>My Profile</span>
+      </a>
+    </nav>
 
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+      <div class="city-promo-card">
+        <div class="city-illustration">
+          <svg viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="32" width="14" height="48" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+            <rect x="33" y="20" width="16" height="60" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="41,8 33,20 49,20" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <rect x="53" y="38" width="12" height="42" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+            <rect x="69" y="16" width="18" height="64" stroke="#4ade80" stroke-width="1.2" opacity="0.8"/>
+            <line x1="78" y1="4" x2="78" y2="16" stroke="#4ade80" stroke-width="1.5" opacity="0.8"/>
+            <rect x="91" y="28" width="15" height="52" stroke="#4ade80" stroke-width="1.2" opacity="0.65"/>
+            <rect x="110" y="22" width="16" height="58" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="118,10 110,22 126,22" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <rect x="130" y="35" width="14" height="45" stroke="#4ade80" stroke-width="1.2" opacity="0.5"/>
+            <line x1="38" y1="28" x2="38" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="44" y1="28" x2="44" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="75" y1="24" x2="75" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="81" y1="24" x2="81" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="115" y1="30" x2="115" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="121" y1="30" x2="121" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <path d="M0 78 Q 80 72 160 78" stroke="#4ade80" stroke-width="1.2" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="promo-text-box">
+          <div class="promo-pin-icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <span>Together for a cleaner, safer and better city.</span>
+        </div>
+      </div>
+
+      <button id="logoutBtn" class="logout-pill-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="main-content">
+    
+    <!-- Top Header with Skyline -->
+    <header class="page-header">
+      <div class="header-left">
+        <span class="header-overline">YOUR CITY, YOUR VOICE</span>
+        <h1 class="main-heading">
+          My complaints<span class="heading-dot">.</span>
+        </h1>
+        <p class="sub-heading">Track the status of your reported issues in CityCare.</p>
+      </div>
+
+      <!-- Right hand Skyline Art and Cursive Slogan -->
+      <div class="header-illustration">
+        <div class="calligraphy-tag">
+          <div class="tag-content">
+            <span class="tag-title">Cleaner city</span>
+            <span class="tag-subtitle">Healthier tomorrow</span>
+          </div>
+          <svg class="tag-flourish" width="130" height="18" viewBox="0 0 130 18" fill="none">
+            <path d="M3 14C35 4 95 3 126 14M98 16C108 14 122 14 127 11" stroke="#3b694b" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="birds-flying">
+          <svg width="60" height="30" viewBox="0 0 60 30" fill="none">
+            <path d="M4 12 Q 9 6 14 12 Q 19 6 24 12" stroke="#527d60" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M26 8 Q 30 3 34 8 Q 38 3 42 8" stroke="#527d60" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+            <path d="M44 14 Q 48 10 52 14 Q 56 10 60 14" stroke="#527d60" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+
+        <div class="skyline-art">
+          <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="skyline-svg">
+            <defs>
+              <linearGradient id="skyBldg1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#b6d8c2"/>
+                <stop offset="100%" stop-color="#8dbb9d"/>
+              </linearGradient>
+              <linearGradient id="skyBldg2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cce6d5"/>
+                <stop offset="100%" stop-color="#a4cca7"/>
+              </linearGradient>
+              <linearGradient id="treeGrad1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#5a8a68"/>
+                <stop offset="100%" stop-color="#315c3e"/>
+              </linearGradient>
+              <linearGradient id="treeGrad2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#73a882"/>
+                <stop offset="100%" stop-color="#467854"/>
+              </linearGradient>
+            </defs>
+
+            <rect x="50" y="70" width="30" height="100" fill="#d7ecde" rx="2"/>
+            <rect x="85" y="55" width="28" height="115" fill="#cce6d5" rx="2"/>
+            <polygon points="99,35 85,55 113,55" fill="#cce6d5"/>
+            <rect x="160" y="60" width="36" height="110" fill="#d2ead9" rx="2"/>
+            <rect x="250" y="75" width="32" height="95" fill="#d7ecde" rx="2"/>
+            <rect x="290" y="50" width="30" height="120" fill="#cce6d5" rx="2"/>
+
+            <rect x="110" y="40" width="38" height="130" fill="url(#skyBldg1)" rx="3"/>
+            <line x1="129" y1="18" x2="129" y2="40" stroke="#7aa88a" stroke-width="2"/>
+            <g stroke="#ffffff" stroke-width="1" opacity="0.6">
+              <line x1="117" y1="50" x2="117" y2="150" stroke-dasharray="4 4"/>
+              <line x1="124" y1="50" x2="124" y2="150" stroke-dasharray="4 4"/>
+              <line x1="131" y1="50" x2="131" y2="150" stroke-dasharray="4 4"/>
+              <line x1="138" y1="50" x2="138" y2="150" stroke-dasharray="4 4"/>
+            </g>
+
+            <rect x="195" y="28" width="44" height="142" fill="url(#skyBldg2)" rx="3"/>
+            <polygon points="217,10 195,28 239,28" fill="#9bc2a4"/>
+            <g stroke="#ffffff" stroke-width="1.2" opacity="0.6">
+              <line x1="205" y1="40" x2="205" y2="150" stroke-dasharray="5 5"/>
+              <line x1="214" y1="40" x2="214" y2="150" stroke-dasharray="5 5"/>
+              <line x1="223" y1="40" x2="223" y2="150" stroke-dasharray="5 5"/>
+              <line x1="231" y1="40" x2="231" y2="150" stroke-dasharray="5 5"/>
+            </g>
+
+            <rect x="245" y="65" width="34" height="105" fill="url(#skyBldg1)" rx="3"/>
+
+            <ellipse cx="25" cy="155" rx="18" ry="24" fill="url(#treeGrad2)"/>
+            <ellipse cx="45" cy="150" rx="22" ry="28" fill="url(#treeGrad1)"/>
+            <ellipse cx="70" cy="158" rx="20" ry="24" fill="url(#treeGrad2)"/>
+            <ellipse cx="95" cy="148" rx="24" ry="32" fill="url(#treeGrad1)"/>
+            <ellipse cx="125" cy="156" rx="22" ry="26" fill="url(#treeGrad2)"/>
+            <ellipse cx="155" cy="150" rx="26" ry="34" fill="url(#treeGrad1)"/>
+            <ellipse cx="185" cy="158" rx="24" ry="28" fill="url(#treeGrad2)"/>
+            <ellipse cx="220" cy="152" rx="26" ry="32" fill="url(#treeGrad1)"/>
+            <ellipse cx="255" cy="156" rx="22" ry="28" fill="url(#treeGrad2)"/>
+            <ellipse cx="285" cy="150" rx="25" ry="32" fill="url(#treeGrad1)"/>
+            <ellipse cx="320" cy="154" rx="24" ry="28" fill="url(#treeGrad2)"/>
+            <ellipse cx="350" cy="148" rx="26" ry="34" fill="url(#treeGrad1)"/>
+            <ellipse cx="380" cy="155" rx="22" ry="26" fill="url(#treeGrad2)"/>
+            <ellipse cx="405" cy="150" rx="18" ry="24" fill="url(#treeGrad1)"/>
+
+            <rect x="0" y="166" width="420" height="14" fill="#315c3e"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- 4 SUMMARY METRIC CARDS -->
+    <section class="metrics-grid">
+      <!-- Total -->
+      <div class="metric-card" data-filter="all">
+        <div class="metric-icon-wrap icon-green">
+          <i class="fa-regular fa-file-lines"></i>
+        </div>
+        <div class="metric-info">
+          <span class="metric-label">Total complaints</span>
+          <div class="metric-number-row">
+            <span id="totalCount" class="metric-value">0</span>
+            <i class="fa-solid fa-arrow-right metric-arrow"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pending -->
+      <div class="metric-card" data-filter="Pending">
+        <div class="metric-icon-wrap icon-amber">
+          <i class="fa-regular fa-clock"></i>
+        </div>
+        <div class="metric-info">
+          <span class="metric-label">Pending</span>
+          <div class="metric-number-row">
+            <span id="pendingCount" class="metric-value">0</span>
+            <i class="fa-solid fa-arrow-right metric-arrow"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- In progress -->
+      <div class="metric-card" data-filter="In Progress">
+        <div class="metric-icon-wrap icon-blue">
+          <i class="fa-solid fa-hourglass-half"></i>
+        </div>
+        <div class="metric-info">
+          <span class="metric-label">In progress</span>
+          <div class="metric-number-row">
+            <span id="inProgressCount" class="metric-value">0</span>
+            <i class="fa-solid fa-arrow-right metric-arrow"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resolved -->
+      <div class="metric-card" data-filter="Resolved">
+        <div class="metric-icon-wrap icon-purple">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <div class="metric-info">
+          <span class="metric-label">Resolved</span>
+          <div class="metric-number-row">
+            <span id="resolvedCount" class="metric-value">0</span>
+            <i class="fa-solid fa-arrow-right metric-arrow"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REPORTED ISSUES SECTION -->
+    <section class="reported-issues-card">
+      <div class="reported-header">
+        <div class="reported-title-wrap">
+          <div class="reported-title-icon">
+            <i class="fa-regular fa-file-lines"></i>
+          </div>
+          <div>
+            <h2 class="reported-title">Reported issues</h2>
+            <p class="reported-subtitle">Your submitted complaints and their latest status.</p>
+          </div>
+        </div>
+        <button id="refreshBtn" class="refresh-pill-btn">
+          <i class="fa-solid fa-rotate"></i>
+          <span>Refresh</span>
+        </button>
+      </div>
+
+      <div class="complaint-count-badge">
+        <span id="complaintFoundText">0 complaint(s) found.</span>
+      </div>
+
+      <!-- Complaints Dynamic List Container -->
+      <div id="complaintsList" class="complaints-list">
+        <!-- Injected via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Bottom Decorative Leaves -->
+    <div class="corner-leaves-decoration">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path opacity="0.3" d="M180 90C180 90 120 85 100 125C80 165 95 180 95 180C95 180 145 185 165 145C185 105 180 90 180 90Z" fill="#a4c9b0"/>
+        <path opacity="0.4" d="M180 30C180 30 140 45 135 85C130 125 155 145 155 145C155 145 178 115 180 85C182 55 180 30 180 30Z" fill="#88b595"/>
+        <path opacity="0.25" d="M120 180C120 180 95 140 115 105C135 70 160 80 160 80C160 80 155 125 135 150C115 175 120 180 120 180Z" fill="#b9dac4"/>
+      </svg>
+    </div>
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="toastNotification" class="toast-notification"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/complaints.js"></script>
 </body>
 </html>

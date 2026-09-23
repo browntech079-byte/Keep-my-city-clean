@@ -1,667 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Report Issue — CityCare</title>
-
-    <!-- Existing global styles -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/auth.css">
-
-    <!-- New Report page design -->
-    <link rel="stylesheet" href="css/report-redesign.css">
-
-    <!-- Leaflet -->
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CityCare - Report Issue</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/report-redesign.css">
 </head>
-
-<body class="report-page">
-
-    <div class="report-layout">
-
-        <!-- =====================================================
-             SIDEBAR
-        ====================================================== -->
-
-        <aside class="report-sidebar">
-
-            <!-- Brand -->
-            <a href="index.html" class="report-sidebar-brand">
-
-                <img
-                    src="assets/images/citycare-logo.png"
-                    alt="CityCare Logo"
-                    class="report-sidebar-logo"
-                >
-
-                <div class="report-sidebar-brand-text">
-                    <strong>CityCare</strong>
-                    <span>Smart Civic Issue Management</span>
-                </div>
-
-            </a>
-
-
-            <!-- Navigation -->
-            <div class="report-sidebar-section">
-
-                <p class="report-sidebar-label">
-                    WORKSPACE
-                </p>
-
-                <nav class="report-sidebar-nav">
-
-                    <a href="index.html">
-                        <span class="sidebar-icon" aria-hidden="true">
-                            ⌂
-                        </span>
-
-                        <span>
-                            Home
-                        </span>
-                    </a>
-
-
-                    <a
-                        href="report.html"
-                        class="active"
-                        aria-current="page"
-                    >
-                        <span class="sidebar-icon" aria-hidden="true">
-                            +
-                        </span>
-
-                        <span>
-                            Report Issue
-                        </span>
-                    </a>
-
-
-                    <a href="complaints.html">
-
-                        <span class="sidebar-icon" aria-hidden="true">
-                            ▤
-                        </span>
-
-                        <span>
-                            Complaints
-                        </span>
-
-                    </a>
-
-
-                    <a href="profile.html">
-
-                        <span class="sidebar-icon" aria-hidden="true">
-                            ♙
-                        </span>
-
-                        <span>
-                            My Profile
-                        </span>
-
-                    </a>
-
-                </nav>
-
-            </div>
-
-
-            <!-- Sidebar decorative city -->
-            <div class="sidebar-city-art" aria-hidden="true">
-
-                <div class="city-building city-building-1"></div>
-                <div class="city-building city-building-2"></div>
-                <div class="city-building city-building-3"></div>
-                <div class="city-building city-building-4"></div>
-                <div class="city-building city-building-5"></div>
-
-                <div class="city-tree tree-one"></div>
-                <div class="city-tree tree-two"></div>
-                <div class="city-tree tree-three"></div>
-
-            </div>
-
-
-            <!-- Sidebar Bottom -->
-            <div class="report-sidebar-bottom">
-
-                <div class="report-sidebar-message">
-
-                    <span>
-                        Better infrastructure
-                    </span>
-
-                    <strong>
-                        for a brighter tomorrow.
-                    </strong>
-
-                </div>
-
-
-                <a
-                    href="login.html"
-                    class="report-sidebar-login"
-                >
-
-                    <span aria-hidden="true">
-                        ↪
-                    </span>
-
-                    <span>
-                        Login
-                    </span>
-
-                </a>
-
-            </div>
-
-        </aside>
-
-
-        <!-- =====================================================
-             MAIN CONTENT
-        ====================================================== -->
-
-        <div class="report-main">
-
-            <main class="report-container">
-
-
-                <!-- =================================================
-                     HERO HEADER
-                ================================================== -->
-
-                <section class="report-hero">
-
-                    <div class="report-hero-content">
-
-                        <span class="report-hero-badge">
-                            REPORT A CIVIC ISSUE
-                        </span>
-
-
-                        <h1>
-                            Report a civic issue.
-                            <br>
-                            Make your city better.
-                        </h1>
-
-
-                        <p>
-                            Help improve your city by reporting problems
-                            directly to the appropriate authorities.
-                        </p>
-
-                    </div>
-
-
-                    <!-- Decorative city illustration -->
-                    <div
-                        class="report-hero-art"
-                        aria-hidden="true"
-                    >
-
-                        <div class="hero-sun"></div>
-
-                        <div class="hero-cloud cloud-one"></div>
-                        <div class="hero-cloud cloud-two"></div>
-
-                        <div class="hero-city">
-
-                            <span class="hero-building b1"></span>
-                            <span class="hero-building b2"></span>
-                            <span class="hero-building b3"></span>
-                            <span class="hero-building b4"></span>
-                            <span class="hero-building b5"></span>
-                            <span class="hero-building b6"></span>
-
-                        </div>
-
-                        <div class="hero-trees">
-
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-
-                        </div>
-
-                        <div class="hero-birds">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="hero-slogan">
-
-                        <strong>
-                            Clean Cities
-                        </strong>
-
-                        <strong>
-                            Stronger Communities
-                        </strong>
-
-                        <span></span>
-
-                    </div>
-
-                </section>
-
-
-                <!-- =================================================
-                     REPORT GRID
-                ================================================== -->
-
-                <section class="report-grid">
-
-
-                    <!-- =================================================
-                         LEFT — ISSUE DETAILS
-                    ================================================== -->
-
-                    <div class="report-form-card">
-
-
-                        <div class="report-card-heading">
-
-                            <div class="heading-icon">
-                                <span>▤</span>
-                            </div>
-
-                            <div>
-
-                                <h2>
-                                    Issue Details
-                                </h2>
-
-                            </div>
-
-                            <span class="required-note">
-                                <b>*</b> Required
-                            </span>
-
-                        </div>
-
-
-                        <form id="complaintForm">
-
-
-                            <!-- Issue Title -->
-
-                            <div class="form-group">
-
-                                <label for="title">
-                                    Issue Title <span>*</span>
-                                </label>
-
-                                <input
-                                    type="text"
-                                    id="title"
-                                    name="title"
-                                    placeholder="e.g. Large pothole near main road"
-                                    required
-                                >
-
-                            </div>
-
-
-                            <!-- Category -->
-
-                            <div class="form-group">
-
-                                <label for="category">
-                                    Category <span>*</span>
-                                </label>
-
-                                <select
-                                    id="category"
-                                    name="category"
-                                    required
-                                >
-
-                                    <option value="">
-                                        Select issue category
-                                    </option>
-
-                                    <option value="Pothole">
-                                        Road / Pothole
-                                    </option>
-
-                                    <option value="Garbage">
-                                        Garbage / Waste
-                                    </option>
-
-                                    <option value="Streetlight">
-                                        Streetlight
-                                    </option>
-
-                                    <option value="Water">
-                                        Water Supply
-                                    </option>
-
-                                    <option value="Drainage">
-                                        Drainage / Sewage
-                                    </option>
-
-                                    <option value="Traffic">
-                                        Traffic / Signals
-                                    </option>
-
-                                    <option value="Other">
-                                        Other
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <!-- Description -->
-
-                            <div class="form-group">
-
-                                <label for="description">
-                                    Description <span>*</span>
-                                </label>
-
-                                <textarea
-                                    id="description"
-                                    name="description"
-                                    rows="6"
-                                    placeholder="Describe the issue and provide any useful details..."
-                                    required
-                                ></textarea>
-
-                            </div>
-
-
-                            <!-- Image Upload -->
-
-                            <div class="form-group report-upload-group">
-
-                                <label for="image">
-                                    Add Photo
-                                </label>
-
-
-                                <div class="custom-file-upload">
-
-                                    <span
-                                        class="upload-icon"
-                                        aria-hidden="true"
-                                    >
-                                        ⇧
-                                    </span>
-
-                                    <input
-                                        type="file"
-                                        id="image"
-                                        name="image"
-                                        accept="image/*"
-                                    >
-
-                                    <span class="file-upload-text">
-                                        Choose File
-                                    </span>
-
-                                    <span class="file-name">
-                                        No file chosen
-                                    </span>
-
-                                </div>
-
-
-                                <small>
-                                    Upload a clear photo of the civic issue.
-                                </small>
-
-                            </div>
-
-
-                            <!-- Hidden location fields -->
-
-                            <input
-                                type="hidden"
-                                id="latitude"
-                                name="latitude"
-                            >
-
-                            <input
-                                type="hidden"
-                                id="longitude"
-                                name="longitude"
-                            >
-
-                            <input
-                                type="hidden"
-                                id="address"
-                                name="address"
-                            >
-
-
-                            <!-- Selected Location -->
-
-                            <div class="selected-location">
-
-                                <div class="selected-location-heading">
-
-                                    <span class="location-mini-icon">
-                                        ●
-                                    </span>
-
-                                    <span class="card-label">
-                                        SELECTED LOCATION
-                                    </span>
-
-                                </div>
-
-
-                                <p id="locationText">
-                                    Click on the map to select the issue location.
-                                </p>
-
-                            </div>
-
-
-                            <!-- Submit -->
-
-                            <button
-                                type="submit"
-                                class="btn btn-primary submit-btn"
-                            >
-
-                                <span class="submit-icon">
-                                    ➤
-                                </span>
-
-                                <span>
-                                    Submit Complaint
-                                </span>
-
-                                <span class="submit-arrow">
-                                    →
-                                </span>
-
-                            </button>
-
-                        </form>
-
-                    </div>
-
-
-                    <!-- =================================================
-                         RIGHT — LOCATION
-                    ================================================== -->
-
-                    <div class="report-map-card">
-
-
-                        <div class="report-map-heading">
-
-                            <div class="map-title-area">
-
-                                <div class="heading-icon map-heading-icon">
-                                    <span>
-                                        ●
-                                    </span>
-                                </div>
-
-                                <div>
-
-                                    <span class="card-label">
-                                        LOCATION
-                                    </span>
-
-                                    <h2>
-                                        Where is the issue?
-                                    </h2>
-
-                                </div>
-
-                            </div>
-
-
-                            <span class="map-status">
-                                <span>▣</span>
-                                Interactive Map
-                            </span>
-
-                        </div>
-
-
-                        <!-- Interactive Map -->
-
-                        <div
-                            id="reportMap"
-                            class="report-map"
-                        ></div>
-
-
-                        <!-- Map Instruction -->
-
-                        <div class="map-instruction">
-
-                            <span class="instruction-icon">
-                                +
-                            </span>
-
-                            <p>
-                                Click anywhere on the map to place the
-                                complaint location.
-                            </p>
-
-                        </div>
-
-
-                        <!-- PIN Code Search -->
-
-                        <div class="pincode-search">
-
-                            <label for="pincodeInput">
-                                Or find it by PIN code
-                            </label>
-
-
-                            <div class="pincode-search-row">
-
-                                <input
-                                    type="text"
-                                    id="pincodeInput"
-                                    name="pincode"
-                                    inputmode="numeric"
-                                    maxlength="6"
-                                    placeholder="e.g. 110001"
-                                    autocomplete="postal-code"
-                                >
-
-
-                                <button
-                                    type="button"
-                                    id="pincodeSearchBtn"
-                                    class="pincode-search-btn"
-                                >
-
-                                    <span>
-                                        ⌕
-                                    </span>
-
-                                    Search
-
-                                </button>
-
-                            </div>
-
-
-                            <small id="pincodeStatus"></small>
-
-                        </div>
-
-
-                        <!-- Decorative leaf -->
-
-                        <div
-                            class="map-leaf-decoration"
-                            aria-hidden="true"
-                        >
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                    </div>
-
-                </section>
-
-            </main>
-
-
-            <!-- =====================================================
-                 FOOTER
-            ====================================================== -->
-
-            <footer class="footer">
-
-                <span>
-                    © 2026 CityCare
-                </span>
-
-                <span>
-                    Smart Civic Issue Management Platform
-                </span>
-
-            </footer>
-
+<body class="citycare-app">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <!-- Background leaf silhouettes -->
+    <div class="sidebar-leaves-bg">
+      <svg viewBox="0 0 200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path opacity="0.07" d="M30 60C30 60 80 80 70 140C60 200 10 210 10 210C10 210 5 150 15 110C25 70 30 60 30 60Z" fill="white"/>
+        <path opacity="0.05" d="M140 180C140 180 190 200 180 260C170 320 120 330 120 330C120 330 115 270 125 230C135 190 140 180 140 180Z" fill="white"/>
+        <path opacity="0.06" d="M120 40C120 40 160 55 150 100C140 145 105 155 105 155C105 155 100 110 110 80C120 50 120 40 120 40Z" fill="white"/>
+      </svg>
+    </div>
+
+    <!-- Brand Header -->
+    <div class="brand-container">
+      <div class="brand-logo-wrap">
+        <svg class="brand-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="36" height="36" rx="10" fill="white"/>
+          <path d="M18 7C14 12 11 18 11 23C11 26.866 14.134 30 18 30C21.866 30 25 26.866 25 23C25 18 22 12 18 7Z" fill="#254d36" fill-opacity="0.15"/>
+          <path d="M18 9C15 13.5 13 18 13 22.5C13 25.5 15.2 28 18 28C20.8 28 23 25.5 23 22.5C23 18 21 13.5 18 9Z" stroke="#254d36" stroke-width="2" stroke-linecap="round"/>
+          <path d="M18 14V26M18 19C16 17 14 17 14 17M18 22C20 20.5 22 21 22 21" stroke="#254d36" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <div class="brand-text">
+          <h2>CityCare</h2>
+          <span>Civic Management System</span>
         </div>
+      </div>
+      <p class="brand-subtext">Smarter City. Happier Citizens.</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+      <a href="report.html" class="nav-item active">
+        <i class="fa-regular fa-square-plus"></i>
+        <span>Report Issue</span>
+      </a>
+      <a href="complaints.html" class="nav-item">
+        <i class="fa-regular fa-clipboard"></i>
+        <span>Complaints</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <i class="fa-regular fa-user"></i>
+        <span>My Profile</span>
+      </a>
+    </nav>
+
+    <!-- Bottom Skyline Card -->
+    <div class="sidebar-footer">
+      <div class="city-promo-card">
+        <div class="city-illustration">
+          <svg viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Buildings outline -->
+            <rect x="15" y="32" width="14" height="48" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+            <rect x="33" y="20" width="16" height="60" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="41,8 33,20 49,20" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <rect x="53" y="38" width="12" height="42" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+            <rect x="69" y="16" width="18" height="64" stroke="#4ade80" stroke-width="1.2" opacity="0.8"/>
+            <line x1="78" y1="4" x2="78" y2="16" stroke="#4ade80" stroke-width="1.5" opacity="0.8"/>
+            <rect x="91" y="28" width="15" height="52" stroke="#4ade80" stroke-width="1.2" opacity="0.65"/>
+            <rect x="110" y="22" width="16" height="58" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="118,10 110,22 126,22" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <rect x="130" y="35" width="14" height="45" stroke="#4ade80" stroke-width="1.2" opacity="0.5"/>
+            <!-- Windows dots -->
+            <line x1="38" y1="28" x2="38" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="44" y1="28" x2="44" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="75" y1="24" x2="75" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="81" y1="24" x2="81" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="115" y1="30" x2="115" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="121" y1="30" x2="121" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <!-- Ground curve line -->
+            <path d="M0 78 Q 80 72 160 78" stroke="#4ade80" stroke-width="1.2" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="promo-text-box">
+          <div class="promo-pin-icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <span>Together for a cleaner, safer and better city.</span>
+        </div>
+      </div>
+
+      <button id="logoutBtn" class="logout-pill-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN VIEW CONTAINER -->
+  <main class="main-content">
+    
+    <!-- Top Header & Banner -->
+    <header class="page-header">
+      <div class="header-left">
+        <div class="civic-badge">REPORT A CIVIC ISSUE</div>
+        <h1 class="main-heading">
+          Report a civic issue.<br>
+          Make your city better.
+        </h1>
+        <p class="sub-heading">Help improve your city by reporting problems directly to the appropriate authorities.</p>
+      </div>
+
+      <!-- Right hand illustration (City Skyline & Birds) -->
+      <div class="header-illustration">
+        <!-- Calligraphic tag with decorative flourish -->
+        <div class="calligraphy-tag">
+          <div class="tag-content">
+            <span class="tag-title">Clean Cities</span>
+            <span class="tag-subtitle">Stronger Communities</span>
+          </div>
+          <svg class="tag-flourish" width="130" height="18" viewBox="0 0 130 18" fill="none">
+            <path d="M3 14C35 4 95 3 126 14M98 16C108 14 122 14 127 11" stroke="#3b694b" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- Flying birds SVG -->
+        <div class="birds-flying">
+          <svg width="60" height="30" viewBox="0 0 60 30" fill="none">
+            <path d="M4 12 Q 9 6 14 12 Q 19 6 24 12" stroke="#527d60" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M26 8 Q 30 3 34 8 Q 38 3 42 8" stroke="#527d60" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+            <path d="M44 14 Q 48 10 52 14 Q 56 10 60 14" stroke="#527d60" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- Detailed Skyline with Trees & Buildings -->
+        <div class="skyline-art">
+          <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="skyline-svg">
+            <defs>
+              <linearGradient id="skyBldg1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#b6d8c2"/>
+                <stop offset="100%" stop-color="#8dbb9d"/>
+              </linearGradient>
+              <linearGradient id="skyBldg2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cce6d5"/>
+                <stop offset="100%" stop-color="#a4cca7"/>
+              </linearGradient>
+              <linearGradient id="treeGrad1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#5a8a68"/>
+                <stop offset="100%" stop-color="#315c3e"/>
+              </linearGradient>
+              <linearGradient id="treeGrad2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#73a882"/>
+                <stop offset="100%" stop-color="#467854"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Back Row Buildings (Soft green) -->
+            <rect x="50" y="70" width="30" height="100" fill="#d7ecde" rx="2"/>
+            <rect x="85" y="55" width="28" height="115" fill="#cce6d5" rx="2"/>
+            <polygon points="99,35 85,55 113,55" fill="#cce6d5"/>
+            <rect x="160" y="60" width="36" height="110" fill="#d2ead9" rx="2"/>
+            <rect x="250" y="75" width="32" height="95" fill="#d7ecde" rx="2"/>
+            <rect x="290" y="50" width="30" height="120" fill="#cce6d5" rx="2"/>
+
+            <!-- Mid Row Buildings with Architectural Grids -->
+            <rect x="110" y="40" width="38" height="130" fill="url(#skyBldg1)" rx="3"/>
+            <line x1="129" y1="18" x2="129" y2="40" stroke="#7aa88a" stroke-width="2"/>
+            <!-- Window details -->
+            <g stroke="#ffffff" stroke-width="1" opacity="0.6">
+              <line x1="117" y1="50" x2="117" y2="150" stroke-dasharray="4 4"/>
+              <line x1="124" y1="50" x2="124" y2="150" stroke-dasharray="4 4"/>
+              <line x1="131" y1="50" x2="131" y2="150" stroke-dasharray="4 4"/>
+              <line x1="138" y1="50" x2="138" y2="150" stroke-dasharray="4 4"/>
+            </g>
+
+            <rect x="195" y="28" width="44" height="142" fill="url(#skyBldg2)" rx="3"/>
+            <polygon points="217,10 195,28 239,28" fill="#9bc2a4"/>
+            <g stroke="#ffffff" stroke-width="1.2" opacity="0.6">
+              <line x1="205" y1="40" x2="205" y2="150" stroke-dasharray="5 5"/>
+              <line x1="214" y1="40" x2="214" y2="150" stroke-dasharray="5 5"/>
+              <line x1="223" y1="40" x2="223" y2="150" stroke-dasharray="5 5"/>
+              <line x1="231" y1="40" x2="231" y2="150" stroke-dasharray="5 5"/>
+            </g>
+
+            <rect x="245" y="65" width="34" height="105" fill="url(#skyBldg1)" rx="3"/>
+
+            <!-- Foreground Trees & Foliage Canopy -->
+            <ellipse cx="25" cy="155" rx="18" ry="24" fill="url(#treeGrad2)"/>
+            <ellipse cx="45" cy="150" rx="22" ry="28" fill="url(#treeGrad1)"/>
+            <ellipse cx="70" cy="158" rx="20" ry="24" fill="url(#treeGrad2)"/>
+            <ellipse cx="95" cy="148" rx="24" ry="32" fill="url(#treeGrad1)"/>
+            <ellipse cx="125" cy="156" rx="22" ry="26" fill="url(#treeGrad2)"/>
+            <ellipse cx="155" cy="150" rx="26" ry="34" fill="url(#treeGrad1)"/>
+            <ellipse cx="185" cy="158" rx="24" ry="28" fill="url(#treeGrad2)"/>
+            <ellipse cx="220" cy="152" rx="26" ry="32" fill="url(#treeGrad1)"/>
+            <ellipse cx="255" cy="156" rx="22" ry="28" fill="url(#treeGrad2)"/>
+            <ellipse cx="285" cy="150" rx="25" ry="32" fill="url(#treeGrad1)"/>
+            <ellipse cx="320" cy="154" rx="24" ry="28" fill="url(#treeGrad2)"/>
+            <ellipse cx="350" cy="148" rx="26" ry="34" fill="url(#treeGrad1)"/>
+            <ellipse cx="380" cy="155" rx="22" ry="26" fill="url(#treeGrad2)"/>
+            <ellipse cx="405" cy="150" rx="18" ry="24" fill="url(#treeGrad1)"/>
+
+            <!-- Ground Base Bar -->
+            <rect x="0" y="166" width="420" height="14" fill="#315c3e"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- TWO-COLUMN WORKSPACE -->
+    <div class="workspace-grid">
+
+      <!-- LEFT COLUMN: ISSUE DETAILS FORM -->
+      <section class="card form-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-title-icon green-soft">
+              <i class="fa-regular fa-file-lines"></i>
+            </div>
+            <h2 class="card-title">Issue Details</h2>
+          </div>
+          <span class="required-notice"><span class="star">*</span> Required</span>
+        </div>
+
+        <form id="reportIssueForm" class="issue-form" novalidate>
+          
+          <!-- Issue Title -->
+          <div class="form-group">
+            <label for="title">Issue Title <span class="star">*</span></label>
+            <input type="text" id="title" name="title" class="input-field" placeholder="e.g. Loose potholes near main road" required>
+          </div>
+
+          <!-- Category -->
+          <div class="form-group">
+            <label for="category">Category <span class="star">*</span></label>
+            <div class="select-wrapper">
+              <select id="category" name="category" class="input-field select-field" required>
+                <option value="" disabled selected>Select issue category</option>
+                <option value="Roads & Footpaths">Roads & Footpaths</option>
+                <option value="Garbage & Cleanliness">Garbage & Cleanliness</option>
+                <option value="Water Supply">Water Supply</option>
+                <option value="Streetlights & Electricity">Streetlights & Electricity</option>
+                <option value="Drainage & Sewage">Drainage & Sewage</option>
+                <option value="Public Parks">Public Parks</option>
+                <option value="Other">Other</option>
+              </select>
+              <i class="fa-solid fa-chevron-down select-arrow"></i>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="description">Description <span class="star">*</span></label>
+            <textarea id="description" name="description" class="input-field textarea-field" rows="4" placeholder="Describe the issue and provide any useful details..." required></textarea>
+          </div>
+
+          <!-- Add Photo -->
+          <div class="form-group">
+            <label>Add Photo</label>
+            <div class="file-upload-container">
+              <div class="upload-icon-box">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+              <label for="imageUpload" class="custom-file-btn">Choose File</label>
+              <input type="file" id="imageUpload" name="image" accept="image/*" hidden>
+              <span id="fileName" class="file-name-text">No file chosen</span>
+            </div>
+            <span class="field-hint">Upload clear photo of the issue</span>
+          </div>
+
+          <!-- Selected Location Display Box -->
+          <div class="selected-location-box">
+            <span class="location-box-title">SELECTED LOCATION</span>
+            <div class="location-box-content">
+              <i class="fa-solid fa-location-dot location-dot-icon"></i>
+              <span id="selectedLocationText">Click on the map to select the exact location.</span>
+            </div>
+          </div>
+
+          <!-- Hidden coordinates -->
+          <input type="hidden" id="latitude" name="latitude">
+          <input type="hidden" id="longitude" name="longitude">
+          <input type="hidden" id="address" name="address">
+
+          <!-- Submit Button -->
+          <button type="submit" id="submitBtn" class="btn-submit-complaint">
+            <i class="fa-regular fa-paper-plane"></i>
+            <span>Submit Complaint</span>
+            <i class="fa-solid fa-arrow-right-long arrow-right"></i>
+          </button>
+        </form>
+      </section>
+
+      <!-- RIGHT COLUMN: MAP & PIN LOOKUP -->
+      <section class="card map-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-title-icon green-soft">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <h2 class="card-title">Location</h2>
+          </div>
+          <div class="interactive-map-badge">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Interactive Map</span>
+          </div>
+        </div>
+
+        <!-- Leaflet Map Wrapper -->
+        <div class="map-container-wrapper">
+          <div id="map" class="map-element"></div>
+        </div>
+
+        <!-- Map helper hint pill -->
+        <div class="map-hint-pill">
+          <div class="hint-pin">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <span>Click anywhere on the map to place the marker on your problem location.</span>
+        </div>
+
+        <!-- Search by PIN Code -->
+        <div class="pincode-section">
+          <label for="pinInput" class="pincode-label">Or find it by PIN code</label>
+          <div class="pincode-input-group">
+            <input type="text" id="pinInput" class="input-field pin-field" placeholder="e.g. 560001" maxlength="6">
+            <button type="button" id="searchPinBtn" class="btn-pin-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span>Search</span>
+            </button>
+          </div>
+        </div>
+      </section>
 
     </div>
 
+    <!-- Decorative Corner Leaves -->
+    <div class="corner-leaves-decoration">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path opacity="0.3" d="M180 90C180 90 120 85 100 125C80 165 95 180 95 180C95 180 145 185 165 145C185 105 180 90 180 90Z" fill="#a4c9b0"/>
+        <path opacity="0.4" d="M180 30C180 30 140 45 135 85C130 125 155 145 155 145C155 145 178 115 180 85C182 55 180 30 180 30Z" fill="#88b595"/>
+        <path opacity="0.25" d="M120 180C120 180 95 140 115 105C135 70 160 80 160 80C160 80 155 125 135 150C115 175 120 180 120 180Z" fill="#b9dac4"/>
+      </svg>
+    </div>
+  </main>
 
-    <!-- =========================================================
-         LEAFLET MAP
-    ========================================================== -->
+  <!-- Notification Toast -->
+  <div id="toastNotification" class="toast-notification"></div>
 
-    <script
-        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    ></script>
-
-
-    <!-- =========================================================
-         EXISTING REPORT JAVASCRIPT — DO NOT CHANGE
-    ========================================================== -->
-
-    <script src="js/report.js"></script>
-
+  <!-- Leaflet JS & Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/report.js"></script>
 </body>
 </html>

@@ -1,2434 +1,732 @@
-/* =========================================================
-   CITYCARE — REPORT ISSUE REDESIGN
-   ---------------------------------------------------------
-   This stylesheet affects ONLY .report-page.
-   Existing report.js remains untouched.
-   ========================================================= */
-
-
-/* =========================================================
-   ROOT
-   ========================================================= */
-
-.report-page {
-
-    --report-bg: #f7f8f3;
-    --report-green: #1e4d35;
-    --report-green-dark: #173c2a;
-    --report-green-light: #dfeeda;
-    --report-green-soft: #eef6ea;
-
-    --report-text: #17352a;
-    --report-muted: #708279;
-
-    --report-border: #dfe7df;
-
-    --report-white: #ffffff;
-
-    background:
-        radial-gradient(
-            circle at 72% 0%,
-            rgba(176, 206, 168, 0.20),
-            transparent 34%
-        ),
-        linear-gradient(
-            180deg,
-            #f9faf7 0%,
-            #f4f7f1 100%
-        );
-
-    color: var(--report-text);
-
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-}
-
-
-/* =========================================================
-   PAGE LAYOUT
-   ========================================================= */
-
-.report-page .report-layout {
-
-    min-height: 100vh;
-
-    display: grid;
-
-    grid-template-columns: 250px minmax(0, 1fr);
-
-    background: transparent;
-}
-
-
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
-
-.report-page .report-sidebar {
-
-    position: sticky;
-
-    top: 0;
-
-    height: 100vh;
-
-    overflow: hidden;
-
-    display: flex;
-
-    flex-direction: column;
-
-    padding: 28px 20px 18px;
-
-    background:
-        radial-gradient(
-            circle at 80% 10%,
-            rgba(110, 157, 108, 0.20),
-            transparent 28%
-        ),
-        linear-gradient(
-            180deg,
-            #214a34 0%,
-            #173d2a 100%
-        );
-
-    color: #ffffff;
-
-    border: none;
-
-    box-shadow:
-        12px 0 40px rgba(20, 60, 40, 0.07);
-
-    z-index: 20;
-}
-
-
-/* =========================================================
-   SIDEBAR BRAND
-   ========================================================= */
-
-.report-page .report-sidebar-brand {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 0 8px 24px;
-
-    color: #ffffff;
-
-    border-bottom:
-        1px solid rgba(255, 255, 255, 0.12);
-
-    position: relative;
-
-    z-index: 5;
-}
-
-
-.report-page .report-sidebar-logo {
-
-    width: 48px;
-
-    height: 48px;
-
-    object-fit: contain;
-
-    border-radius: 13px;
-
-    background: #ffffff;
-
-    padding: 4px;
-
-    box-shadow:
-        0 6px 18px rgba(0, 0, 0, 0.12);
-}
-
-
-.report-page .report-sidebar-brand-text {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 3px;
-
-    min-width: 0;
-}
-
-
-.report-page .report-sidebar-brand-text strong {
-
-    color: #ffffff;
-
-    font-size: 1.18rem;
-
-    line-height: 1.1;
-
-    font-weight: 750;
-
-    letter-spacing: -0.035em;
-}
-
-
-.report-page .report-sidebar-brand-text span {
-
-    color:
-        rgba(255, 255, 255, 0.68);
-
-    font-size: 0.58rem;
-
-    line-height: 1.35;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   SIDEBAR WORKSPACE
-   ========================================================= */
-
-.report-page .report-sidebar-section {
-
-    margin-top: 28px;
-
-    position: relative;
-
-    z-index: 5;
-}
-
-
-.report-page .report-sidebar-label {
-
-    margin: 0 8px 12px;
-
-    color:
-        rgba(255, 255, 255, 0.55);
-
-    font-size: 0.62rem;
-
-    font-weight: 700;
-
-    letter-spacing: 0.16em;
-}
-
-
-.report-page .report-sidebar-nav {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 7px;
-}
-
-
-.report-page .report-sidebar-nav a {
-
-    min-height: 48px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    padding: 0 14px;
-
-    color:
-        rgba(255, 255, 255, 0.80);
-
-    border-radius: 12px;
-
-    font-size: 0.84rem;
-
-    font-weight: 500;
-
-    transition:
-        background 0.22s ease,
-        color 0.22s ease,
-        transform 0.22s ease;
+/* ==========================================================================
+   CityCare "Report Issue" Screen Redesign
+   Exact match to Image 2
+   ========================================================================== */
+
+:root {
+  --primary-dark: #204530;
+  --primary-green: #254d36;
+  --primary-hover: #1b3d2b;
+  --accent-green: #3b694b;
+  --light-sage: #eaf3ed;
+  --card-sage-border: #e3ebe5;
+  --badge-bg: #dbebe0;
+  --badge-text: #2f563d;
+  --text-dark: #1e2922;
+  --text-gray: #627267;
+  --text-light: #8e9e93;
+  --input-border: #dfe6e1;
+  --input-focus: #315c3e;
+  --sidebar-active-bg: #bfdfcb;
+  --sidebar-active-text: #193825;
+  --sidebar-text: #e1ede5;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body.citycare-app {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #f7faf8;
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   LEFT SIDEBAR
+   ========================================================================== */
+.sidebar {
+  width: 260px;
+  background-color: var(--primary-green);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 28px 18px 24px 20px;
+  position: relative;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.sidebar-leaves-bg {
+  position: absolute;
+  top: 120px;
+  right: 0;
+  width: 140px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.brand-container {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 36px;
+}
+
+.brand-logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.brand-text h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.brand-text span {
+  font-size: 0.68rem;
+  color: #a4c9b0;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.brand-subtext {
+  font-size: 0.72rem;
+  color: #92bfa0;
+  margin-top: 10px;
+  padding-left: 2px;
 }
 
-
-.report-page .report-sidebar-nav a:hover {
-
-    color: #ffffff;
-
-    background:
-        rgba(255, 255, 255, 0.09);
-
-    transform: translateX(2px);
+/* Navigation */
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  z-index: 2;
+  flex-grow: 1;
 }
-
-
-.report-page .report-sidebar-nav a.active {
-
-    color: #1d432e;
-
-    background:
-        linear-gradient(
-            135deg,
-            #eef5e9,
-            #d8e8d2
-        );
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  color: var(--sidebar-text);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-item i {
+  font-size: 1.05rem;
+  width: 20px;
+  text-align: center;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.nav-item.active {
+  background-color: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+  font-weight: 600;
+}
+
+.nav-item.active i {
+  color: var(--sidebar-active-text);
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  position: relative;
+  z-index: 2;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.city-promo-card {
+  background: rgba(14, 38, 23, 0.45);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.city-illustration {
+  width: 100%;
+  height: 52px;
+  margin-bottom: 8px;
+}
+
+.city-illustration svg {
+  width: 100%;
+  height: 100%;
+}
+
+.promo-text-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.promo-pin-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  color: #79d799;
+}
+
+.promo-text-box span {
+  font-size: 0.7rem;
+  line-height: 1.35;
+  color: #cfe5d6;
+  font-weight: 400;
+}
+
+.logout-pill-btn {
+  width: 100%;
+  background-color: var(--sidebar-active-bg);
+  color: var(--sidebar-active-text);
+  border: none;
+  outline: none;
+  padding: 11px 20px;
+  border-radius: var(--radius-pill);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  transition: background 0.2s ease;
+}
+
+.logout-pill-btn:hover {
+  background-color: #add3ba;
+}
+
+/* ==========================================================================
+   MAIN VIEW & HEADER
+   ========================================================================== */
+.main-content {
+  flex-grow: 1;
+  padding: 30px 42px 40px;
+  position: relative;
+  background-color: #f7faf8;
+  max-width: 1440px;
+}
+
+/* Header Area */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.header-left {
+  max-width: 580px;
+}
+
+.civic-badge {
+  display: inline-block;
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+
+.main-heading {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+
+.sub-heading {
+  font-size: 0.88rem;
+  color: var(--text-gray);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Upper Right Illustration & Calligraphy */
+.header-illustration {
+  position: relative;
+  width: 380px;
+  height: 160px;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.calligraphy-tag {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  text-align: right;
+  z-index: 4;
+}
+
+.tag-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.tag-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #274b34;
+  line-height: 1.0;
+  transform: rotate(-3deg);
+}
 
-    font-weight: 700;
-
-    box-shadow:
-        0 7px 20px rgba(0, 0, 0, 0.08);
+.tag-subtitle {
+  font-family: 'Caveat', cursive;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #274b34;
+  line-height: 1.0;
+  margin-top: 2px;
+  transform: rotate(-3deg);
 }
-
-
-.report-page .sidebar-icon {
-
-    width: 22px;
-
-    height: 22px;
-
-    display: grid;
-
-    place-items: center;
-
-    flex: 0 0 22px;
 
-    font-size: 1rem;
-
-    line-height: 1;
+.tag-flourish {
+  margin-top: -2px;
+  transform: rotate(-2deg);
 }
-
-
-/* =========================================================
-   SIDEBAR CITY DECORATION
-   ========================================================= */
-
-.sidebar-city-art {
-
-    position: absolute;
-
-    left: 0;
-
-    right: 0;
-
-    bottom: 108px;
 
-    height: 210px;
-
-    overflow: hidden;
-
-    opacity: 0.36;
-
-    pointer-events: none;
+.birds-flying {
+  position: absolute;
+  top: 42px;
+  right: 220px;
+  z-index: 3;
 }
-
-
-.sidebar-city-art::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 20px;
 
-    right: 20px;
-
-    bottom: 16px;
-
-    height: 1px;
-
-    background:
-        rgba(176, 211, 171, 0.45);
+.skyline-art {
+  position: absolute;
+  bottom: -4px;
+  right: -10px;
+  width: 360px;
+  height: 140px;
+  z-index: 2;
+}
+
+.skyline-svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   WORKSPACE TWO-COLUMN GRID
+   ========================================================================== */
+.workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  position: relative;
+  z-index: 3;
 }
-
-
-.city-building {
-
-    position: absolute;
-
-    bottom: 17px;
-
-    width: 22px;
 
-    border: 1px solid rgba(187, 220, 178, 0.52);
-
-    background:
-        rgba(150, 196, 144, 0.08);
+/* Card Styling */
+.card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--card-sage-border);
+  box-shadow: var(--shadow-subtle);
+  padding: 26px 28px;
 }
-
-
-.city-building::before {
-
-    content: "";
 
-    position: absolute;
-
-    inset: 8px 5px;
-
-    background:
-        repeating-linear-gradient(
-            to bottom,
-            rgba(196, 225, 188, 0.55) 0 3px,
-            transparent 3px 10px
-        );
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
 }
-
-
-.city-building-1 {
 
-    left: 28px;
-
-    height: 58px;
+.card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-
-
-.city-building-2 {
-
-    left: 55px;
 
-    width: 28px;
-
-    height: 92px;
+.card-title-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--light-sage);
+  color: var(--accent-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
 }
-
-
-.city-building-3 {
-
-    left: 88px;
 
-    width: 35px;
-
-    height: 125px;
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: -0.01em;
 }
-
-
-.city-building-4 {
-
-    left: 128px;
 
-    width: 25px;
-
-    height: 78px;
+.required-notice {
+  font-size: 0.8rem;
+  color: var(--text-gray);
 }
-
-
-.city-building-5 {
-
-    left: 158px;
 
-    width: 32px;
-
-    height: 103px;
+.star {
+  color: #e04444;
+  font-weight: bold;
 }
-
-
-.city-tree {
-
-    position: absolute;
-
-    bottom: 15px;
-
-    width: 36px;
-
-    height: 55px;
-
-    border-radius: 50% 50% 42% 42%;
-
-    background:
-        rgba(155, 199, 145, 0.28);
+
+/* ==========================================================================
+   FORM INPUTS & ELEMENTS
+   ========================================================================== */
+.issue-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
-
 
-.tree-one {
-
-    left: 8px;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
-
 
-.tree-two {
-
-    right: 18px;
-
-    transform: scale(1.15);
+.form-group label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-dark);
 }
-
-
-.tree-three {
 
-    right: 55px;
-
-    transform: scale(0.8);
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--input-border);
+  background-color: #ffffff;
+  font-family: inherit;
+  font-size: 0.86rem;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-
-
-/* =========================================================
-   SIDEBAR BOTTOM
-   ========================================================= */
-
-.report-page .report-sidebar-bottom {
 
-    margin-top: auto;
-
-    position: relative;
-
-    z-index: 5;
+.input-field::placeholder {
+  color: var(--text-light);
+  font-weight: 400;
 }
-
-
-.report-page .report-sidebar-message {
 
-    margin-bottom: 12px;
-
-    padding: 15px 14px;
-
-    border:
-        1px solid rgba(197, 226, 190, 0.20);
-
-    border-radius: 12px;
-
-    background:
-        rgba(255, 255, 255, 0.055);
-
-    backdrop-filter: blur(8px);
+.input-field:focus {
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(37, 77, 54, 0.1);
 }
-
-
-.report-page .report-sidebar-message span {
-
-    display: block;
 
-    margin-bottom: 3px;
-
-    color:
-        rgba(255, 255, 255, 0.57);
-
-    font-size: 0.58rem;
+/* Select element */
+.select-wrapper {
+  position: relative;
+  width: 100%;
 }
-
-
-.report-page .report-sidebar-message strong {
 
-    display: block;
-
-    color: #ffffff;
-
-    font-size: 0.70rem;
-
-    line-height: 1.4;
+.select-field {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  padding-right: 36px;
 }
-
-
-.report-page .report-sidebar-login {
-
-    min-height: 48px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 9px;
-
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #eef3dd,
-            #dfe8cf
-        );
 
-    color: #173c2a;
-
-    font-size: 0.78rem;
-
-    font-weight: 700;
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
+.select-arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+
+.textarea-field {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* File Upload Component */
+.file-upload-container {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  gap: 12px;
 }
-
 
-.report-page .report-sidebar-login:hover {
+.upload-icon-box {
+  color: var(--accent-green);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2px;
+}
+
+.custom-file-btn {
+  background-color: var(--primary-green);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.2s;
+}
 
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.12);
+.custom-file-btn:hover {
+  background-color: var(--primary-hover);
+}
+
+.file-name-text {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.field-hint {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+
+/* Selected Location Box */
+.selected-location-box {
+  background-color: #f1f7f3;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  border: 1px solid #e1eee5;
+  margin-top: 4px;
+}
+
+.location-box-title {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.location-box-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--text-gray);
+}
+
+.location-dot-icon {
+  color: var(--accent-green);
+  font-size: 0.95rem;
 }
-
-
-/* =========================================================
-   MAIN
-   ========================================================= */
-
-.report-page .report-main {
-
-    min-width: 0;
-
-    min-height: 100vh;
-
-    background:
-        radial-gradient(
-            circle at 70% 5%,
-            rgba(202, 225, 194, 0.25),
-            transparent 30%
-        ),
-        #f7f8f3;
+
+/* Submit Button */
+.btn-submit-complaint {
+  background-color: var(--primary-green);
+  color: #ffffff;
+  border: none;
+  outline: none;
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-submit-complaint:hover {
+  background-color: var(--primary-hover);
 }
-
-
-.report-page .report-container {
-
-    width: min(
-        calc(100% - 72px),
-        1280px
-    );
-
-    margin: 0 auto;
-
-    padding: 32px 0 55px;
+
+.btn-submit-complaint .arrow-right {
+  font-size: 0.85rem;
+  margin-left: 2px;
 }
 
-
-/* =========================================================
-   HERO
-   ========================================================= */
-
-.report-page .report-hero {
-
-    position: relative;
-
-    min-height: 185px;
-
-    display: flex;
-
-    align-items: flex-start;
-
-    overflow: hidden;
-
-    padding: 5px 28px 10px;
-
-    border-radius: 26px;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.82),
-            rgba(246, 250, 243, 0.58)
-        );
-
-    border:
-        1px solid rgba(205, 219, 203, 0.45);
-
-    margin-bottom: 20px;
+/* ==========================================================================
+   LOCATION & MAP CARD
+   ========================================================================== */
+.interactive-map-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  background: #f7faf8;
+  border: 1px solid var(--input-border);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
 }
-
-
-.report-page .report-hero-content {
-
-    position: relative;
-
-    z-index: 5;
-
-    padding-top: 4px;
-
-    max-width: 700px;
-}
-
-
-.report-page .report-hero-badge {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    padding: 7px 15px;
-
-    margin-bottom: 12px;
-
-    border-radius: 999px;
-
-    background:
-        #e3f1dd;
-
-    color:
-        #39704c;
-
-    font-size: 0.65rem;
-
-    font-weight: 800;
-
-    letter-spacing: 0.09em;
-
-    text-transform: uppercase;
-}
-
-
-.report-page .report-hero h1 {
-
-    margin: 0;
-
-    color:
-        #173c2a;
-
-    font-size:
-        clamp(2.5rem, 4vw, 4.15rem);
-
-    line-height: 0.98;
-
-    letter-spacing:
-        -0.055em;
-
-    font-weight: 780;
-}
-
-
-.report-page .report-hero p {
-
-    max-width: 690px;
-
-    margin: 13px 0 0;
-
-    color:
-        #72837a;
-
-    font-size: 0.88rem;
-
-    line-height: 1.65;
-}
-
-
-/* =========================================================
-   HERO CITY ART
-   ========================================================= */
-
-.report-page .report-hero-art {
-
-    position: absolute;
-
-    right: 0;
-
-    bottom: 0;
-
-    width: 52%;
-
-    height: 100%;
-
-    pointer-events: none;
-
-    overflow: hidden;
-
-    opacity: 0.86;
-}
-
-
-.hero-sun {
-
-    position: absolute;
-
-    top: 23px;
-
-    right: 190px;
-
-    width: 74px;
-
-    height: 74px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(214, 230, 191, 0.46);
-}
-
-
-.hero-cloud {
-
-    position: absolute;
-
-    height: 22px;
-
-    width: 90px;
-
-    border-radius: 999px;
-
-    background:
-        rgba(215, 230, 209, 0.48);
-}
-
-
-.cloud-one {
-
-    top: 35px;
-
-    right: 420px;
-}
-
-
-.cloud-two {
-
-    top: 58px;
-
-    right: 300px;
-
-    width: 120px;
-}
-
-
-.hero-city {
-
-    position: absolute;
-
-    right: 50px;
-
-    bottom: 36px;
-
-    width: 440px;
-
-    height: 120px;
-}
-
-
-.hero-building {
-
-    position: absolute;
-
-    bottom: 0;
-
-    display: block;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(128, 170, 125, 0.25),
-            rgba(102, 151, 111, 0.35)
-        );
-
-    border-radius: 5px 5px 0 0;
-
-    border:
-        1px solid rgba(101, 147, 106, 0.15);
-}
-
-
-.hero-building::before {
-
-    content: "";
-
-    position: absolute;
-
-    left: 20%;
-
-    right: 20%;
-
-    top: 15px;
-
-    bottom: 12px;
-
-    background:
-        repeating-linear-gradient(
-            to right,
-            rgba(255,255,255,0.34) 0 4px,
-            transparent 4px 12px
-        ),
-        repeating-linear-gradient(
-            to bottom,
-            rgba(255,255,255,0.28) 0 4px,
-            transparent 4px 13px
-        );
-}
-
-
-.hero-building.b1 {
-
-    left: 0;
-
-    width: 48px;
-
-    height: 66px;
-}
-
-
-.hero-building.b2 {
-
-    left: 58px;
-
-    width: 63px;
-
-    height: 93px;
-}
-
-
-.hero-building.b3 {
-
-    left: 134px;
-
-    width: 70px;
-
-    height: 116px;
-}
-
-
-.hero-building.b4 {
-
-    left: 217px;
-
-    width: 54px;
-
-    height: 78px;
-}
-
-
-.hero-building.b5 {
-
-    left: 283px;
-
-    width: 80px;
-
-    height: 104px;
-}
-
-
-.hero-building.b6 {
-
-    left: 376px;
-
-    width: 60px;
-
-    height: 70px;
-}
-
-
-.hero-trees {
-
-    position: absolute;
-
-    left: 45%;
-
-    right: 0;
-
-    bottom: 0;
-
-    height: 75px;
-
-    display: flex;
-
-    align-items: flex-end;
-
-    gap: 8px;
-}
-
-
-.hero-trees span {
-
-    width: 42px;
-
-    height: 42px;
-
-    border-radius:
-        50% 50% 48% 48%;
-
-    background:
-        rgba(94, 145, 101, 0.42);
-
-    box-shadow:
-        13px 7px 0
-        rgba(110, 157, 105, 0.22);
-}
-
-
-.hero-trees span:nth-child(2) {
-
-    width: 54px;
-
-    height: 56px;
-}
-
-
-.hero-trees span:nth-child(4) {
-
-    width: 50px;
-
-    height: 52px;
-}
-
-
-.hero-birds {
-
-    position: absolute;
-
-    top: 50px;
-
-    right: 80px;
-
-    display: flex;
-
-    gap: 18px;
-}
-
-
-.hero-birds span {
-
-    width: 16px;
-
-    height: 7px;
-
-    border-top:
-        2px solid rgba(55, 102, 68, 0.45);
-
-    border-radius: 50%;
-}
-
-
-.hero-birds span:nth-child(2) {
-
-    transform: translateY(8px);
-}
-
-
-.hero-birds span:nth-child(3) {
-
-    transform: translateY(-4px);
-}
-
-
-/* =========================================================
-   HERO SLOGAN
-   ========================================================= */
-
-.report-page .hero-slogan {
-
-    position: absolute;
-
-    z-index: 6;
-
-    top: 16px;
-
-    right: 35px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: flex-end;
-
-    color: #285c3e;
-
-    transform: rotate(-3deg);
-}
-
-
-.report-page .hero-slogan strong {
-
-    font-family:
-        "Segoe Print",
-        "Bradley Hand",
-        cursive;
-
-    font-size: 0.98rem;
-
-    line-height: 1.15;
-}
-
-
-.report-page .hero-slogan span {
-
-    width: 70px;
-
-    height: 3px;
-
-    margin-top: 7px;
-
-    border-radius: 99px;
-
-    background:
-        #3c7750;
-
-    transform:
-        rotate(-4deg);
-}
-
-
-/* =========================================================
-   REPORT GRID
-   ========================================================= */
-
-.report-page .report-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        minmax(0, 0.94fr)
-        minmax(0, 1.06fr);
-
-    gap: 18px;
-
-    align-items: stretch;
-}
-
-
-/* =========================================================
-   CARDS
-   ========================================================= */
-
-.report-page .report-form-card,
-.report-page .report-map-card {
-
-    position: relative;
-
-    min-width: 0;
-
-    background:
-        rgba(255, 255, 255, 0.94);
-
-    border:
-        1px solid rgba(210, 222, 210, 0.76);
-
-    border-radius: 24px;
-
-    box-shadow:
-        0 12px 38px rgba(37, 71, 48, 0.065);
-
-    overflow: hidden;
-}
-
-
-.report-page .report-form-card {
-
-    padding: 24px 28px 25px;
-}
-
-
-.report-page .report-map-card {
-
-    padding: 24px 25px 25px;
-
-    display: flex;
-
-    flex-direction: column;
-}
-
-
-/* =========================================================
-   CARD HEADER
-   ========================================================= */
-
-.report-page .report-card-heading,
-.report-page .report-map-heading {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 13px;
-
-    margin-bottom: 18px;
-}
-
-
-.report-page .report-card-heading {
-
-    position: relative;
-}
-
-
-.report-page .heading-icon {
-
-    width: 44px;
-
-    height: 44px;
-
-    flex: 0 0 44px;
-
-    display: grid;
-
-    place-items: center;
-
-    border-radius: 50%;
-
-    color: #34734c;
-
-    background:
-        #e4f1df;
-
-    font-size: 1.1rem;
-
-    font-weight: 700;
-}
-
-
-.report-page .heading-icon span {
-
-    line-height: 1;
-}
-
-
-.report-page .report-card-heading h2,
-.report-page .report-map-heading h2 {
-
-    margin: 2px 0 0;
-
-    color:
-        #183c2a;
-
-    font-size: 1.08rem;
-
-    line-height: 1.15;
-
-    letter-spacing: -0.025em;
-
-    font-weight: 750;
-}
-
-
-.report-page .required-note {
-
-    margin-left: auto;
-
-    align-self: flex-start;
-
-    color:
-        #697970;
-
-    font-size: 0.69rem;
-
-    white-space: nowrap;
-}
-
-
-.report-page .required-note b {
-
-    color:
-        #c74236;
-}
-
-
-/* =========================================================
-   FORM
-   ========================================================= */
-
-.report-page #complaintForm {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 13px;
-}
-
-
-.report-page .form-group {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 6px;
-
-    margin: 0;
-}
-
-
-.report-page .form-group label {
-
-    color:
-        #395146 !important;
-
-    font-size: 0.72rem;
-
-    font-weight: 650;
-
-    line-height: 1.3;
-}
-
-
-.report-page .form-group label span {
-
-    color:
-        #c74339;
-}
-
-
-/* =========================================================
-   INPUTS
-   ========================================================= */
-
-.report-page .form-group input,
-.report-page .form-group select,
-.report-page .form-group textarea {
-
-    width: 100%;
-
-    min-height: 44px;
-
-    padding:
-        0 13px;
-
-    color:
-        #294036 !important;
-
-    -webkit-text-fill-color:
-        #294036 !important;
-
-    background:
-        #ffffff !important;
-
-    border:
-        1px solid #dce5dd !important;
-
-    border-radius: 10px;
-
-    outline: none;
-
-    font-family: inherit;
-
-    font-size: 0.77rem;
-
-    box-shadow:
-        inset 0 1px 1px rgba(0,0,0,0.015);
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.report-page .form-group textarea {
-
-    min-height: 82px;
-
-    padding: 12px 13px;
-
-    resize: vertical;
-
-    line-height: 1.5;
-}
-
-
-.report-page .form-group input::placeholder,
-.report-page .form-group textarea::placeholder {
-
-    color:
-        #a0ada6 !important;
-
-    -webkit-text-fill-color:
-        #a0ada6 !important;
-
-    opacity: 1;
-}
-
-
-.report-page .form-group select {
-
-    cursor: pointer;
-}
-
-
-.report-page .form-group select option {
-
-    color: #294036;
-
-    background: #ffffff;
-}
-
-
-.report-page .form-group input:focus,
-.report-page .form-group select:focus,
-.report-page .form-group textarea:focus {
-
-    border-color:
-        #4f895f !important;
-
-    box-shadow:
-        0 0 0 3px rgba(74, 135, 92, 0.11) !important;
-
-    transform: translateY(-1px);
-}
-
-
-/* =========================================================
-   FILE UPLOAD
-   ========================================================= */
-
-.report-page .report-upload-group {
-
-    margin-top: 2px;
-}
-
-
-.report-page .custom-file-upload {
-
-    position: relative;
-
-    min-height: 48px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 5px 12px;
-
-    border:
-        1px solid #dce5dd;
-
-    border-radius: 10px;
-
-    background:
-        #fbfcfa;
-
-    overflow: hidden;
-}
-
-
-.report-page .custom-file-upload input[type="file"] {
-
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-
-    height: 100%;
-
-    opacity: 0;
-
-    cursor: pointer;
-}
-
-
-.report-page .upload-icon {
-
-    width: 25px;
-
-    height: 25px;
-
-    display: grid;
-
-    place-items: center;
-
-    color: #34734c;
-
-    font-size: 1rem;
-}
-
-
-.report-page .file-upload-text {
-
-    padding: 7px 11px;
-
-    border-radius: 7px;
-
-    background:
-        #2d7048;
-
-    color: #ffffff;
-
-    font-size: 0.69rem;
-
-    font-weight: 700;
-}
-
-
-.report-page .file-name {
-
-    color:
-        #7b8880;
-
-    font-size: 0.72rem;
-
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-
-.report-page .form-group small {
-
-    color:
-        #9aa69f;
-
-    font-size: 0.63rem;
-
-    line-height: 1.4;
-}
-
-
-/* =========================================================
-   SELECTED LOCATION
-   ========================================================= */
-
-.report-page .selected-location {
-
-    margin-top: 1px;
-
-    padding: 13px 14px;
-
-    border:
-        1px solid #dce9dc;
-
-    border-radius: 11px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #f2f8ef,
-            #f8fbf6
-        );
-}
-
-
-.report-page .selected-location-heading {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-}
-
-
-.report-page .location-mini-icon {
-
-    color:
-        #35764d;
-
-    font-size: 0.7rem;
-}
-
-
-.report-page .selected-location .card-label {
-
-    color:
-        #4b6e58;
-
-    font-size: 0.62rem;
-
-    font-weight: 750;
-
-    letter-spacing: 0.11em;
-}
-
-
-.report-page .selected-location p {
-
-    margin: 6px 0 0;
-
-    color:
-        #718179;
-
-    font-size: 0.68rem;
-
-    line-height: 1.45;
-}
-
-
-/* =========================================================
-   SUBMIT BUTTON
-   ========================================================= */
-
-.report-page .submit-btn {
-
-    width: 100%;
-
-    min-height: 48px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 10px;
-
-    margin-top: 1px;
-
-    padding: 0 17px;
-
-    border: none !important;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #2f754b,
-            #1f5c38
-        ) !important;
-
-    color: #ffffff !important;
-
-    font-family: inherit;
-
-    font-size: 0.76rem;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 8px 20px rgba(38, 102, 63, 0.18);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        filter 0.2s ease;
-}
-
-
-.report-page .submit-btn:hover {
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 11px 25px rgba(38, 102, 63, 0.24);
-
-    filter: brightness(1.03);
-}
-
-
-.report-page .submit-btn:active {
-
-    transform:
-        translateY(0)
-        scale(0.99);
-}
-
-
-.report-page .submit-icon {
-
-    font-size: 0.82rem;
-}
-
-
-.report-page .submit-arrow {
-
-    margin-left: auto;
-
-    font-size: 1rem;
-}
-
-
-/* =========================================================
-   MAP HEADER
-   ========================================================= */
-
-.report-page .report-map-heading {
-
-    justify-content: space-between;
-
-    margin-bottom: 14px;
-}
-
-
-.report-page .map-title-area {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-}
-
-
-.report-page .map-heading-icon {
-
-    color: #ffffff;
-
-    background:
-        #e2f0dd;
-}
-
-
-.report-page .map-heading-icon span {
-
-    color:
-        #35764d;
-
-    font-size: 0.82rem;
-}
-
-
-.report-page .map-title-area .card-label {
-
-    display: block;
-
-    color:
-        #5a7163;
-
-    font-size: 0.61rem;
-
-    font-weight: 750;
-
-    letter-spacing: 0.12em;
-
-    margin-bottom: 3px;
-}
-
-
-.report-page .map-status {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 6px;
-
-    padding: 6px 10px;
-
-    border:
-        1px solid #dbe7dc;
-
-    border-radius: 999px;
-
-    background:
-        #f4f8f1;
-
-    color:
-        #4b7057;
-
-    font-size: 0.62rem;
-
-    font-weight: 650;
-
-    white-space: nowrap;
-}
-
-
-/* =========================================================
-   MAP
-   ========================================================= */
-
-.report-page .report-map {
-
-    width: 100%;
-
-    min-height: 360px;
-
-    flex: 1;
-
-    border-radius: 14px;
-
-    overflow: hidden;
-
-    border:
-        1px solid #dbe4dc;
-
-    background:
-        #e8eee8;
-
-    box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.4);
-}
-
-
-/* Leaflet overrides */
-
-.report-page .leaflet-container {
-
-    font-family: inherit;
-
-    background: #e7eee7;
-}
-
-
-.report-page .leaflet-control-zoom {
-
-    border: none !important;
-
-    box-shadow:
-        0 4px 12px rgba(30, 70, 45, 0.12) !important;
-
-    border-radius: 8px !important;
-
-    overflow: hidden;
-}
-
-
-.report-page .leaflet-control-zoom a {
-
-    color:
-        #315c42 !important;
-
-    background:
-        rgba(255,255,255,0.94) !important;
-
-    border: none !important;
-}
-
-
-.report-page .leaflet-control-attribution {
-
-    font-size: 8px !important;
-
-    background:
-        rgba(255,255,255,0.82) !important;
-}
-
-
-/* =========================================================
-   MAP INSTRUCTION
-   ========================================================= */
-
-.report-page .map-instruction {
-
-    min-height: 46px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 10px;
-
-    margin-top: 10px;
-
-    padding: 8px 12px;
-
-    border-radius: 10px;
-
-    background:
-        #f0f7ed;
-
-    color:
-        #698075;
-}
-
-
-.report-page .instruction-icon {
-
-    width: 24px;
-
-    height: 24px;
-
-    flex: 0 0 24px;
-
-    display: grid;
-
-    place-items: center;
-
-    border-radius: 50%;
-
-    background:
-        #5b8b61;
-
-    color: #ffffff;
-
-    font-size: 0.9rem;
-
-    font-weight: 700;
-}
-
-
-.report-page .map-instruction p {
-
-    margin: 0;
-
-    font-size: 0.66rem;
-
-    line-height: 1.45;
-}
-
-
-/* =========================================================
-   PINCODE
-   ========================================================= */
-
-.report-page .pincode-search {
-
-    margin-top: 10px;
-}
-
-
-.report-page .pincode-search label {
-
-    display: block;
-
-    margin-bottom: 6px;
-
-    color:
-        #63756b;
-
-    font-size: 0.68rem;
-
-    font-weight: 600;
-}
-
-
-.report-page .pincode-search-row {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
-}
-
-
-.report-page .pincode-search-row input {
-
-    width: 150px;
-
-    height: 38px;
-
-    padding: 0 12px;
-
-    color:
-        #294036 !important;
-
-    -webkit-text-fill-color:
-        #294036 !important;
-
-    background:
-        #ffffff !important;
-
-    border:
-        1px solid #dbe4dd !important;
-
-    border-radius: 9px;
-
-    outline: none;
-
-    font-family: inherit;
-
-    font-size: 0.72rem;
-}
-
-
-.report-page .pincode-search-row input::placeholder {
-
-    color:
-        #a2ada7 !important;
-
-    -webkit-text-fill-color:
-        #a2ada7 !important;
-}
-
-
-.report-page .pincode-search-row input:focus {
-
-    border-color:
-        #4f895f !important;
-
-    box-shadow:
-        0 0 0 3px rgba(74, 135, 92, 0.10);
-}
-
-
-.report-page .pincode-search-btn {
-
-    height: 38px;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 6px;
-
-    padding: 0 14px;
-
-    border:
-        1px solid #cfe0d1;
-
-    border-radius: 9px;
-
-    background:
-        #eff6ec;
-
-    color:
-        #356b49;
-
-    font-family: inherit;
-
-    font-size: 0.69rem;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition:
-        background 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.report-page .pincode-search-btn:hover {
-
-    background:
-        #e3f0df;
-
-    transform:
-        translateY(-1px);
-}
-
-
-.report-page .pincode-search-btn:disabled {
-
-    opacity: 0.55;
-
-    cursor: not-allowed;
-
-    transform: none;
-}
-
-
-.report-page #pincodeStatus {
-
-    display: block;
-
-    min-height: 16px;
-
-    margin-top: 5px;
-
-    color:
-        #738078;
-
-    font-size: 0.61rem;
-}
-
-
-.report-page #pincodeStatus.success {
-
-    color:
-        #39754d;
-}
-
-
-.report-page #pincodeStatus.error {
-
-    color:
-        #b34b42;
-}
-
-
-/* =========================================================
-   DECORATIVE MAP LEAVES
-   ========================================================= */
-
-.map-leaf-decoration {
-
-    position: absolute;
-
-    right: -18px;
-
-    bottom: -34px;
-
-    width: 140px;
-
-    height: 120px;
-
-    opacity: 0.20;
-
-    pointer-events: none;
-}
-
-
-.map-leaf-decoration span {
-
-    position: absolute;
-
-    width: 65px;
-
-    height: 34px;
-
-    border-radius:
-        100% 0 100% 0;
-
-    border:
-        2px solid #75a26f;
-
-    transform: rotate(-28deg);
-}
-
-
-.map-leaf-decoration span:nth-child(1) {
-
-    right: 15px;
-
-    bottom: 20px;
-}
-
-
-.map-leaf-decoration span:nth-child(2) {
-
-    right: 48px;
-
-    bottom: 54px;
-
-    transform:
-        rotate(18deg)
-        scale(0.82);
-}
-
-
-.map-leaf-decoration span:nth-child(3) {
-
-    right: 3px;
-
-    bottom: 62px;
-
-    transform:
-        rotate(-50deg)
-        scale(0.64);
-}
-
-
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
-.report-page .footer {
-
-    width:
-        min(
-            calc(100% - 72px),
-            1280px
-        );
-
-    margin: 0 auto;
-
-    padding: 18px 0 25px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    border-top:
-        1px solid #dfe6df;
-
-    color:
-        #8a968f;
-
-    font-size: 0.62rem;
-}
-
-
-/* =========================================================
-   AUTOFILL
-   ========================================================= */
-
-.report-page .form-group input:-webkit-autofill,
-.report-page .form-group input:-webkit-autofill:hover,
-.report-page .form-group input:-webkit-autofill:focus {
-
-    -webkit-text-fill-color:
-        #294036 !important;
-
-    box-shadow:
-        0 0 0 1000px #ffffff inset !important;
-
-    border:
-        1px solid #dce5dd !important;
-
-    transition:
-        background-color 9999s ease-in-out 0s;
-}
-
-
-/* =========================================================
-   RESPONSIVE — TABLET
-   ========================================================= */
-
-@media (max-width: 1100px) {
-
-    .report-page .report-layout {
-
-        grid-template-columns:
-            215px minmax(0, 1fr);
-    }
-
-
-    .report-page .report-container {
-
-        width:
-            min(
-                calc(100% - 40px),
-                1100px
-            );
-    }
-
-
-    .report-page .report-grid {
-
-        grid-template-columns:
-            1fr;
-    }
-
-
-    .report-page .report-form-card,
-    .report-page .report-map-card {
-
-        min-height: auto;
-    }
-
-
-    .report-page .report-map {
-
-        min-height: 430px;
-    }
-
-
-    .report-page .report-hero-art {
-
-        opacity: 0.48;
-
-        width: 55%;
-    }
-}
-
-
-/* =========================================================
-   RESPONSIVE — SMALL LAPTOP
-   ========================================================= */
-
-@media (max-width: 850px) {
-
-    .report-page .report-layout {
-
-        grid-template-columns: 1fr;
-    }
-
-
-    .report-page .report-sidebar {
-
-        position: relative;
-
-        height: auto;
-
-        min-height: auto;
-
-        padding:
-            15px 18px;
-    }
-
-
-    .report-page .report-sidebar-brand {
-
-        border-bottom: none;
-
-        padding-bottom: 12px;
-    }
-
-
-    .report-page .report-sidebar-section {
-
-        margin-top: 5px;
-    }
-
-
-    .report-page .report-sidebar-nav {
-
-        flex-direction: row;
-
-        overflow-x: auto;
-
-        padding-bottom: 3px;
-    }
-
-
-    .report-page .report-sidebar-nav a {
-
-        flex: 0 0 auto;
-
-        min-height: 40px;
-
-        padding:
-            0 12px;
-    }
-
-
-    .report-page .report-sidebar-label {
-
-        display: none;
-    }
-
-
-    .report-page .sidebar-city-art {
-
-        display: none;
-    }
-
-
-    .report-page .report-sidebar-bottom {
-
-        display: none;
-    }
-
-
-    .report-page .report-container {
-
-        padding-top: 24px;
-    }
-
-
-    .report-page .report-hero {
-
-        min-height: 230px;
-
-        padding:
-            10px 22px;
-    }
-
-
-    .report-page .report-hero-art {
-
-        width: 65%;
-
-        opacity: 0.32;
-    }
-
-
-    .report-page .hero-slogan {
-
-        display: none;
-    }
-}
-
-
-/* =========================================================
-   RESPONSIVE — MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-    .report-page .report-container {
-
-        width:
-            calc(100% - 24px);
-
-        padding:
-            16px 0 35px;
-    }
-
-
-    .report-page .report-hero {
-
-        min-height: 250px;
-
-        padding:
-            18px 18px;
-
-        border-radius: 20px;
-    }
-
-
-    .report-page .report-hero h1 {
-
-        font-size: 2.35rem;
-    }
-
-
-    .report-page .report-hero p {
-
-        font-size: 0.78rem;
-
-        max-width: 95%;
-    }
-
-
-    .report-page .report-hero-art {
-
-        width: 100%;
-
-        opacity: 0.18;
-    }
-
-
-    .report-page .report-form-card,
-    .report-page .report-map-card {
-
-        padding:
-            18px;
-        
-        border-radius: 20px;
-    }
-
-
-    .report-page .report-card-heading,
-    .report-page .report-map-heading {
-
-        align-items: flex-start;
-    }
-
-
-    .report-page .required-note {
-
-        font-size: 0.61rem;
-    }
-
-
-    .report-page .report-map {
-
-        min-height: 330px;
-    }
-
-
-    .report-page .pincode-search-row {
-
-        align-items: stretch;
-    }
-
-
-    .report-page .pincode-search-row input {
-
-        flex: 1;
-
-        width: auto;
-    }
-
-
-    .report-page .pincode-search-btn {
-
-        flex: 0 0 auto;
-    }
-
-
-    .report-page .footer {
-
-        width:
-            calc(100% - 24px);
-
-        flex-direction: column;
-
-        align-items: flex-start;
-
-        gap: 6px;
-
-        font-size: 0.58rem;
-    }
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    .report-page *,
-    .report-page *::before,
-    .report-page *::after {
-
-        scroll-behavior: auto !important;
-
-        transition-duration: 0.01ms !important;
-
-        animation-duration: 0.01ms !important;
 
-        animation-iteration-count: 1 !important;
-    }
+.interactive-map-badge i {
+  color: var(--accent-green);
+  font-size: 0.82rem;
+}
+
+.map-container-wrapper {
+  width: 100%;
+  height: 380px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--input-border);
+  position: relative;
+}
+
+.map-element {
+  width: 100%;
+  height: 100%;
+}
+
+/* Hint Pill Under Map */
+.map-hint-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f1f7f3;
+  border: 1px solid #e1eee5;
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-top: 14px;
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+
+.hint-pin {
+  color: var(--accent-green);
+  font-size: 0.9rem;
+}
+
+/* PIN Code Lookup */
+.pincode-section {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pincode-label {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.pincode-input-group {
+  display: flex;
+  gap: 12px;
+}
+
+.pin-field {
+  max-width: 220px;
+}
+
+.btn-pin-search {
+  background-color: #f1f7f3;
+  color: var(--text-dark);
+  border: 1px solid #d5e5db;
+  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-pin-search:hover {
+  background-color: #e2ede5;
+  border-color: #c1d6c8;
+}
+
+.btn-pin-search i {
+  color: var(--accent-green);
+  font-size: 0.85rem;
+}
+
+/* Corner Leaves Illustration (Bottom Right) */
+.corner-leaves-decoration {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Toast */
+.toast-notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--primary-green);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  display: none;
+  z-index: 1000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1180px) {
+  .workspace-grid {
+    grid-template-columns: 1fr;
+  }
+  .header-illustration {
+    display: none;
+  }
 }

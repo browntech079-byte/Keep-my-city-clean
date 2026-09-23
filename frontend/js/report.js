@@ -1,574 +1,229 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Check auth
+  const token = localStorage.getItem("citycare_token");
+  const user = JSON.parse(localStorage.getItem("citycare_user") || "{}");
 
-    // ==========================================
-    // API CONFIGURATION
-    // ==========================================
-
-    const API_BASE_URL = "https://citycare-gov.onrender.com";
-
-
-    // ==========================================
-    // 1. INITIALIZE MAP
-    // ==========================================
-
-    const mapElement = document.getElementById("reportMap");
-
-    if (!mapElement) {
-        return;
-    }
-
-    // Default map center: India
-    const defaultLatitude = 20.5937;
-    const defaultLongitude = 78.9629;
-
-    const map = L.map("reportMap").setView(
-        [defaultLatitude, defaultLongitude],
-        5
-    );
-
-    // OpenStreetMap tiles
-    L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-            attribution: "&copy; OpenStreetMap contributors",
-            maxZoom: 19
-        }
-    ).addTo(map);
-
-
-    // ==========================================
-    // 2. MAP LOCATION SELECTION
-    // ==========================================
-
-    let marker = null;
-
-    // Bumped on every location change (map click OR pincode search) so an
-    // in-flight reverse-geocode response from an older selection can be
-    // told apart from the most recent one — without this, a slow response
-    // to an earlier selection can arrive after a faster response to a
-    // later one and overwrite the correct address/marker with stale data.
-    let locationRequestId = 0;
-
-    const latitudeInput = document.getElementById("latitude");
-    const longitudeInput = document.getElementById("longitude");
-    const addressInput = document.getElementById("address");
-    const locationText = document.getElementById("locationText");
-
-    // ==========================================
-    // SHARED LOCATION SELECTION
-    // ==========================================
-    // Places the marker, saves the coordinates and reverse-geocodes the
-    // address. Used by both a direct map click and a PIN code search, so
-    // the two stay in sync.
-
-    async function selectLocation(latitude, longitude) {
-
-        const requestId = ++locationRequestId;
-
-        // Remove previous marker
-        if (marker) {
-            map.removeLayer(marker);
-        }
-
-        // Add new marker — kept as a local reference so the popup below
-        // always binds to the marker THIS selection created, even if a
-        // later selection has since reassigned the shared `marker` variable.
-        const newMarker = L.marker([latitude, longitude]).addTo(map);
-        marker = newMarker;
-
-        // Save coordinates
-        latitudeInput.value = latitude;
-        longitudeInput.value = longitude;
-
-        // Reset address while looking it up
-        addressInput.value = "";
-
-        locationText.textContent =
-            `Location selected: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
-
-        try {
-
-            // ==========================================
-            // REVERSE GEOCODING
-            // ==========================================
-
-            const response = await fetch(
-                `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`
-            );
-
-            if (!response.ok) {
-                throw new Error("Failed to get address");
-            }
-
-            const data = await response.json();
-
-            // A newer selection has happened since this request started —
-            // discard this result so it can't overwrite fresher data.
-            if (requestId !== locationRequestId) {
-                return;
-            }
-
-            const address = data.display_name || "";
-
-            addressInput.value = address;
-
-            locationText.textContent =
-                address ||
-                `Location selected: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
-
-            // Safe popup content
-            const popupContent = document.createElement("div");
-
-            const popupTitle = document.createElement("strong");
-            popupTitle.textContent = "Selected Location";
-
-            const popupAddress = document.createElement("div");
-            popupAddress.textContent =
-                address || "Location selected";
-
-            popupContent.appendChild(popupTitle);
-            popupContent.appendChild(popupAddress);
-
-            newMarker
-                .bindPopup(popupContent)
-                .openPopup();
-
-        } catch (error) {
-
-            // Also discard a stale failure — a newer selection already
-            // replaced this one, so there's nothing left to update.
-            if (requestId !== locationRequestId) {
-                return;
-            }
-
-            console.error("Address lookup failed:", error);
-
-            addressInput.value =
-                `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
-
-            locationText.textContent =
-                `Location selected: ${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
-
-            newMarker
-                .bindPopup("Selected Location")
-                .openPopup();
-        }
-    }
-
-    map.on("click", (event) => {
-        selectLocation(event.latlng.lat, event.latlng.lng);
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("citycare_token");
+      localStorage.removeItem("citycare_user");
+      window.location.href = "login.html";
     });
+  }
 
+  // File Upload Indicator
+  const imageUpload = document.getElementById("imageUpload");
+  const fileName = document.getElementById("fileName");
+  if (imageUpload && fileName) {
+    imageUpload.addEventListener("change", (e) => {
+      if (e.target.files && e.target.files.length > 0) {
+        fileName.textContent = e.target.files[0].name;
+      } else {
+        fileName.textContent = "No file chosen";
+      }
+    });
+  }
 
-    // ==========================================
-    // 2B. PIN CODE SEARCH (ALL-INDIA)
-    // ==========================================
-    // Looks the PIN code up via India Post's public API to get the
-    // post office/district/state, then geocodes that place name via
-    // Nominatim so the map can jump straight to it. Falls back to a
-    // district-level match if the precise post office isn't found.
+  // Toast Helper
+  function showToast(message, isError = false) {
+    const toast = document.getElementById("toastNotification");
+    if (!toast) return;
+    toast.textContent = message;
+    toast.style.backgroundColor = isError ? "#c53030" : "#254d36";
+    toast.style.display = "block";
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 3500);
+  }
 
-    const pincodeInput = document.getElementById("pincodeInput");
-    const pincodeSearchBtn = document.getElementById("pincodeSearchBtn");
-    const pincodeStatus = document.getElementById("pincodeStatus");
+  // Initialize Leaflet Map (Centered on Pune as per reference image)
+  const defaultLat = 18.5204;
+  const defaultLng = 73.8567;
+  const map = L.map("map", {
+    zoomControl: false
+  }).setView([defaultLat, defaultLng], 12);
 
-    function setPincodeStatus(message, type) {
+  // Reposition zoom controls to match top-left style
+  L.control.zoom({ position: "topleft" }).addTo(map);
 
-        if (!pincodeStatus) {
-            return;
-        }
+  // CartoDB / OSM clean tile layer
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
 
-        pincodeStatus.textContent = message;
-        pincodeStatus.classList.remove("error", "success");
+  // Custom Pine/Forest Pin Marker
+  const customPinIcon = L.divIcon({
+    className: "custom-map-marker",
+    html: `
+      <div style="
+        background-color: #254d36;
+        width: 32px;
+        height: 32px;
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #ffffff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      ">
+        <div style="
+          width: 10px;
+          height: 10px;
+          background-color: #ffffff;
+          border-radius: 50%;
+        "></div>
+      </div>
+    `,
+    iconSize: [32, 32],
+    iconAnchor: [16, 32]
+  });
 
-        if (type) {
-            pincodeStatus.classList.add(type);
-        }
+  let marker = L.marker([defaultLat, defaultLng], { icon: customPinIcon }).addTo(map);
+
+  const selectedLocText = document.getElementById("selectedLocationText");
+  const latInput = document.getElementById("latitude");
+  const lngInput = document.getElementById("longitude");
+  const addressInput = document.getElementById("address");
+
+  function setCoordinates(lat, lng, label = null) {
+    latInput.value = lat;
+    lngInput.value = lng;
+    marker.setLatLng([lat, lng]);
+
+    if (label) {
+      selectedLocText.textContent = label;
+      addressInput.value = label;
+    } else {
+      selectedLocText.textContent = `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`;
+      addressInput.value = `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`;
+      // Reverse Geocoding with OpenStreetMap Nominatim
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.display_name) {
+            const shortAddress = data.display_name.split(",").slice(0, 3).join(",");
+            selectedLocText.textContent = shortAddress;
+            addressInput.value = data.display_name;
+          }
+        })
+        .catch(() => {});
     }
+  }
 
-    async function geocodePlace(query) {
+  // Set default
+  setCoordinates(defaultLat, defaultLng, "Pune, Maharashtra, India");
 
-        const response = await fetch(
-            `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=in&q=${encodeURIComponent(query)}`
-        );
+  // Map Click Listener
+  map.on("click", (e) => {
+    setCoordinates(e.latlng.lat, e.latlng.lng);
+  });
 
-        if (!response.ok) {
-            return null;
-        }
+  // PIN Code Search Handler
+  const pinInput = document.getElementById("pinInput");
+  const searchPinBtn = document.getElementById("searchPinBtn");
 
-        const results = await response.json();
-
-        if (!Array.isArray(results) || results.length === 0) {
-            return null;
-        }
-
-        return {
-            latitude: parseFloat(results[0].lat),
-            longitude: parseFloat(results[0].lon)
-        };
-    }
-
-    async function handlePincodeSearch() {
-
-        const pincode = pincodeInput.value.trim();
-
-        if (!/^\d{6}$/.test(pincode)) {
-            setPincodeStatus("Enter a valid 6-digit PIN code.", "error");
-            return;
-        }
-
-        if (pincodeSearchBtn) {
-            pincodeSearchBtn.disabled = true;
-            pincodeSearchBtn.textContent = "Locating...";
-        }
-
-        setPincodeStatus("Looking up PIN code...", null);
-
-        try {
-
-            const postResponse = await fetch(
-                `https://api.postalpincode.in/pincode/${pincode}`
-            );
-
-            if (!postResponse.ok) {
-                throw new Error("PIN code lookup failed.");
-            }
-
-            const postData = await postResponse.json();
-
-            const lookup =
-                Array.isArray(postData) ? postData[0] : null;
-
-            if (!lookup || lookup.Status !== "Success" || !Array.isArray(lookup.PostOffice) || lookup.PostOffice.length === 0) {
-                setPincodeStatus("No location found for that PIN code.", "error");
-                return;
-            }
-
-            const office = lookup.PostOffice[0];
-            const district = office.District || "";
-            const state = office.State || "";
-
-            // Try the precise post office name first, then fall back to
-            // a district-level match so every valid Indian PIN code
-            // resolves to at least an approximate area.
-            let place =
-                await geocodePlace(`${office.Name}, ${district}, ${state}, India`);
-
-            if (!place) {
-                place = await geocodePlace(`${district}, ${state}, India`);
-            }
-
-            if (!place) {
-                setPincodeStatus(
-                    `Found ${office.Name}, ${district}, ${state}, but couldn't place it on the map. Please click the location manually.`,
-                    "error"
-                );
-                return;
-            }
-
-            map.setView([place.latitude, place.longitude], 14);
-
-            await selectLocation(place.latitude, place.longitude);
-
-            setPincodeStatus(
-                `Located ${office.Name}, ${district}, ${state}.`,
-                "success"
-            );
-
-        } catch (error) {
-
-            console.error("PIN code search failed:", error);
-            setPincodeStatus(
-                "Couldn't look up that PIN code. Please try again or click the map.",
-                "error"
-            );
-
-        } finally {
-
-            if (pincodeSearchBtn) {
-                pincodeSearchBtn.disabled = false;
-                pincodeSearchBtn.textContent = "Locate";
-            }
-        }
-    }
-
-    if (pincodeSearchBtn) {
-        pincodeSearchBtn.addEventListener("click", handlePincodeSearch);
-    }
-
-    if (pincodeInput) {
-        pincodeInput.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                handlePincodeSearch();
-            }
-        });
-    }
-
-
-    // ==========================================
-    // 3. COMPLAINT FORM SUBMISSION
-    // ==========================================
-
-    const complaintForm =
-        document.getElementById("complaintForm");
-
-    if (!complaintForm) {
+  if (searchPinBtn && pinInput) {
+    searchPinBtn.addEventListener("click", () => {
+      const pin = pinInput.value.trim();
+      if (!pin || pin.length < 5) {
+        showToast("Please enter a valid PIN code", true);
         return;
-    }
+      }
+      fetch(`https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(pin)}&country=India&format=json`)
+        .then(res => res.json())
+        .then(results => {
+          if (results && results.length > 0) {
+            const lat = parseFloat(results[0].lat);
+            const lon = parseFloat(results[0].lon);
+            map.setView([lat, lon], 13);
+            setCoordinates(lat, lon, results[0].display_name);
+            showToast(`Location set to PIN: ${pin}`);
+          } else {
+            showToast("PIN code location not found", true);
+          }
+        })
+        .catch(() => {
+          showToast("Failed to lookup PIN code", true);
+        });
+    });
+  }
 
-    complaintForm.addEventListener("submit", async (event) => {
+  // Form Submission
+  const form = document.getElementById("reportIssueForm");
+  const submitBtn = document.getElementById("submitBtn");
 
-        event.preventDefault();
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-        // ==========================================
-        // GET FORM VALUES
-        // ==========================================
+      const title = document.getElementById("title").value.trim();
+      const category = document.getElementById("category").value;
+      const description = document.getElementById("description").value.trim();
+      const latitude = latInput.value;
+      const longitude = lngInput.value;
+      const address = addressInput.value;
+      const file = imageUpload.files[0];
 
-        const title =
-            document.getElementById("title").value.trim();
+      if (!title || !category || !description) {
+        showToast("Please fill in all required fields", true);
+        return;
+      }
 
-        const category =
-            document.getElementById("category").value;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Submitting...</span>`;
 
-        const description =
-            document.getElementById("description").value.trim();
-
-        const latitude =
-            document.getElementById("latitude").value;
-
-        const longitude =
-            document.getElementById("longitude").value;
-
-        const address =
-            document.getElementById("address").value.trim();
-
-        const imageInput =
-            document.getElementById("image");
-
-        const imageFile =
-            imageInput ? imageInput.files[0] : null;
-
-
-        // ==========================================
-        // VALIDATION
-        // ==========================================
-
-        if (!title) {
-            alert("Please enter an issue title.");
-            return;
-        }
-
-        if (!category) {
-            alert("Please select an issue category.");
-            return;
-        }
-
-        if (!description) {
-            alert("Please describe the civic issue.");
-            return;
-        }
-
-        if (!latitude || !longitude) {
-            alert("Please select the issue location on the map.");
-            return;
-        }
-
-
-        // ==========================================
-        // IMAGE VALIDATION
-        // ==========================================
-
-        if (imageFile) {
-
-            // Maximum 5 MB
-            const maxFileSize = 5 * 1024 * 1024;
-
-            if (imageFile.size > maxFileSize) {
-                alert("Image size must be less than 5 MB.");
-                return;
-            }
-
-            if (!imageFile.type.startsWith("image/")) {
-                alert("Please select a valid image file.");
-                return;
-            }
-        }
-
-
-        // ==========================================
-        // CREATE FORMDATA
-        // ==========================================
-
+      try {
         const formData = new FormData();
-
         formData.append("title", title);
         formData.append("category", category);
         formData.append("description", description);
-
-        formData.append(
-            "latitude",
-            latitude
-        );
-
-        formData.append(
-            "longitude",
-            longitude
-        );
-
-        formData.append(
-            "address",
-            address
-        );
-
-        // Add image only if selected
-        if (imageFile) {
-            formData.append(
-                "image",
-                imageFile
-            );
+        formData.append("latitude", latitude);
+        formData.append("longitude", longitude);
+        formData.append("address", address);
+        if (file) {
+          formData.append("image", file);
         }
 
+        const API_URL = (typeof window.API_BASE_URL !== "undefined") 
+          ? `${window.API_BASE_URL}/complaints`
+          : "/api/complaints";
 
-        // ==========================================
-        // SUBMIT BUTTON
-        // ==========================================
-
-        const submitButton =
-            complaintForm.querySelector(
-                'button[type="submit"]'
-            );
-
-        if (submitButton) {
-
-            submitButton.disabled = true;
-
-            submitButton.textContent =
-                imageFile
-                    ? "Uploading & Submitting..."
-                    : "Submitting...";
+        const headers = {};
+        if (token) {
+          headers["Authorization"] = `Bearer ${token}`;
         }
 
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: headers,
+          body: formData
+        });
 
-        // ==========================================
-        // SEND TO BACKEND
-        // ==========================================
+        const data = await res.json();
 
-        try {
-
-            const response = await fetch(
-                `${API_BASE_URL}/api/complaints`,
-                {
-                    method: "POST",
-
-                    // IMPORTANT:
-                    // Do NOT set Content-Type manually.
-                    // Browser automatically sets the
-                    // multipart/form-data boundary.
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("citycare_token") || ""}`
-                    },
-
-                    body: formData
-                }
-            );
-
-
-            // ==========================================
-            // READ RESPONSE
-            // ==========================================
-
-            let data = {};
-
-            try {
-                data = await response.json();
-            } catch (jsonError) {
-                data = {};
-            }
-
-
-            // ==========================================
-            // ERROR HANDLING
-            // ==========================================
-
-            if (!response.ok) {
-
-                if (response.status === 401) {
-                    localStorage.removeItem("citycare_token");
-                    localStorage.removeItem("citycare_user");
-
-                    alert("Please log in before submitting a complaint.");
-                    window.location.href = "login.html";
-                    return;
-                }
-
-                throw new Error(
-                    data.message ||
-                    "Failed to submit complaint."
-                );
-            }
-
-
-            // ==========================================
-            // SUCCESS
-            // ==========================================
-
-            alert(
-                "Complaint submitted successfully!"
-            );
-
-            // Reset form
-            complaintForm.reset();
-
-
-            // Remove marker
-            if (marker) {
-
-                map.removeLayer(marker);
-
-                marker = null;
-            }
-
-
-            // Reset location information
-            locationText.textContent =
-                "Click on the map to select the issue location.";
-
-            latitudeInput.value = "";
-            longitudeInput.value = "";
-            addressInput.value = "";
-
-
-            // Return map to India
-            map.setView(
-                [defaultLatitude, defaultLongitude],
-                5
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                "Complaint submission error:",
-                error
-            );
-
-            alert(
-                error.message ||
-                "Something went wrong while submitting the complaint."
-            );
-
-
-        } finally {
-
-            // Re-enable button
-            if (submitButton) {
-
-                submitButton.disabled = false;
-
-                submitButton.textContent =
-                    "Submit Complaint →";
-            }
+        if (res.ok) {
+          showToast("Complaint submitted successfully!");
+          form.reset();
+          fileName.textContent = "No file chosen";
+          setTimeout(() => {
+            window.location.href = "complaints.html";
+          }, 1200);
+        } else {
+          showToast(data.message || "Failed to submit complaint", true);
         }
+      } catch (err) {
+        showToast("Network error. Could not reach server.", true);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <i class="fa-regular fa-paper-plane"></i>
+          <span>Submit Complaint</span>
+          <i class="fa-solid fa-arrow-right-long arrow-right"></i>
+        `;
+      }
     });
+  }
 });

@@ -1,301 +1,510 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>My Profile — CityCare</title>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CityCare - My Profile</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/profile.css">
 </head>
-
-<body class="complaints-page">
-
-    <div class="complaints-layout">
-
-        <!-- =====================================
-             LEFT SIDEBAR
-        ====================================== -->
-
-        <aside class="report-sidebar">
-
-            <!-- CityCare Logo -->
-            <a href="index.html" class="report-sidebar-brand">
-
-                <img
-                    src="assets/images/citycare-logo.png"
-                    alt="CityCare Logo"
-                    class="report-sidebar-logo"
-                >
-
-                <div class="report-sidebar-brand-text">
-                    <strong>CityCare</strong>
-                    <span>Smart Civic Issue Management</span>
-                </div>
-
-            </a>
-
-
-            <!-- Navigation -->
-            <div class="report-sidebar-section">
-
-                <p class="report-sidebar-label">
-                    WORKSPACE
-                </p>
-
-                <nav class="report-sidebar-nav">
-
-                    <a href="index.html">
-                        <span class="sidebar-icon" aria-hidden="true">⌂</span>
-                        <span>Home</span>
-                    </a>
-
-                    <a href="report.html">
-                        <span class="sidebar-icon" aria-hidden="true">＋</span>
-                        <span>Report Issue</span>
-                    </a>
-
-                    <a href="complaints.html">
-                        <span class="sidebar-icon" aria-hidden="true">▤</span>
-                        <span>Complaints</span>
-                    </a>
-
-                    <a
-                        href="profile.html"
-                        class="active"
-                        aria-current="page"
-                    >
-                        <span class="sidebar-icon" aria-hidden="true">♙</span>
-                        <span>My Profile</span>
-                    </a>
-
-                </nav>
-
-            </div>
-
-
-            <!-- Sidebar Bottom -->
-            <div class="report-sidebar-bottom">
-
-                <div class="report-sidebar-message">
-                    <span>Better infrastructure</span>
-                    <strong>for a brighter tomorrow.</strong>
-                </div>
-
-                <a
-                    href="#"
-                    id="sidebarLogout"
-                    class="report-sidebar-login"
-                >
-                    <span aria-hidden="true">↪</span>
-                    <span>Logout</span>
-                </a>
-
-            </div>
-
-        </aside>
-
-
-        <!-- =====================================
-             MAIN PROFILE CONTENT
-        ====================================== -->
-
-        <div class="complaints-main">
-
-            <main class="complaints-container">
-
-                <!-- Page Header -->
-                <section class="page-header">
-
-                    <div>
-                        <span class="eyebrow">
-                            YOUR ACCOUNT
-                        </span>
-
-                        <h1>
-                            My profile<span>.</span>
-                        </h1>
-
-                        <p>
-                            Your CityCare account details and activity.
-                        </p>
-                    </div>
-
-                    <button
-                        id="logoutButton"
-                        class="btn btn-secondary"
-                    >
-                        Logout
-                    </button>
-
-                </section>
-
-
-                <!-- Profile status message (loading / error) -->
-                <div
-                    id="profileMessage"
-                    class="complaints-message"
-                >
-                    Loading your profile...
-                </div>
-
-
-                <!-- Professional dashboard-style layout: a full-width
-                     header card, then Personal Information and
-                     Activity sitting side by side beneath it -->
-                <div class="profile-page-layout">
-
-                <!-- Profile Header Card -->
-                <section
-                    id="profileCard"
-                    class="profile-header-card"
-                    hidden
-                >
-
-                    <div class="profile-banner"></div>
-
-                    <div class="profile-header-row">
-
-                        <div
-                            id="profileAvatar"
-                            class="profile-avatar"
-                        ></div>
-
-                        <div class="profile-header-text">
-                            <h2 id="profileName">—</h2>
-                            <p id="profileLocation">—</p>
-                        </div>
-
-                        <span
-                            id="profileRoleBadge"
-                            class="profile-role-badge"
-                        ></span>
-
-                    </div>
-
-                </section>
-
-
-                <div class="profile-body-grid">
-
-                    <!-- Personal Information -->
-                    <section class="profile-info-panel">
-
-                        <h3 class="profile-panel-title">
-                            Personal Information
-                        </h3>
-
-                        <div class="profile-info-grid">
-
-                            <div class="profile-info-item">
-                                <span class="profile-detail-icon" aria-hidden="true">✉</span>
-                                <div>
-                                    <span class="profile-detail-label">Email</span>
-                                    <strong id="profileEmail">—</strong>
-                                </div>
-                            </div>
-
-                            <div class="profile-info-item">
-                                <span class="profile-detail-icon" aria-hidden="true">⌖</span>
-                                <div>
-                                    <span class="profile-detail-label">City</span>
-                                    <strong id="profileCity">—</strong>
-                                </div>
-                            </div>
-
-                            <div class="profile-info-item">
-                                <span class="profile-detail-icon" aria-hidden="true">⬡</span>
-                                <div>
-                                    <span class="profile-detail-label">State</span>
-                                    <strong id="profileState">—</strong>
-                                </div>
-                            </div>
-
-                            <div class="profile-info-item">
-                                <span class="profile-detail-icon" aria-hidden="true">⚧</span>
-                                <div>
-                                    <span class="profile-detail-label">Gender</span>
-                                    <strong id="profileGender">—</strong>
-                                </div>
-                            </div>
-
-                            <div class="profile-info-item">
-                                <span class="profile-detail-icon" aria-hidden="true">◷</span>
-                                <div>
-                                    <span class="profile-detail-label">Member since</span>
-                                    <strong id="profileJoined">—</strong>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </section>
-
-
-                    <!-- Activity Summary -->
-                    <section
-                        id="profileStats"
-                        class="profile-activity-panel"
-                        hidden
-                    >
-
-                        <h3 class="profile-panel-title">
-                            Activity
-                        </h3>
-
-                        <div class="profile-activity-list">
-
-                            <article class="stat-card">
-                                <span>Total complaints</span>
-                                <strong id="profileTotalCount">0</strong>
-                            </article>
-
-                            <article class="stat-card">
-                                <span>Pending</span>
-                                <strong id="profilePendingCount">0</strong>
-                            </article>
-
-                            <article class="stat-card">
-                                <span>In progress</span>
-                                <strong id="profileProgressCount">0</strong>
-                            </article>
-
-                            <article class="stat-card">
-                                <span>Resolved</span>
-                                <strong id="profileResolvedCount">0</strong>
-                            </article>
-
-                        </div>
-
-                    </section>
-
-                </div>
-
-                </div>
-
-            </main>
-
-
-            <!-- Footer -->
-            <footer class="footer">
-
-                <span>© 2026 CityCare</span>
-
-                <span>
-                    Smart Civic Issue Management Platform
-                </span>
-
-            </footer>
-
+<body class="citycare-app">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
+    <!-- Background leaf silhouettes -->
+    <div class="sidebar-leaves-bg">
+      <svg viewBox="0 0 200 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path opacity="0.07" d="M30 60C30 60 80 80 70 140C60 200 10 210 10 210C10 210 5 150 15 110C25 70 30 60 30 60Z" fill="white"/>
+        <path opacity="0.05" d="M140 180C140 180 190 200 180 260C170 320 120 330 120 330C120 330 115 270 125 230C135 190 140 180 140 180Z" fill="white"/>
+        <path opacity="0.06" d="M120 40C120 40 160 55 150 100C140 145 105 155 105 155C105 155 100 110 110 80C120 50 120 40 120 40Z" fill="white"/>
+      </svg>
+    </div>
+
+    <!-- Brand Header -->
+    <div class="brand-container">
+      <div class="brand-logo-wrap">
+        <!-- OFFICIAL CITYCARE EMBLEM -->
+        <div class="brand-logo-card">
+          <svg class="brand-icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="pinRingGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#72c416"/>
+                <stop offset="50%" stop-color="#2ca12d"/>
+                <stop offset="100%" stop-color="#0b6b33"/>
+              </linearGradient>
+              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#084282"/>
+                <stop offset="50%" stop-color="#0e62b8"/>
+                <stop offset="100%" stop-color="#0a70c9"/>
+              </linearGradient>
+              <linearGradient id="riverGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0a71ca"/>
+                <stop offset="100%" stop-color="#064082"/>
+              </linearGradient>
+              <linearGradient id="hillGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#55b81a"/>
+                <stop offset="100%" stop-color="#147526"/>
+              </linearGradient>
+            </defs>
+            <path d="M50 4C30 4 14 20 14 40C14 55 35 77 50 94C65 77 86 55 86 40C86 20 70 4 50 4Z" 
+                  stroke="url(#pinRingGrad)" stroke-width="8" stroke-linejoin="round" fill="none"/>
+            <g clip-path="url(#innerClip)">
+              <clipPath id="innerClip">
+                <path d="M50 8C33 8 19 22 19 40C19 53 37 72 50 87C63 72 81 53 81 40C81 22 67 8 50 8Z"/>
+              </clipPath>
+              <polygon points="50,14 46,20 54,20" fill="#0b488a"/>
+              <rect x="46" y="20" width="8" height="35" fill="url(#skyGrad)"/>
+              <rect x="48" y="24" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="51" y="24" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="48" y="28" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="51" y="28" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="48" y="32" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="51" y="32" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <polygon points="38,27 34,30 42,30" fill="#083a74"/>
+              <rect x="34" y="30" width="8" height="26" fill="url(#skyGrad)"/>
+              <rect x="36" y="33" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="39" y="33" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="36" y="37" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="39" y="37" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="26" y="36" width="7" height="20" fill="#0a59a7"/>
+              <rect x="28" y="39" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="28" y="43" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <polygon points="62,27 58,30 66,30" fill="#083a74"/>
+              <rect x="58" y="30" width="8" height="26" fill="url(#skyGrad)"/>
+              <rect x="60" y="33" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="63" y="33" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="60" y="37" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="63" y="37" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="67" y="36" width="7" height="20" fill="#0a59a7"/>
+              <rect x="69" y="39" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <rect x="69" y="43" width="1.5" height="2" fill="#ffffff" opacity="0.9"/>
+              <path d="M14 46 C25 43 40 45 50 51 C62 43 78 44 86 47 L86 80 L14 80 Z" fill="url(#hillGrad)"/>
+              <path d="M50 51 C60 56 68 66 50 90 C62 82 78 68 76 52 C68 53 58 52 50 51 Z" fill="url(#riverGrad)"/>
+              <path d="M37 53 C33 50 31 46 31 46 C31 46 35 48 37 53 Z" fill="#ffffff"/>
+              <path d="M38 54 C42 49 45 47 45 47 C45 47 43 51 38 54 Z" fill="#ffffff"/>
+            </g>
+          </svg>
         </div>
+        <div class="brand-text">
+          <h2>CityCare</h2>
+          <span>Civic Management System</span>
+        </div>
+      </div>
+      <p class="brand-subtext">Smarter City. Happier Citizens.</p>
+    </div>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+      <a href="index.html" class="nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+      <a href="report.html" class="nav-item">
+        <i class="fa-regular fa-square-plus"></i>
+        <span>Report Issue</span>
+      </a>
+      <a href="complaints.html" class="nav-item">
+        <i class="fa-regular fa-clipboard"></i>
+        <span>Complaints</span>
+      </a>
+      <a href="profile.html" class="nav-item active">
+        <i class="fa-regular fa-user"></i>
+        <span>My Profile</span>
+      </a>
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+      <div class="city-promo-card">
+        <div class="city-illustration">
+          <svg viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="15" y="32" width="14" height="48" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+            <rect x="33" y="20" width="16" height="60" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="41,8 33,20 49,20" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <rect x="53" y="38" width="12" height="42" stroke="#4ade80" stroke-width="1.2" opacity="0.6"/>
+            <rect x="69" y="16" width="18" height="64" stroke="#4ade80" stroke-width="1.2" opacity="0.8"/>
+            <line x1="78" y1="4" x2="78" y2="16" stroke="#4ade80" stroke-width="1.5" opacity="0.8"/>
+            <rect x="91" y="28" width="15" height="52" stroke="#4ade80" stroke-width="1.2" opacity="0.65"/>
+            <rect x="110" y="22" width="16" height="58" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <polygon points="118,10 110,22 126,22" stroke="#4ade80" stroke-width="1.2" opacity="0.75"/>
+            <rect x="130" y="35" width="14" height="45" stroke="#4ade80" stroke-width="1.2" opacity="0.5"/>
+            <line x1="38" y1="28" x2="38" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="44" y1="28" x2="44" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="75" y1="24" x2="75" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="81" y1="24" x2="81" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="115" y1="30" x2="115" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <line x1="121" y1="30" x2="121" y2="70" stroke="#4ade80" stroke-width="1.2" stroke-dasharray="2 3" opacity="0.5"/>
+            <path d="M0 78 Q 80 72 160 78" stroke="#4ade80" stroke-width="1.2" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="promo-text-box">
+          <div class="promo-pin-icon">
+            <i class="fa-solid fa-location-dot"></i>
+          </div>
+          <span>Together for a cleaner, safer and better city.</span>
+        </div>
+      </div>
+
+      <button id="logoutBtn" class="logout-pill-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN PROFILE VIEW -->
+  <main class="main-content">
+    
+    <!-- Top Header Area -->
+    <header class="page-header">
+      <div class="header-left">
+        <span class="header-overline">YOUR PROFILE</span>
+        <h1 class="main-heading">
+          My profile<span class="heading-dot">.</span>
+        </h1>
+        <p class="sub-heading">Your CityCare account details and activity.</p>
+      </div>
+
+      <!-- Right hand Skyline Art & Slogan -->
+      <div class="header-illustration">
+        <div class="calligraphy-tag">
+          <div class="tag-content">
+            <span class="tag-title">A cleaner city</span>
+            <span class="tag-subtitle">starts with you</span>
+          </div>
+          <svg class="tag-flourish" width="130" height="18" viewBox="0 0 130 18" fill="none">
+            <path d="M3 14C35 4 95 3 126 14M98 16C108 14 122 14 127 11" stroke="#3b694b" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div class="birds-flying">
+          <svg width="60" height="30" viewBox="0 0 60 30" fill="none">
+            <path d="M4 12 Q 9 6 14 12 Q 19 6 24 12" stroke="#527d60" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M26 8 Q 30 3 34 8 Q 38 3 42 8" stroke="#527d60" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+            <path d="M44 14 Q 48 10 52 14 Q 56 10 60 14" stroke="#527d60" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+
+        <div class="skyline-art">
+          <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="skyline-svg">
+            <defs>
+              <linearGradient id="skyBldg1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#b6d8c2"/>
+                <stop offset="100%" stop-color="#8dbb9d"/>
+              </linearGradient>
+              <linearGradient id="skyBldg2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cce6d5"/>
+                <stop offset="100%" stop-color="#a4cca7"/>
+              </linearGradient>
+              <linearGradient id="treeGrad1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#5a8a68"/>
+                <stop offset="100%" stop-color="#315c3e"/>
+              </linearGradient>
+              <linearGradient id="treeGrad2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#73a882"/>
+                <stop offset="100%" stop-color="#467854"/>
+              </linearGradient>
+            </defs>
+
+            <rect x="50" y="70" width="30" height="100" fill="#d7ecde" rx="2"/>
+            <rect x="85" y="55" width="28" height="115" fill="#cce6d5" rx="2"/>
+            <polygon points="99,35 85,55 113,55" fill="#cce6d5"/>
+            <rect x="160" y="60" width="36" height="110" fill="#d2ead9" rx="2"/>
+            <rect x="250" y="75" width="32" height="95" fill="#d7ecde" rx="2"/>
+            <rect x="290" y="50" width="30" height="120" fill="#cce6d5" rx="2"/>
+
+            <rect x="110" y="40" width="38" height="130" fill="url(#skyBldg1)" rx="3"/>
+            <line x1="129" y1="18" x2="129" y2="40" stroke="#7aa88a" stroke-width="2"/>
+            <g stroke="#ffffff" stroke-width="1" opacity="0.6">
+              <line x1="117" y1="50" x2="117" y2="150" stroke-dasharray="4 4"/>
+              <line x1="124" y1="50" x2="124" y2="150" stroke-dasharray="4 4"/>
+              <line x1="131" y1="50" x2="131" y2="150" stroke-dasharray="4 4"/>
+              <line x1="138" y1="50" x2="138" y2="150" stroke-dasharray="4 4"/>
+            </g>
+
+            <rect x="195" y="28" width="44" height="142" fill="url(#skyBldg2)" rx="3"/>
+            <polygon points="217,10 195,28 239,28" fill="#9bc2a4"/>
+            <g stroke="#ffffff" stroke-width="1.2" opacity="0.6">
+              <line x1="205" y1="40" x2="205" y2="150" stroke-dasharray="5 5"/>
+              <line x1="214" y1="40" x2="214" y2="150" stroke-dasharray="5 5"/>
+              <line x1="223" y1="40" x2="223" y2="150" stroke-dasharray="5 5"/>
+              <line x1="231" y1="40" x2="231" y2="150" stroke-dasharray="5 5"/>
+            </g>
+
+            <rect x="245" y="65" width="34" height="105" fill="url(#skyBldg1)" rx="3"/>
+
+            <ellipse cx="25" cy="155" rx="18" ry="24" fill="url(#treeGrad2)"/>
+            <ellipse cx="45" cy="150" rx="22" ry="28" fill="url(#treeGrad1)"/>
+            <ellipse cx="70" cy="158" rx="20" ry="24" fill="url(#treeGrad2)"/>
+            <ellipse cx="95" cy="148" rx="24" ry="32" fill="url(#treeGrad1)"/>
+            <ellipse cx="125" cy="156" rx="22" ry="26" fill="url(#treeGrad2)"/>
+            <ellipse cx="155" cy="150" rx="26" ry="34" fill="url(#treeGrad1)"/>
+            <ellipse cx="185" cy="158" rx="24" ry="28" fill="url(#treeGrad2)"/>
+            <ellipse cx="220" cy="152" rx="26" ry="32" fill="url(#treeGrad1)"/>
+            <ellipse cx="255" cy="156" rx="22" ry="28" fill="url(#treeGrad2)"/>
+            <ellipse cx="285" cy="150" rx="25" ry="32" fill="url(#treeGrad1)"/>
+            <ellipse cx="320" cy="154" rx="24" ry="28" fill="url(#treeGrad2)"/>
+            <ellipse cx="350" cy="148" rx="26" ry="34" fill="url(#treeGrad1)"/>
+            <ellipse cx="380" cy="155" rx="22" ry="26" fill="url(#treeGrad2)"/>
+            <ellipse cx="405" cy="150" rx="18" ry="24" fill="url(#treeGrad1)"/>
+
+            <rect x="0" y="166" width="420" height="14" fill="#315c3e"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- TOP USER PROFILE HERO BANNER -->
+    <section class="profile-hero-banner">
+      <div class="hero-left-wrap">
+        <div class="avatar-ring-container">
+          <div id="avatarImageWrap" class="avatar-circle">
+            <i class="fa-solid fa-user"></i>
+          </div>
+          <button id="uploadAvatarBtn" class="avatar-camera-btn" title="Change profile picture">
+            <i class="fa-solid fa-camera"></i>
+          </button>
+          <input type="file" id="avatarFileInput" accept="image/*" hidden>
+        </div>
+        <div class="hero-user-details">
+          <h2 id="profileHeroName" class="hero-name">Risabh!</h2>
+          <p id="profileHeroLocation" class="hero-location">Muzaffarpur, Bihar</p>
+        </div>
+      </div>
+
+      <!-- Banner Decorative Botanical Leaves -->
+      <div class="hero-leaves-bg">
+        <svg viewBox="0 0 200 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path opacity="0.3" d="M120 120 C120 70 170 30 190 20 C190 20 190 60 170 90 C150 120 120 120 120 120 Z" fill="#88b595"/>
+          <path opacity="0.25" d="M90 120 C90 80 130 50 150 40 C150 40 150 75 130 100 C110 120 90 120 90 120 Z" fill="#a4c9b0"/>
+          <path opacity="0.2" d="M150 120 C160 85 200 65 210 60 C210 60 210 90 190 110 C170 125 150 120 150 120 Z" fill="#72a882"/>
+        </svg>
+      </div>
+
+      <button id="editProfileBtn" class="btn-edit-profile">
+        <i class="fa-regular fa-pen-to-square"></i>
+        <span>Edit Profile</span>
+      </button>
+    </section>
+
+    <!-- TWO-COLUMN WORKSPACE: PERSONAL INFO & ACTIVITY -->
+    <div class="profile-workspace-grid">
+
+      <!-- LEFT COLUMN: PERSONAL INFORMATION -->
+      <section class="personal-info-column">
+        <div class="card info-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <div class="card-title-icon green-soft">
+                <i class="fa-regular fa-address-card"></i>
+              </div>
+              <h2 class="card-title">Personal Information</h2>
+            </div>
+          </div>
+
+          <div class="info-items-grid">
+            <!-- Email -->
+            <div class="info-pill-item">
+              <div class="pill-icon-box">
+                <i class="fa-regular fa-envelope"></i>
+              </div>
+              <div class="pill-text-wrap">
+                <span class="pill-label">Email</span>
+                <span id="infoEmail" class="pill-value">sneon2123@gmail.com</span>
+              </div>
+            </div>
+
+            <!-- City -->
+            <div class="info-pill-item">
+              <div class="pill-icon-box">
+                <i class="fa-solid fa-city"></i>
+              </div>
+              <div class="pill-text-wrap">
+                <span class="pill-label">City</span>
+                <span id="infoCity" class="pill-value">Muzaffarpur</span>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="info-pill-item">
+              <div class="pill-icon-box">
+                <i class="fa-solid fa-phone"></i>
+              </div>
+              <div class="pill-text-wrap">
+                <span class="pill-label">Phone</span>
+                <span id="infoPhone" class="pill-value">+91 98765 43210</span>
+              </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="info-pill-item">
+              <div class="pill-icon-box">
+                <i class="fa-solid fa-venus-mars"></i>
+              </div>
+              <div class="pill-text-wrap">
+                <span class="pill-label">Gender</span>
+                <span id="infoGender" class="pill-value">Male</span>
+              </div>
+            </div>
+
+            <!-- Member Since -->
+            <div class="info-pill-item info-pill-wide">
+              <div class="pill-icon-box">
+                <i class="fa-regular fa-calendar-days"></i>
+              </div>
+              <div class="pill-text-wrap">
+                <span class="pill-label">Member Since</span>
+                <span id="infoMemberSince" class="pill-value">September 2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Motivational Quote Box -->
+        <div class="quote-action-card">
+          <div class="quote-sprout-icon">
+            <i class="fa-solid fa-seedling"></i>
+          </div>
+          <div class="quote-text-wrap">
+            <h4 class="quote-heading">Your actions make a difference!</h4>
+            <p class="quote-subtext">Report issues, help your city get better.</p>
+          </div>
+          <div class="quote-leaves-art">
+            <svg width="80" height="60" viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M40 55 C35 35 15 25 5 25 C5 25 15 45 35 55 Z" stroke="#3b694b" stroke-width="1.5" fill="none" opacity="0.4"/>
+              <path d="M40 55 C45 30 65 20 75 20 C75 20 65 45 45 55 Z" stroke="#3b694b" stroke-width="1.5" fill="none" opacity="0.4"/>
+              <path d="M40 55 L40 25" stroke="#3b694b" stroke-width="1.5" opacity="0.4"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: ACTIVITY LIST -->
+      <section class="card activity-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <div class="card-title-icon green-soft">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <h2 class="card-title">Activity</h2>
+          </div>
+        </div>
+
+        <div class="activity-items-stack">
+          <!-- Total complaints -->
+          <a href="complaints.html" class="activity-row-link">
+            <div class="activity-icon-circle icon-green">
+              <i class="fa-regular fa-file-lines"></i>
+            </div>
+            <div class="activity-info-box">
+              <span class="activity-label">Total complaints</span>
+              <span id="activityTotal" class="activity-count">0</span>
+            </div>
+            <i class="fa-solid fa-chevron-right activity-chevron"></i>
+          </a>
+
+          <!-- Pending -->
+          <a href="complaints.html" class="activity-row-link">
+            <div class="activity-icon-circle icon-amber">
+              <i class="fa-regular fa-clock"></i>
+            </div>
+            <div class="activity-info-box">
+              <span class="activity-label">Pending</span>
+              <span id="activityPending" class="activity-count">0</span>
+            </div>
+            <i class="fa-solid fa-chevron-right activity-chevron"></i>
+          </a>
+
+          <!-- In progress -->
+          <a href="complaints.html" class="activity-row-link">
+            <div class="activity-icon-circle icon-blue">
+              <i class="fa-solid fa-gear"></i>
+            </div>
+            <div class="activity-info-box">
+              <span class="activity-label">In progress</span>
+              <span id="activityInProgress" class="activity-count">0</span>
+            </div>
+            <i class="fa-solid fa-chevron-right activity-chevron"></i>
+          </a>
+
+          <!-- Resolved -->
+          <a href="complaints.html" class="activity-row-link">
+            <div class="activity-icon-circle icon-purple">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <div class="activity-info-box">
+              <span class="activity-label">Resolved</span>
+              <span id="activityResolved" class="activity-count">0</span>
+            </div>
+            <i class="fa-solid fa-chevron-right activity-chevron"></i>
+          </a>
+        </div>
+      </section>
 
     </div>
 
+    <!-- Decorative Corner Leaves -->
+    <div class="corner-leaves-decoration">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path opacity="0.3" d="M180 90C180 90 120 85 100 125C80 165 95 180 95 180C95 180 145 185 165 145C185 105 180 90 180 90Z" fill="#a4c9b0"/>
+        <path opacity="0.4" d="M180 30C180 30 140 45 135 85C130 125 155 145 155 145C155 145 178 115 180 85C182 55 180 30 180 30Z" fill="#88b595"/>
+        <path opacity="0.25" d="M120 180C120 180 95 140 115 105C135 70 160 80 160 80C160 80 155 125 135 150C115 175 120 180 120 180Z" fill="#b9dac4"/>
+      </svg>
+    </div>
+  </main>
 
-    <!-- Existing JavaScript -->
-    <script src="js/profile.js"></script>
+  <!-- Edit Profile Modal -->
+  <div id="editProfileModal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit Profile</h3>
+        <button id="closeModalBtn" class="modal-close-btn">&times;</button>
+      </div>
+      <form id="editProfileForm" class="modal-form">
+        <div class="form-group">
+          <label for="editName">Full Name</label>
+          <input type="text" id="editName" class="input-field" placeholder="Your full name" required>
+        </div>
+        <div class="form-group">
+          <label for="editCity">City</label>
+          <input type="text" id="editCity" class="input-field" placeholder="City name" required>
+        </div>
+        <div class="form-group">
+          <label for="editState">State</label>
+          <input type="text" id="editState" class="input-field" placeholder="State" required>
+        </div>
+        <div class="form-group">
+          <label for="editPhone">Phone Number</label>
+          <input type="text" id="editPhone" class="input-field" placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+          <label for="editGender">Gender</label>
+          <div class="select-wrapper">
+            <select id="editGender" class="input-field select-field">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <i class="fa-solid fa-chevron-down select-arrow"></i>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="cancelModalBtn" class="btn-cancel">Cancel</button>
+          <button type="submit" class="btn-save">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="toast-notification"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/profile.js"></script>
 </body>
 </html>

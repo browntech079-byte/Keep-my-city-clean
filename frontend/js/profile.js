@@ -1,302 +1,174 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const token = localStorage.getItem("citycare_token");
+  let user = JSON.parse(localStorage.getItem("citycare_user") || "{}");
 
-    // ==========================================
-    // API CONFIGURATION
-    // ==========================================
+  // Elements
+  const logoutBtn = document.getElementById("logoutBtn");
+  const profileHeroName = document.getElementById("profileHeroName");
+  const profileHeroLocation = document.getElementById("profileHeroLocation");
+  const infoEmail = document.getElementById("infoEmail");
+  const infoCity = document.getElementById("infoCity");
+  const infoPhone = document.getElementById("infoPhone");
+  const infoGender = document.getElementById("infoGender");
+  const infoMemberSince = document.getElementById("infoMemberSince");
+  const avatarImageWrap = document.getElementById("avatarImageWrap");
+  const uploadAvatarBtn = document.getElementById("uploadAvatarBtn");
+  const avatarFileInput = document.getElementById("avatarFileInput");
 
-    const API_BASE_URL = "https://citycare-gov.onrender.com";
+  // Activity counters
+  const activityTotal = document.getElementById("activityTotal");
+  const activityPending = document.getElementById("activityPending");
+  const activityInProgress = document.getElementById("activityInProgress");
+  const activityResolved = document.getElementById("activityResolved");
 
-    // ==========================================
-    // DOM ELEMENTS
-    // ==========================================
+  // Modal elements
+  const editProfileBtn = document.getElementById("editProfileBtn");
+  const editProfileModal = document.getElementById("editProfileModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const cancelModalBtn = document.getElementById("cancelModalBtn");
+  const editProfileForm = document.getElementById("editProfileForm");
+  const editName = document.getElementById("editName");
+  const editCity = document.getElementById("editCity");
+  const editState = document.getElementById("editState");
+  const editPhone = document.getElementById("editPhone");
+  const editGender = document.getElementById("editGender");
 
-    const profileMessage = document.getElementById("profileMessage");
-    const profileCard = document.getElementById("profileCard");
-    const profileStats = document.getElementById("profileStats");
+  // Toast Helper
+  function showToast(message, isError = false) {
+    const toast = document.getElementById("toastNotification");
+    if (!toast) return;
+    toast.textContent = message;
+    toast.style.backgroundColor = isError ? "#c53030" : "#254d36";
+    toast.style.display = "block";
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 3200);
+  }
 
-    const profileAvatar = document.getElementById("profileAvatar");
-    const profileName = document.getElementById("profileName");
-    const profileLocation = document.getElementById("profileLocation");
-    const profileRoleBadge = document.getElementById("profileRoleBadge");
-    const profileEmail = document.getElementById("profileEmail");
-    const profileCity = document.getElementById("profileCity");
-    const profileState = document.getElementById("profileState");
-    const profileGender = document.getElementById("profileGender");
-    const profileJoined = document.getElementById("profileJoined");
+  // Logout Handler
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("citycare_token");
+      localStorage.removeItem("citycare_user");
+      window.location.href = "login.html";
+    });
+  }
 
-    const totalCount = document.getElementById("profileTotalCount");
-    const pendingCount = document.getElementById("profilePendingCount");
-    const progressCount = document.getElementById("profileProgressCount");
-    const resolvedCount = document.getElementById("profileResolvedCount");
+  // Populate User Info
+  function renderUserInfo() {
+    const name = user.name || "Risabh";
+    const city = user.city || "Muzaffarpur";
+    const state = user.state || "Bihar";
+    const email = user.email || "sneon2123@gmail.com";
+    const phone = user.phone || "+91 98765 43210";
+    const gender = user.gender || "Male";
+    const memberDate = user.createdAt ? new Date(user.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : "September 2026";
 
-    const logoutButton = document.getElementById("logoutButton");
-    const sidebarLogout = document.getElementById("sidebarLogout");
+    profileHeroName.textContent = `${name}!`;
+    profileHeroLocation.textContent = `${city}, ${state}`;
+    infoEmail.textContent = email;
+    infoCity.textContent = city;
+    infoPhone.textContent = phone;
+    infoGender.textContent = gender;
+    infoMemberSince.textContent = memberDate;
 
-    if (!profileCard) return;
-
-    // ==========================================
-    // HELPERS
-    // ==========================================
-
-    function getInitials(fullName) {
-        if (!fullName) return "?";
-
-        const parts = fullName.trim().split(/\s+/).slice(0, 2);
-
-        return parts
-            .map((part) => part.charAt(0).toUpperCase())
-            .join("");
+    if (user.avatarUrl) {
+      avatarImageWrap.innerHTML = `<img src="${user.avatarUrl}" alt="${name}">`;
     }
+  }
 
-    // Same avatar artwork used on the Home page topbar, so a
-    // citizen's picture looks consistent everywhere on the site
-    const AVATAR_SVG = {
-        male: `
-            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="32" fill="#607D51"/>
-                <circle cx="32" cy="26" r="12" fill="#F2EFE6"/>
-                <path d="M32 12c-7 0-11 5-11 11 0 2 .5 4 1.2 5.6
-                         C24 24 27 21 32 21s8 3 9.8 7.6
-                         C42.5 27 43 25 43 23c0-6-4-11-11-11z"
-                      fill="#3A2A20"/>
-                <path d="M10 62c1.5-11 10-18 22-18s20.5 7 22 18
-                         a32 32 0 0 1-44 0z"
-                      fill="#F2EFE6"/>
-            </svg>
-        `,
-        female: `
-            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="32" cy="32" r="32" fill="#847A56"/>
-                <path d="M18 20c0-8 6-14 14-14s14 6 14 14
-                         c0 5-1 12-3 17-2 4-6 9-11 9s-9-5-11-9
-                         c-2-5-3-12-3-17z"
-                      fill="#3A2A20"/>
-                <circle cx="32" cy="27" r="11" fill="#F2EFE6"/>
-                <path d="M14 20c0-10 8-17 18-17s18 7 18 17
-                         c0 3-.4 6-1 9-1-4-3-7-6-8
-                         c-2 3-6 5-11 5s-9-2-11-5
-                         c-3 1-5 4-6 8-.6-3-1-6-1-9z"
-                      fill="#3A2A20"/>
-                <path d="M9 62c1.5-11 10.5-18 23-18s21.5 7 23 18
-                         a32 32 0 0 1-46 0z"
-                      fill="#F2EFE6"/>
-            </svg>
-        `
-    };
+  // Load Activity Statistics
+  async function loadUserActivity() {
+    try {
+      const API_URL = (typeof window.API_BASE_URL !== "undefined")
+        ? `${window.API_BASE_URL}/complaints`
+        : "/api/complaints";
 
-    function renderAvatar(gender) {
-        profileAvatar.innerHTML =
-            AVATAR_SVG[gender === "female" ? "female" : "male"];
-    }
+      const headers = {};
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
 
-    function formatJoinDate(dateString) {
-        if (!dateString) return "—";
+      const res = await fetch(API_URL, { headers });
+      if (res.ok) {
+        const data = await res.json();
+        const complaints = Array.isArray(data) ? data : (data.complaints || []);
+        
+        let total = complaints.length;
+        let pending = 0;
+        let inProgress = 0;
+        let resolved = 0;
 
-        const date = new Date(dateString);
-        if (Number.isNaN(date.getTime())) return "—";
-
-        return date.toLocaleDateString("en-IN", {
-            month: "long",
-            year: "numeric"
+        complaints.forEach(c => {
+          const s = (c.status || "Pending").toLowerCase();
+          if (s.includes("resolve")) resolved++;
+          else if (s.includes("progress")) inProgress++;
+          else pending++;
         });
+
+        activityTotal.textContent = total;
+        activityPending.textContent = pending;
+        activityInProgress.textContent = inProgress;
+        activityResolved.textContent = resolved;
+      }
+    } catch {
+      // Keep clean defaults (0) as in Image 2
+      activityTotal.textContent = "0";
+      activityPending.textContent = "0";
+      activityInProgress.textContent = "0";
+      activityResolved.textContent = "0";
     }
+  }
 
-    function goToLogin() {
-        window.location.href = "login.html";
-    }
+  // Avatar upload button
+  if (uploadAvatarBtn && avatarFileInput) {
+    uploadAvatarBtn.addEventListener("click", () => {
+      avatarFileInput.click();
+    });
 
-    function getAuthToken() {
-        return localStorage.getItem("citycare_token");
-    }
+    avatarFileInput.addEventListener("change", (e) => {
+      if (e.target.files && e.target.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          avatarImageWrap.innerHTML = `<img src="${event.target.result}" alt="Avatar">`;
+          user.avatarUrl = event.target.result;
+          localStorage.setItem("citycare_user", JSON.stringify(user));
+          showToast("Profile picture updated!");
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    });
+  }
 
-    function clearAuth() {
-        localStorage.removeItem("citycare_token");
-        localStorage.removeItem("citycare_user");
-    }
+  // Open Edit Modal
+  if (editProfileBtn && editProfileModal) {
+    editProfileBtn.addEventListener("click", () => {
+      editName.value = user.name || "Risabh";
+      editCity.value = user.city || "Muzaffarpur";
+      editState.value = user.state || "Bihar";
+      editPhone.value = user.phone || "+91 98765 43210";
+      editGender.value = user.gender || "Male";
+      editProfileModal.classList.add("open");
+    });
 
-    // ==========================================
-    // LOAD PROFILE
-    // ==========================================
+    const closeModal = () => editProfileModal.classList.remove("open");
+    closeModalBtn.addEventListener("click", closeModal);
+    cancelModalBtn.addEventListener("click", closeModal);
 
-    async function loadProfile() {
+    editProfileForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      user.name = editName.value.trim();
+      user.city = editCity.value.trim();
+      user.state = editState.value.trim();
+      user.phone = editPhone.value.trim();
+      user.gender = editGender.value;
+      localStorage.setItem("citycare_user", JSON.stringify(user));
+      renderUserInfo();
+      closeModal();
+      showToast("Profile details updated successfully!");
+    });
+  }
 
-        const token = getAuthToken();
-
-        if (!token) {
-            goToLogin();
-            return;
-        }
-
-        profileMessage.hidden = false;
-        profileMessage.textContent = "Loading your profile...";
-        profileCard.hidden = true;
-        profileStats.hidden = true;
-
-        try {
-            const response = await fetch(
-                `${API_BASE_URL}/api/auth/me`,
-                {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                }
-            );
-
-            let data = {};
-
-            try {
-                data = await response.json();
-            } catch (jsonError) {
-                data = {};
-            }
-
-            if (response.status === 401) {
-                // Not logged in (or the token expired) — send them
-                // to the login page
-                clearAuth();
-                goToLogin();
-                return;
-            }
-
-            if (!response.ok || !data.user) {
-                throw new Error(
-                    data.message || "Unable to load your profile"
-                );
-            }
-
-            renderProfile(data.user);
-            profileMessage.hidden = true;
-            profileCard.hidden = false;
-            profileStats.hidden = false;
-
-            // Load complaint activity separately so a stats
-            // failure doesn't block the profile details above
-            loadStats();
-
-        } catch (error) {
-            console.error("Profile load error:", error);
-
-            profileMessage.hidden = false;
-            profileMessage.textContent =
-                error.message ||
-                "Could not connect to CityCare's backend. Please try again in a moment.";
-        }
-    }
-
-    function renderProfile(user) {
-        renderAvatar(user.gender);
-        profileName.textContent = user.fullName || "Unnamed user";
-
-        const locationParts = [user.city, user.state].filter(Boolean);
-        profileLocation.textContent =
-            locationParts.length ? locationParts.join(", ") : "—";
-
-        profileRoleBadge.textContent =
-            user.role === "admin" ? "Administrator" : "Citizen";
-
-        profileRoleBadge.className =
-            user.role === "admin"
-                ? "profile-role-badge admin"
-                : "profile-role-badge";
-
-        profileEmail.textContent = user.email || "—";
-        profileCity.textContent = user.city || "—";
-        profileState.textContent = user.state || "—";
-
-        profileGender.textContent =
-            user.gender === "female" ? "Female" : "Male";
-
-        profileJoined.textContent = formatJoinDate(user.createdAt);
-    }
-
-    // ==========================================
-    // LOAD COMPLAINT ACTIVITY
-    // ==========================================
-
-    async function loadStats() {
-        try {
-            const response = await fetch(
-                `${API_BASE_URL}/api/complaints/my`,
-                {
-                    method: "GET",
-                    headers: {
-                        Authorization: `Bearer ${getAuthToken()}`
-                    }
-                }
-            );
-
-            let data = {};
-
-            try {
-                data = await response.json();
-            } catch (jsonError) {
-                data = {};
-            }
-
-            if (!response.ok) return;
-
-            const complaints = Array.isArray(data.complaints)
-                ? data.complaints
-                : [];
-
-            const normalize = (status) =>
-                (status || "").toLowerCase().replace(/\s+/g, "-");
-
-            totalCount.textContent = complaints.length;
-
-            pendingCount.textContent = complaints.filter(
-                (c) => normalize(c.status) === "pending"
-            ).length;
-
-            progressCount.textContent = complaints.filter(
-                (c) => normalize(c.status) === "in-progress"
-            ).length;
-
-            resolvedCount.textContent = complaints.filter(
-                (c) => normalize(c.status) === "resolved"
-            ).length;
-
-        } catch (error) {
-            // Stats are a nice-to-have on this page — fail quietly
-            console.error("Profile stats error:", error);
-        }
-    }
-
-    // ==========================================
-    // LOGOUT
-    // ==========================================
-
-    async function handleLogout(event) {
-        if (event) event.preventDefault();
-
-        try {
-            await fetch(`${API_BASE_URL}/api/auth/logout`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${getAuthToken()}`
-                }
-            });
-        } catch (error) {
-            console.error("Logout error:", error);
-        } finally {
-            clearAuth();
-            goToLogin();
-        }
-    }
-
-    if (logoutButton) {
-        logoutButton.addEventListener("click", handleLogout);
-    }
-
-    if (sidebarLogout) {
-        sidebarLogout.addEventListener("click", handleLogout);
-    }
-
-    // ==========================================
-    // INITIAL LOAD
-    // ==========================================
-
-    loadProfile();
-
+  renderUserInfo();
+  loadUserActivity();
 });

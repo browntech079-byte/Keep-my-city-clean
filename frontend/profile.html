@@ -142,92 +142,138 @@
                 </div>
 
 
-                <!-- Profile Card -->
+                <!-- Professional dashboard-style layout: a full-width
+                     header card, then Personal Information and
+                     Activity sitting side by side beneath it -->
+                <div class="profile-page-layout">
+
+                <!-- Profile Header Card -->
                 <section
                     id="profileCard"
-                    class="profile-panel"
+                    class="profile-header-card"
                     hidden
                 >
 
                     <div class="profile-banner"></div>
 
-                    <div class="profile-identity">
+                    <div class="profile-header-row">
 
                         <div
                             id="profileAvatar"
                             class="profile-avatar"
                         ></div>
 
-                        <div class="profile-identity-text">
+                        <div class="profile-header-text">
                             <h2 id="profileName">—</h2>
                             <p id="profileLocation">—</p>
-                            <span
-                                id="profileRoleBadge"
-                                class="profile-role-badge"
-                            ></span>
                         </div>
 
-                    </div>
-
-                    <div class="profile-details-list">
-
-                        <div class="profile-detail-row">
-                            <span class="profile-detail-icon" aria-hidden="true">✉</span>
-                            <span class="profile-detail-label">Email</span>
-                            <strong id="profileEmail">—</strong>
-                        </div>
-
-                        <div class="profile-detail-row">
-                            <span class="profile-detail-icon" aria-hidden="true">⌖</span>
-                            <span class="profile-detail-label">City</span>
-                            <strong id="profileCity">—</strong>
-                        </div>
-
-                        <div class="profile-detail-row">
-                            <span class="profile-detail-icon" aria-hidden="true">⬡</span>
-                            <span class="profile-detail-label">State</span>
-                            <strong id="profileState">—</strong>
-                        </div>
-
-                        <div class="profile-detail-row">
-                            <span class="profile-detail-icon" aria-hidden="true">◷</span>
-                            <span class="profile-detail-label">Member since</span>
-                            <strong id="profileJoined">—</strong>
-                        </div>
+                        <span
+                            id="profileRoleBadge"
+                            class="profile-role-badge"
+                        ></span>
 
                     </div>
 
                 </section>
 
 
-                <!-- Activity Summary -->
-                <section
-                    id="profileStats"
-                    class="complaint-stats profile-stats"
-                    hidden
-                >
+                <div class="profile-body-grid">
 
-                    <article class="stat-card">
-                        <span>Total complaints</span>
-                        <strong id="profileTotalCount">0</strong>
-                    </article>
+                    <!-- Personal Information -->
+                    <section class="profile-info-panel">
 
-                    <article class="stat-card">
-                        <span>Pending</span>
-                        <strong id="profilePendingCount">0</strong>
-                    </article>
+                        <h3 class="profile-panel-title">
+                            Personal Information
+                        </h3>
 
-                    <article class="stat-card">
-                        <span>In progress</span>
-                        <strong id="profileProgressCount">0</strong>
-                    </article>
+                        <div class="profile-info-grid">
 
-                    <article class="stat-card">
-                        <span>Resolved</span>
-                        <strong id="profileResolvedCount">0</strong>
-                    </article>
+                            <div class="profile-info-item">
+                                <span class="profile-detail-icon" aria-hidden="true">✉</span>
+                                <div>
+                                    <span class="profile-detail-label">Email</span>
+                                    <strong id="profileEmail">—</strong>
+                                </div>
+                            </div>
 
-                </section>
+                            <div class="profile-info-item">
+                                <span class="profile-detail-icon" aria-hidden="true">⌖</span>
+                                <div>
+                                    <span class="profile-detail-label">City</span>
+                                    <strong id="profileCity">—</strong>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-item">
+                                <span class="profile-detail-icon" aria-hidden="true">⬡</span>
+                                <div>
+                                    <span class="profile-detail-label">State</span>
+                                    <strong id="profileState">—</strong>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-item">
+                                <span class="profile-detail-icon" aria-hidden="true">⚧</span>
+                                <div>
+                                    <span class="profile-detail-label">Gender</span>
+                                    <strong id="profileGender">—</strong>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-item">
+                                <span class="profile-detail-icon" aria-hidden="true">◷</span>
+                                <div>
+                                    <span class="profile-detail-label">Member since</span>
+                                    <strong id="profileJoined">—</strong>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- Activity Summary -->
+                    <section
+                        id="profileStats"
+                        class="profile-activity-panel"
+                        hidden
+                    >
+
+                        <h3 class="profile-panel-title">
+                            Activity
+                        </h3>
+
+                        <div class="profile-activity-list">
+
+                            <article class="stat-card">
+                                <span>Total complaints</span>
+                                <strong id="profileTotalCount">0</strong>
+                            </article>
+
+                            <article class="stat-card">
+                                <span>Pending</span>
+                                <strong id="profilePendingCount">0</strong>
+                            </article>
+
+                            <article class="stat-card">
+                                <span>In progress</span>
+                                <strong id="profileProgressCount">0</strong>
+                            </article>
+
+                            <article class="stat-card">
+                                <span>Resolved</span>
+                                <strong id="profileResolvedCount">0</strong>
+                            </article>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+                </div>
 
             </main>
 

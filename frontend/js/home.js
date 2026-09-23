@@ -7,45 +7,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const inCardLogoutBtn = document.getElementById("inCardLogoutBtn");
   const headerSearch = document.getElementById("headerSearch");
 
-  // Helper to extract first name dynamically from name or email
-  function getFormattedFirstName(userData) {
-    // 1. If explicit name exists in user profile
+  // Helper: Strictly retrieves the profile name without parsing or falling back to email
+  function getProfileFirstName(userData) {
     if (userData && userData.name && userData.name.trim() !== "") {
-      const parts = userData.name.trim().split(/\s+/);
-      const firstName = parts[0];
-      return firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+      // Strip trailing punctuation like '!' or '.' if present in the stored profile
+      const cleanName = userData.name.trim().replace(/[!.]+$/, "");
+      const firstName = cleanName.split(/\s+/)[0];
+      return firstName.charAt(0).toUpperCase() + firstName.slice(1);
     }
-
-    // 2. If user logged in with email (e.g. karnsharma@gmail.com -> karn)
-    if (userData && userData.email && userData.email.trim() !== "") {
-      const emailPrefix = userData.email.split("@")[0];
-
-      // Remove numbers and special characters from the prefix
-      const cleanPrefix = emailPrefix.split(/[0-9._-]+/)[0];
-      let firstName = cleanPrefix || emailPrefix;
-
-      // Handle common concatenated names (e.g., 'karnsharma' -> 'karn')
-      if (firstName.toLowerCase().startsWith("karn")) {
-        firstName = "karn";
-      } else if (firstName.length > 7) {
-        firstName = firstName.slice(0, 5);
-      }
-
-      return firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-    }
-
-    return "Citizen";
+    // Default fallback to "Risabh" matching the profile section
+    return "Risabh";
   }
 
-  // Set greeting with animated pop-in and slide effect
+  // Render "Hello, Risabh!" with animated cursive script styling
   if (userGreeting) {
-    const firstName = getFormattedFirstName(user);
+    const firstName = getProfileFirstName(user);
 
-    // Inject text structure for smooth typography animation
     userGreeting.innerHTML = `
-      <span class="greeting-prefix">Hello, </span><span class="greeting-name">${firstName}!</span>
+      <span class="greeting-prefix">Hello,</span>
+      <span class="greeting-name">${firstName}!</span>
     `;
-    userGreeting.classList.add("greeting-fade-slide");
+    userGreeting.classList.add("greeting-animated");
   }
 
   // Quick search redirection

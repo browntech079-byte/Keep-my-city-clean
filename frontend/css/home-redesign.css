@@ -1,6 +1,6 @@
 /* ==========================================================================
    CityCare "Home / Dashboard" Screen Redesign
-   Exact match to Image 2 Reference
+   Exact match to Reference Design
    ========================================================================== */
 
 :root {
@@ -255,7 +255,7 @@ body.citycare-app {
 }
 
 /* ==========================================================================
-   MAIN CONTENT
+   MAIN DASHBOARD CONTENT
    ========================================================================== */
 .main-content {
   flex: 1 1 auto !important;
@@ -266,7 +266,7 @@ body.citycare-app {
   overflow-y: auto;
 }
 
-/* Top Greeting Bar */
+/* Top Greeting Bar & Dynamic Animated Script */
 .home-top-bar {
   display: flex;
   align-items: center;
@@ -282,30 +282,33 @@ body.citycare-app {
 .greeting-script {
   font-family: 'Caveat', cursive !important;
   font-size: 2.85rem !important;
-  font-weight: 700;
+  font-weight: 700 !important;
   color: var(--text-dark);
-  line-height: 1.1;
+  line-height: 1.05;
   letter-spacing: -0.01em;
   display: inline-flex;
   align-items: baseline;
-  gap: 4px;
+  gap: 8px;
+}
+
+.greeting-prefix {
+  display: inline-block;
+  opacity: 0;
+  animation: greetingFadeIn 0.5s ease forwards;
 }
 
 .greeting-name {
   color: var(--text-dark);
   display: inline-block;
-  transform-origin: bottom left;
-  animation: popIn 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+  transform-origin: left bottom;
+  animation: greetingCursiveReveal 0.75s cubic-bezier(0.2, 0.9, 0.3, 1.2) 0.15s forwards;
 }
 
-.greeting-fade-slide {
-  animation: greetingSlideIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes greetingSlideIn {
+@keyframes greetingFadeIn {
   0% {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(6px);
   }
   100% {
     opacity: 1;
@@ -313,24 +316,27 @@ body.citycare-app {
   }
 }
 
-@keyframes popIn {
+@keyframes greetingCursiveReveal {
   0% {
     opacity: 0;
-    transform: scale(0.9);
+    transform: translateY(10px) rotate(-3deg) scale(0.92);
+    filter: blur(2px);
   }
   60% {
-    transform: scale(1.06);
+    transform: translateY(-2px) rotate(1deg) scale(1.03);
+    filter: blur(0);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) rotate(0deg) scale(1);
+    filter: blur(0);
   }
 }
 
 .greeting-subtitle {
   font-size: 0.86rem;
   color: var(--text-gray);
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .top-bar-actions {

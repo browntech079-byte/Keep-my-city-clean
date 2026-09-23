@@ -13,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   
+  <!-- Style dependencies -->
   <link rel="stylesheet" href="css/home-redesign.css" />
   <link rel="stylesheet" href="css/about.css" />
 </head>
@@ -139,8 +140,8 @@
   <!-- ================= MAIN CONTENT ================= -->
   <main class="main-content">
     
-    <!-- Top Header -->
-    <header class="page-header">
+    <!-- Top Header (Fixed proportions and positioning) -->
+    <header class="page-header about-page-header">
       <div class="header-left">
         <div class="civic-badge">ABOUT OUR MISSION</div>
         <h1 class="main-heading">
@@ -160,12 +161,14 @@
             <path d="M3 14C35 4 95 3 126 14M98 16C108 14 122 14 127 11" stroke="#3b694b" stroke-width="2.2" stroke-linecap="round"/>
           </svg>
         </div>
+
         <div class="birds-flying">
           <svg width="60" height="30" viewBox="0 0 60 30" fill="none">
             <path d="M4 12 Q 9 6 14 12 Q 19 6 24 12" stroke="#527d60" stroke-width="1.5" stroke-linecap="round" fill="none"/>
             <path d="M26 8 Q 30 3 34 8 Q 38 3 42 8" stroke="#527d60" stroke-width="1.3" stroke-linecap="round" fill="none"/>
           </svg>
         </div>
+
         <div class="skyline-art">
           <svg viewBox="0 0 420 180" fill="none" xmlns="http://www.w3.org/2000/svg" class="skyline-svg">
             <rect x="50" y="70" width="30" height="100" fill="#d7ecde" rx="2"/>
@@ -191,7 +194,15 @@
       <!-- SECTION 1: Cleaning the Dump & Waste Management -->
       <article class="about-block">
         <div class="about-image-card">
-          <img src="assets/images/cleaning-garbage.png" alt="Community garbage and dump cleanup drive with CityCare" class="about-img" />
+          <!-- Fallback illustration container ensures visual beauty even if local file path differs -->
+          <div class="image-media-wrapper">
+            <img 
+              src="assets/images/cleaning the dump and garbage areas.png" 
+              alt="Community garbage and dump cleanup drive with CityCare" 
+              class="about-img" 
+              onerror="this.onerror=null; this.src='assets/images/cleaning-garbage.png'; this.parentElement.classList.add('loaded-alt');" 
+            />
+          </div>
           <div class="about-img-badge">
             <i class="fa-solid fa-recycle"></i>
             <span>Waste Remediation</span>
@@ -212,7 +223,14 @@
       <!-- SECTION 2: Walkable Footpaths & Restoring Urban Dignity (Reversed) -->
       <article class="about-block reverse">
         <div class="about-image-card">
-          <img src="assets/images/cleaning-footpath.png" alt="Citizens and youth sweeping footpaths and sidewalks" class="about-img" />
+          <div class="image-media-wrapper">
+            <img 
+              src="assets/images/cleaning the footpath.png" 
+              alt="Citizens and youth sweeping footpaths and sidewalks" 
+              class="about-img" 
+              onerror="this.onerror=null; this.src='assets/images/cleaning-footpath.png'; this.parentElement.classList.add('loaded-alt');" 
+            />
+          </div>
           <div class="about-img-badge">
             <i class="fa-solid fa-broom"></i>
             <span>Walkable Neighborhoods</span>
@@ -233,7 +251,14 @@
       <!-- SECTION 3: Urban Afforestation & Living Green Cover -->
       <article class="about-block">
         <div class="about-image-card">
-          <img src="assets/images/planting-tree.png" alt="Youth and students planting native saplings in city grounds" class="about-img" />
+          <div class="image-media-wrapper">
+            <img 
+              src="assets/images/planting tree.png" 
+              alt="Youth and students planting native saplings in city grounds" 
+              class="about-img" 
+              onerror="this.onerror=null; this.src='assets/images/planting-tree.png'; this.parentElement.classList.add('loaded-alt');" 
+            />
+          </div>
           <div class="about-img-badge">
             <i class="fa-solid fa-seedling"></i>
             <span>Urban Afforestation</span>

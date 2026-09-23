@@ -1,30 +1,112 @@
 /* ==========================================================================
-   CityCare "About" Page Styles
+   CityCare "About" Page Custom Styling - Fixed & Polished
    ========================================================================== */
 
+/* Strict constraint on the top header illustration so it never stretches across the screen */
+.about-page-header {
+  position: relative !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  min-height: 140px !important;
+  margin-bottom: 28px !important;
+  overflow: visible !important;
+}
+
+.about-page-header .header-left {
+  max-width: 580px !important;
+  position: relative;
+  z-index: 5;
+}
+
+.about-page-header .header-illustration {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 380px !important;
+  height: 150px !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+.about-page-header .skyline-art {
+  position: absolute !important;
+  bottom: 0 !important;
+  right: 0 !important;
+  width: 320px !important;
+  height: 120px !important;
+}
+
+.about-page-header .skyline-svg {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.about-page-header .calligraphy-tag {
+  position: absolute !important;
+  top: 0 !important;
+  right: 12px !important;
+  text-align: right !important;
+  z-index: 4 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+}
+
+.about-page-header .tag-title {
+  font-family: 'Caveat', cursive !important;
+  font-size: 1.55rem !important;
+  font-weight: 700 !important;
+  color: #274b34 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.about-page-header .tag-subtitle {
+  font-family: 'Caveat', cursive !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+  color: #274b34 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  margin-top: 2px !important;
+}
+
+.about-page-header .tag-flourish {
+  margin-top: -2px !important;
+}
+
+.about-page-header .birds-flying {
+  position: absolute !important;
+  top: 36px !important;
+  right: 180px !important;
+}
+
+/* ==========================================================================
+   ABOUT CARDS & IMAGE PRESENTATION
+   ========================================================================== */
 .about-container {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 30px;
   position: relative;
   z-index: 3;
-  margin-top: 10px;
 }
 
-/* Individual Editorial Block (Image + Narrative Text) */
 .about-block {
   background: #ffffff;
   border-radius: var(--radius-lg);
   border: 1px solid var(--card-sage-border);
   box-shadow: var(--shadow-subtle);
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
+  grid-template-columns: 1.1fr 1fr;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .about-block.reverse {
-  grid-template-columns: 1fr 1.15fr;
+  grid-template-columns: 1fr 1.1fr;
 }
 
 .about-block.reverse .about-image-card {
@@ -37,57 +119,69 @@
 
 .about-block:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
 }
 
-/* Image Container */
+/* Image Frame Wrapper */
 .about-image-card {
   position: relative;
-  min-height: 340px;
-  max-height: 420px;
+  min-height: 380px;
+  max-height: 440px;
+  background: linear-gradient(135deg, #e4f2e9 0%, #d8ece0 100%);
   overflow: hidden;
-  background-color: #ebf5ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-media-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
 
 .about-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
   transition: transform 0.4s ease;
 }
 
 .about-block:hover .about-img {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
+/* Pill badge on top of image */
 .about-img-badge {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: 18px;
+  left: 18px;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(6px);
   color: var(--primary-green);
-  padding: 6px 14px;
+  padding: 7px 16px;
   border-radius: var(--radius-pill);
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  z-index: 2;
 }
 
 /* Text Container */
 .about-text-card {
-  padding: 34px 38px;
+  padding: 38px 42px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .about-kicker {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 800;
   color: var(--accent-green);
   letter-spacing: 0.09em;
@@ -96,54 +190,58 @@
 }
 
 .about-card-title {
-  font-size: 1.45rem;
+  font-size: 1.55rem;
   font-weight: 800;
   color: var(--text-dark);
-  line-height: 1.22;
+  line-height: 1.2;
   letter-spacing: -0.02em;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .about-paragraph {
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   color: var(--text-gray);
-  line-height: 1.65;
-  margin-bottom: 12px;
+  line-height: 1.7;
+  margin-bottom: 14px;
 }
 
 .about-paragraph:last-child {
   margin-bottom: 0;
 }
 
-/* Bottom Vision Banner Card */
+/* ==========================================================================
+   VISION BANNER CARD
+   ========================================================================== */
 .vision-banner-card {
   background: linear-gradient(135deg, #ebf5ee 0%, #d8ece0 100%);
   border: 1px solid #cce0d3;
   border-radius: var(--radius-lg);
-  padding: 40px 48px;
+  padding: 42px 48px;
   box-shadow: var(--shadow-subtle);
   position: relative;
   overflow: hidden;
 }
 
 .vision-content {
-  max-width: 820px;
+  max-width: 840px;
+  position: relative;
+  z-index: 2;
 }
 
 .vision-pill-label {
   display: inline-block;
   background-color: var(--primary-green);
   color: #ffffff;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 800;
-  padding: 5px 14px;
+  padding: 6px 16px;
   border-radius: var(--radius-pill);
   letter-spacing: 0.08em;
   margin-bottom: 14px;
 }
 
 .vision-title {
-  font-size: 2.1rem;
+  font-size: 2.15rem;
   font-weight: 800;
   color: #172a1e;
   line-height: 1.18;
@@ -152,20 +250,22 @@
 }
 
 .vision-body {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: #3f5948;
-  line-height: 1.65;
+  line-height: 1.7;
   margin-bottom: 24px;
 }
 
 .vision-cta-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
+/* ==========================================================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+@media (max-width: 1100px) {
   .about-block, .about-block.reverse {
     grid-template-columns: 1fr;
   }
@@ -176,9 +276,9 @@
     order: 2;
   }
   .about-image-card {
-    min-height: 280px;
+    min-height: 300px;
   }
-  .vision-banner-card {
-    padding: 30px 28px;
+  .about-page-header .header-illustration {
+    display: none !important;
   }
 }

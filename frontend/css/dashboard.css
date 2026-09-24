@@ -1,6 +1,5 @@
 /* ==========================================================================
    CityCare "My Complaints" Screen Redesign
-   Exact match to Image 2
    ========================================================================== */
 
 :root {
@@ -174,50 +173,33 @@ body.citycare-app {
   gap: 16px;
 }
 
-.city-promo-card {
-  background: rgba(14, 38, 23, 0.45);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
+/* Sidebar Motto Card */
+.sidebar-motto-box {
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  position: relative;
-  overflow: hidden;
+  border-radius: 14px;
+  padding: 16px 14px;
+  margin: 14px auto;
+  backdrop-filter: blur(8px);
+  text-align: left;
 }
 
-.city-illustration {
-  width: 100%;
-  height: 52px;
+.motto-accent-line {
+  width: 26px;
+  height: 2px;
+  background-color: #6ee7b7;
+  border-radius: 2px;
   margin-bottom: 8px;
 }
 
-.city-illustration svg {
-  width: 100%;
-  height: 100%;
-}
-
-.promo-text-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.promo-pin-icon {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 0.72rem;
-  color: #79d799;
-}
-
-.promo-text-box span {
-  font-size: 0.7rem;
-  line-height: 1.35;
-  color: #cfe5d6;
-  font-weight: 400;
+.motto-text {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #e2e8f0;
+  font-style: italic;
+  margin: 0;
 }
 
 .logout-pill-btn {
@@ -296,73 +278,9 @@ body.citycare-app {
   font-weight: 400;
 }
 
-/* Header Skyline Art */
+/* Remove entire top-right header illustration and text */
 .header-illustration {
-  position: relative;
-  width: 380px;
-  height: 160px;
-  flex-shrink: 0;
-  pointer-events: none;
-}
-
-.calligraphy-tag {
-  position: absolute;
-  top: 6px;
-  right: 12px;
-  text-align: right;
-  z-index: 4;
-}
-
-.tag-content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.tag-title {
-  font-family: 'Caveat', cursive;
-  font-size: 1.45rem;
-  font-weight: 700;
-  color: #274b34;
-  line-height: 1.0;
-  transform: rotate(-3deg);
-}
-
-.tag-subtitle {
-  font-family: 'Caveat', cursive;
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #274b34;
-  line-height: 1.0;
-  margin-top: 2px;
-  transform: rotate(-3deg);
-}
-
-.tag-flourish {
-  margin-top: -2px;
-  transform: rotate(-2deg);
-}
-
-.birds-flying {
-  position: absolute;
-  top: 42px;
-  right: 220px;
-  z-index: 3;
-}
-
-.skyline-art {
-  position: absolute;
-  bottom: -4px;
-  right: -10px;
-  width: 360px;
-  height: 140px;
-  z-index: 2;
-}
-
-.skyline-svg {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  display: none !important;
 }
 
 /* ==========================================================================
@@ -735,9 +653,6 @@ body.citycare-app {
   .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .header-illustration {
-    display: none;
-  }
 }
 
 @media (max-width: 768px) {
@@ -755,144 +670,4 @@ body.citycare-app {
     height: auto;
     margin-top: 10px;
   }
-}
-/* Sidebar Motto Card */
-.sidebar-motto-box {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 16px 14px;
-  margin: 14px auto;
-  backdrop-filter: blur(8px);
-  text-align: left;
-}
-
-.motto-accent-line {
-  width: 26px;
-  height: 2px;
-  background-color: #6ee7b7;
-  border-radius: 2px;
-  margin-bottom: 8px;
-}
-
-.motto-text {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  font-size: 0.82rem;
-  font-weight: 500;
-  line-height: 1.45;
-  color: #e2e8f0;
-  font-style: italic;
-  margin: 0;
-}
-/* --- HIDE TOP-RIGHT SKYLINE & BIRDS GRAPHICS --- */
-.header-illustration .skyline-art,
-.header-illustration .birds-flying,
-.header-illustration .tag-flourish {
-  display: none !important;
-}
-
-/* --- RE-ALIGN & EXPAND HEADER TEXT CONTAINER --- */
-.header-illustration {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  background: transparent !important;
-}
-
-/* --- PROFESSIONAL & AESTHETIC BANNER BADGE --- */
-.header-illustration .calligraphy-tag {
-  background: linear-gradient(135deg, rgba(37, 77, 54, 0.08) 0%, rgba(110, 231, 183, 0.12) 100%) !important;
-  border: 1px solid rgba(49, 92, 62, 0.22) !important;
-  border-left: 4px solid #2e5439 !important;
-  border-radius: 14px !important;
-  padding: 16px 24px !important;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04) !important;
-  backdrop-filter: blur(6px) !important;
-  transform: none !important;
-  display: block !important;
-}
-
-.header-illustration .tag-content {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 3px !important;
-  text-align: left !important;
-}
-
-/* --- LARGER, ELEGANT TOP LINE --- */
-.header-illustration .tag-title {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
-  font-size: 1.35rem !important; /* Noticeably bigger and crisp */
-  font-weight: 800 !important;
-  letter-spacing: -0.3px !important;
-  color: #1e3a29 !important; /* Deep forest green */
-  line-height: 1.25 !important;
-  display: block !important;
-}
-
-/* --- HIDE TOP-RIGHT SKYLINE & EXTRA GRAPHICS --- */
-.header-illustration .skyline-art,
-.header-illustration .birds-flying,
-.header-illustration .tag-flourish,
-.header-illustration svg.skyline-svg,
-.header-illustration svg.skyline-panorama-svg {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  height: 0 !important;
-  width: 0 !important;
-}
-
-/* --- TOP-RIGHT ALIGNMENT --- */
-.header-illustration {
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: flex-end !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* --- REMOVE BOX COMPLETELY --- */
-.header-illustration .calligraphy-tag {
-  background: transparent !important;
-  border: none !important;
-  border-left: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  text-align: right !important;
-  display: block !important;
-  transform: none !important;
-}
-
-.header-illustration .tag-content {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-end !important;
-  gap: 4px !important;
-}
-
-/* --- PRIMARY TEXT: BIG, BOLD, EDITORIAL --- */
-.header-illustration .tag-title {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
-  font-size: 1.85rem !important; /* Prominent and large */
-  font-weight: 800 !important;
-  letter-spacing: -0.8px !important;
-  color: #1b3d2b !important; /* Deep luxury evergreen */
-  line-height: 1.15 !important;
-  display: block !important;
-}
-
-/* --- SECONDARY SLOGAN: SLEEK MINIMALIST SUBTEXT --- */
-.header-illustration .tag-subtitle {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
-  font-size: 1.05rem !important;
-  font-weight: 500 !important;
-  font-style: italic !important;
-  color: #4b6b55 !important; /* Muted sage-forest green */
-  letter-spacing: 0.2px !important;
-  line-height: 1.25 !important;
-  display: block !important;
 }

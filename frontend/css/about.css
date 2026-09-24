@@ -19,68 +19,14 @@
   z-index: 5;
 }
 
+/* Remove entire top-right header illustration and text */
+.header-illustration,
 .about-page-header .header-illustration {
-  position: absolute !important;
-  top: 0 !important;
-  right: 0 !important;
-  width: 380px !important;
-  height: 150px !important;
-  pointer-events: none !important;
-  z-index: 2 !important;
-}
-
-.about-page-header .skyline-art {
-  position: absolute !important;
-  bottom: 0 !important;
-  right: 0 !important;
-  width: 320px !important;
-  height: 120px !important;
-}
-
-.about-page-header .skyline-svg {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;
-}
-
-.about-page-header .calligraphy-tag {
-  position: absolute !important;
-  top: 0 !important;
-  right: 12px !important;
-  text-align: right !important;
-  z-index: 4 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-end !important;
-}
-
-.about-page-header .tag-title {
-  font-family: 'Caveat', cursive !important;
-  font-size: 1.55rem !important;
-  font-weight: 700 !important;
-  color: #274b34 !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
-}
-
-.about-page-header .tag-subtitle {
-  font-family: 'Caveat', cursive !important;
-  font-size: 1.4rem !important;
-  font-weight: 700 !important;
-  color: #274b34 !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
-  margin-top: 2px !important;
-}
-
-.about-page-header .tag-flourish {
-  margin-top: -2px !important;
-}
-
-.about-page-header .birds-flying {
-  position: absolute !important;
-  top: 36px !important;
-  right: 180px !important;
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
 }
 
 /* ==========================================================================
@@ -277,116 +223,4 @@
   .about-image-card {
     min-height: 300px;
   }
-}
-/* --- HIDE TOP-RIGHT SKYLINE & BIRDS GRAPHICS --- */
-.header-illustration .skyline-art,
-.header-illustration .birds-flying,
-.header-illustration .tag-flourish {
-  display: none !important;
-}
-
-/* --- RE-ALIGN & EXPAND HEADER TEXT CONTAINER --- */
-.header-illustration {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: flex-end !important;
-  background: transparent !important;
-}
-
-/* --- PROFESSIONAL & AESTHETIC BANNER BADGE --- */
-.header-illustration .calligraphy-tag {
-  background: linear-gradient(135deg, rgba(37, 77, 54, 0.08) 0%, rgba(110, 231, 183, 0.12) 100%) !important;
-  border: 1px solid rgba(49, 92, 62, 0.22) !important;
-  border-left: 4px solid #2e5439 !important;
-  border-radius: 14px !important;
-  padding: 16px 24px !important;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04) !important;
-  backdrop-filter: blur(6px) !important;
-  transform: none !important;
-  display: block !important;
-}
-
-.header-illustration .tag-content {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 3px !important;
-  text-align: left !important;
-}
-
-/* --- LARGER, ELEGANT TOP LINE --- */
-.header-illustration .tag-title {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
-  font-size: 1.35rem !important; /* Noticeably bigger and crisp */
-  font-weight: 800 !important;
-  letter-spacing: -0.3px !important;
-  color: #1e3a29 !important; /* Deep forest green */
-  line-height: 1.25 !important;
-  display: block !important;
-}
-
-/* --- HIDE TOP-RIGHT SKYLINE & EXTRA GRAPHICS --- */
-.header-illustration .skyline-art,
-.header-illustration .birds-flying,
-.header-illustration .tag-flourish,
-.header-illustration svg.skyline-svg,
-.header-illustration svg.skyline-panorama-svg {
-  display: none !important;
-  visibility: hidden !important;
-  opacity: 0 !important;
-  height: 0 !important;
-  width: 0 !important;
-}
-
-/* --- TOP-RIGHT ALIGNMENT --- */
-.header-illustration {
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: flex-end !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* --- REMOVE BOX COMPLETELY --- */
-.header-illustration .calligraphy-tag {
-  background: transparent !important;
-  border: none !important;
-  border-left: none !important;
-  box-shadow: none !important;
-  backdrop-filter: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  text-align: right !important;
-  display: block !important;
-  transform: none !important;
-}
-
-.header-illustration .tag-content {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: flex-end !important;
-  gap: 4px !important;
-}
-
-/* --- PRIMARY TEXT: BIG, BOLD, EDITORIAL --- */
-.header-illustration .tag-title {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
-  font-size: 1.85rem !important; /* Prominent and large */
-  font-weight: 800 !important;
-  letter-spacing: -0.8px !important;
-  color: #1b3d2b !important; /* Deep luxury evergreen */
-  line-height: 1.15 !important;
-  display: block !important;
-}
-
-/* --- SECONDARY SLOGAN: SLEEK MINIMALIST SUBTEXT --- */
-.header-illustration .tag-subtitle {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
-  font-size: 1.05rem !important;
-  font-weight: 500 !important;
-  font-style: italic !important;
-  color: #4b6b55 !important; /* Muted sage-forest green */
-  letter-spacing: 0.2px !important;
-  line-height: 1.25 !important;
-  display: block !important;
 }

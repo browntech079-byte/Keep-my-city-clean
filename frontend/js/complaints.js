@@ -156,14 +156,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch from backend
   async function loadComplaints() {
     try {
-      // Determine exact URL to prevent resolving to /my
-     const API_URL = "/api/complaints/my";
+      const base = (typeof CONFIG !== "undefined" && CONFIG.API_BASE_URL)
+        ? CONFIG.API_BASE_URL
+        : "https://citycare-gov.onrender.com/api";
+
+      const API_URL = `${base}/complaints/my`;
 
       const headers = {
         "Content-Type": "application/json"
       };
       if (token) {
         headers["Authorization"] = `Bearer ${token}`;
+      } else {
+        console.warn("No token found in localStorage! Please log in.");
       }
 
       const res = await fetch(API_URL, { headers });

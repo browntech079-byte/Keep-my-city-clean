@@ -156,12 +156,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // Fetch from backend
   async function loadComplaints() {
     try {
-      // Point directly to /api/complaints/my
-      const base = (typeof CONFIG !== "undefined" && CONFIG.API_BASE_URL)
-        ? CONFIG.API_BASE_URL
-        : ((typeof window.API_BASE_URL !== "undefined") ? window.API_BASE_URL : "/api");
-
-      const API_URL = `${base}/complaints/my`;
+      // Determine exact URL to prevent resolving to /my
+      let API_URL = "/api/complaints/my";
+      if (typeof CONFIG !== "undefined" && CONFIG.API_BASE_URL) {
+        API_URL = `${CONFIG.API_BASE_URL.replace(/\/+$/, "")}/complaints/my`;
+      } else if (typeof window.API_BASE_URL !== "undefined") {
+        API_URL = `${window.API_BASE_URL.replace(/\/+$/, "")}/complaints/my`;
+      }
 
       const headers = {
         "Content-Type": "application/json"
@@ -173,9 +174,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch(API_URL, { headers });
       if (res.ok) {
         const data = await res.json();
+        console.log("Complaints received:", data);
         allComplaints = Array.isArray(data) ? data : (data.complaints || []);
       } else {
-        console.error("Server responded with error:", res.status);
+        console.error("Server responded with error status:", res.status);
         allComplaints = [];
       }
     } catch (err) {

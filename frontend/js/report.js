@@ -11,12 +11,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Element Selectors
   const reportForm = document.getElementById("reportForm") || document.querySelector("form");
-  const issuePhotoInput = document.getElementById("issuePhoto") || document.getElementById("photo") || document.querySelector('input[type="file"]');
-  const photoNameDisplay = document.getElementById("photoNameDisplay") || document.querySelector(".file-name-display");
   const pinInput = document.getElementById("pinCodeInput") || document.querySelector('input[placeholder*="PIN"]') || document.querySelector('input[name="pincode"]');
   const pinSearchBtn = document.getElementById("pinSearchBtn") || document.querySelector('button.pin-search-btn');
   const selectedLocationText = document.getElementById("selectedLocationText") || document.querySelector(".selected-location-box span") || document.querySelector(".location-text");
   const logoutBtn = document.getElementById("logoutBtn");
+
+  // File Upload Elements
+  const imageUpload = document.getElementById("imageUpload") || document.getElementById("issuePhoto") || document.querySelector('input[type="file"]');
+  const fileNameDisplay = document.getElementById("fileName") || document.getElementById("photoNameDisplay") || document.querySelector(".file-name-display");
+
+  // File Upload Display Handler
+  if (imageUpload && fileNameDisplay) {
+    imageUpload.addEventListener("change", () => {
+      if (imageUpload.files && imageUpload.files.length > 0) {
+        fileNameDisplay.textContent = imageUpload.files[0].name;
+        fileNameDisplay.style.color = "#254d36";
+      } else {
+        fileNameDisplay.textContent = "No file chosen";
+        fileNameDisplay.style.color = "#6b7280";
+      }
+    });
+  }
 
   // Lat / Lng hidden fields or state
   let currentCoords = {
@@ -167,21 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --------------------------------------------------------------------------
-  // 4. Photo File Selection Preview
-  // --------------------------------------------------------------------------
-  if (issuePhotoInput) {
-    issuePhotoInput.addEventListener("change", (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (file) {
-        if (photoNameDisplay) {
-          photoNameDisplay.textContent = file.name;
-        }
-      }
-    });
-  }
-
-  // --------------------------------------------------------------------------
-  // 5. Complaint Form Submission (Robust 200/201 Response Handling)
+  // 4. Complaint Form Submission
   // --------------------------------------------------------------------------
   if (reportForm) {
     reportForm.addEventListener("submit", async (e) => {
@@ -206,7 +207,12 @@ document.addEventListener("DOMContentLoaded", () => {
         // Build FormData
         const formData = new FormData(reportForm);
 
-        // Append Coordinates & Address if available
+        // Explicitly append image file if selected
+        if (imageUpload && imageUpload.files && imageUpload.files[0]) {
+          formData.set("image", imageUpload.files[0]);
+        }
+
+        // Append Coordinates & Address
         if (currentCoords) {
           formData.set("latitude", currentCoords.lat);
           formData.set("longitude", currentCoords.lng);
@@ -215,14 +221,15 @@ document.addEventListener("DOMContentLoaded", () => {
           formData.set("address", selectedLocationText.textContent.trim());
         }
 
-        // Determine base API endpoint
-        const apiBase = (typeof CONFIG !== "undefined" && CONFIG.API_BASE_URL) ? CONFIG.API_BASE_URL : "/api";
+        // Ensure target is live Render backend if CONFIG is missing
+        const apiBase = (typeof CONFIG !== "undefined" && CONFIG.API_BASE_URL)
+          ? CONFIG.API_BASE_URL
+          : "https://citycare-gov.onrender.com/api";
 
         const response = await fetch(`${apiBase}/complaints`, {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${userToken}`
-            // Do not manually set Content-Type; FormData sets multipart/form-data with boundaries
           },
           body: formData
         });
@@ -246,6 +253,12 @@ document.addEventListener("DOMContentLoaded", () => {
         showToast("Complaint submitted successfully!", "success");
         reportForm.reset();
 
+        // Reset dynamic file label
+        if (fileNameDisplay) {
+          fileNameDisplay.textContent = "No file chosen";
+          fileNameDisplay.style.color = "#6b7280";
+        }
+
         setTimeout(() => {
           window.location.href = "complaints.html";
         }, 1200);
@@ -263,7 +276,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --------------------------------------------------------------------------
-  // 6. Logout Handler
+  // 5. Logout Handler
   // --------------------------------------------------------------------------
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {

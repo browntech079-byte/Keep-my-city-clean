@@ -746,3 +746,9 @@ body.citycare-app {
     display: none;
   }
 }
+.custom-file-btn {
+  color: #ffffff !important;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-block;
+}

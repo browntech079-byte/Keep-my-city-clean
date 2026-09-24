@@ -826,13 +826,69 @@ body.citycare-app {
   display: block !important;
 }
 
-/* --- AESTHETIC SUB-SLOGAN --- */
+/* --- HIDE TOP-RIGHT SKYLINE & EXTRA GRAPHICS --- */
+.header-illustration .skyline-art,
+.header-illustration .birds-flying,
+.header-illustration .tag-flourish,
+.header-illustration svg.skyline-svg,
+.header-illustration svg.skyline-panorama-svg {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+
+/* --- TOP-RIGHT ALIGNMENT --- */
+.header-illustration {
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* --- REMOVE BOX COMPLETELY --- */
+.header-illustration .calligraphy-tag {
+  background: transparent !important;
+  border: none !important;
+  border-left: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  text-align: right !important;
+  display: block !important;
+  transform: none !important;
+}
+
+.header-illustration .tag-content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 4px !important;
+}
+
+/* --- PRIMARY TEXT: BIG, BOLD, EDITORIAL --- */
+.header-illustration .tag-title {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  font-size: 1.85rem !important; /* Prominent and large */
+  font-weight: 800 !important;
+  letter-spacing: -0.8px !important;
+  color: #1b3d2b !important; /* Deep luxury evergreen */
+  line-height: 1.15 !important;
+  display: block !important;
+}
+
+/* --- SECONDARY SLOGAN: SLEEK MINIMALIST SUBTEXT --- */
 .header-illustration .tag-subtitle {
-  font-family: 'Caveat', cursive !important; /* Refined script aesthetic */
-  font-size: 1.2rem !important;
-  font-weight: 700 !important;
-  color: #3b694b !important;
-  letter-spacing: 0.4px !important;
-  line-height: 1.2 !important;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  font-style: italic !important;
+  color: #4b6b55 !important; /* Muted sage-forest green */
+  letter-spacing: 0.2px !important;
+  line-height: 1.25 !important;
   display: block !important;
 }

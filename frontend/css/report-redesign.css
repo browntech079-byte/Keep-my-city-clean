@@ -780,3 +780,59 @@ body.citycare-app {
   font-style: italic;
   margin: 0;
 }
+/* --- HIDE TOP-RIGHT SKYLINE & BIRDS GRAPHICS --- */
+.header-illustration .skyline-art,
+.header-illustration .birds-flying,
+.header-illustration .tag-flourish {
+  display: none !important;
+}
+
+/* --- RE-ALIGN & EXPAND HEADER TEXT CONTAINER --- */
+.header-illustration {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  background: transparent !important;
+}
+
+/* --- PROFESSIONAL & AESTHETIC BANNER BADGE --- */
+.header-illustration .calligraphy-tag {
+  background: linear-gradient(135deg, rgba(37, 77, 54, 0.08) 0%, rgba(110, 231, 183, 0.12) 100%) !important;
+  border: 1px solid rgba(49, 92, 62, 0.22) !important;
+  border-left: 4px solid #2e5439 !important;
+  border-radius: 14px !important;
+  padding: 16px 24px !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04) !important;
+  backdrop-filter: blur(6px) !important;
+  transform: none !important;
+  display: block !important;
+}
+
+.header-illustration .tag-content {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+  text-align: left !important;
+}
+
+/* --- LARGER, ELEGANT TOP LINE --- */
+.header-illustration .tag-title {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  font-size: 1.35rem !important; /* Noticeably bigger and crisp */
+  font-weight: 800 !important;
+  letter-spacing: -0.3px !important;
+  color: #1e3a29 !important; /* Deep forest green */
+  line-height: 1.25 !important;
+  display: block !important;
+}
+
+/* --- AESTHETIC SUB-SLOGAN --- */
+.header-illustration .tag-subtitle {
+  font-family: 'Caveat', cursive !important; /* Refined script aesthetic */
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  color: #3b694b !important;
+  letter-spacing: 0.4px !important;
+  line-height: 1.2 !important;
+  display: block !important;
+}

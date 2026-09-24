@@ -888,3 +888,31 @@ body.citycare-app {
     display: none;
   }
 }
+/* Sidebar Motto Card */
+.sidebar-motto-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 16px 14px;
+  margin: 14px auto;
+  backdrop-filter: blur(8px);
+  text-align: left;
+}
+
+.motto-accent-line {
+  width: 26px;
+  height: 2px;
+  background-color: #6ee7b7;
+  border-radius: 2px;
+  margin-bottom: 8px;
+}
+
+.motto-text {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #e2e8f0;
+  font-style: italic;
+  margin: 0;
+}

@@ -157,12 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadComplaints() {
     try {
       // Determine exact URL to prevent resolving to /my
-      let API_URL = "/api/complaints/my";
-      if (typeof CONFIG !== "undefined" && CONFIG.API_BASE_URL) {
-        API_URL = `${CONFIG.API_BASE_URL.replace(/\/+$/, "")}/complaints/my`;
-      } else if (typeof window.API_BASE_URL !== "undefined") {
-        API_URL = `${window.API_BASE_URL.replace(/\/+$/, "")}/complaints/my`;
-      }
+     const API_URL = "/api/complaints/my";
 
       const headers = {
         "Content-Type": "application/json"

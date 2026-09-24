@@ -73,12 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    complaintFoundText.textContent = `${filtered.length} complaint(s) found.`;
+    if (complaintFoundText) {
+      complaintFoundText.textContent = `${filtered.length} complaint(s) found.`;
+    }
+
+    if (!complaintsList) return;
 
     if (filtered.length === 0) {
       complaintsList.innerHTML = `
-        <div class="empty-complaints">
-          <i class="fa-regular fa-folder-open"></i>
+        <div class="empty-complaints" style="text-align: center; padding: 40px; color: #6b7280;">
+          <i class="fa-regular fa-folder-open" style="font-size: 2.5rem; margin-bottom: 12px; display: block;"></i>
           <p>No complaints found under "${currentFilter}".</p>
         </div>
       `;
@@ -89,11 +93,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const idStr = c._id ? `#CC${c._id.substring(c._id.length - 4).toUpperCase()}` : "#CC001";
       const dateStr = c.createdAt ? new Date(c.createdAt).toLocaleDateString("en-GB", { day: '2-digit', month: 'short', year: 'numeric' }) : "Recent";
       const categoryStr = c.category || "General Issue";
-      const departmentStr = getDepartment(categoryStr);
-      const addressStr = c.address || "Location unavailable";
-      const imageTag = c.imageUrl
-        ? `<img src="${c.imageUrl}" alt="${c.title}" class="complaint-thumb-img">`
-        : `<span class="no-photo-placeholder">No photo</span>`;
+      const departmentStr = c.department || getDepartment(categoryStr);
+      
+      // Handles both nested location.address and flat address
+      const addressStr = (c.location && c.location.address) || c.address || "Location unavailable";
+      
+      // Check both 'image' (Cloudinary model field) and 'imageUrl'
+      const photoSrc = c.image || c.imageUrl;
+      const imageTag = photoSrc
+        ? `<img src="${photoSrc}" alt="${c.title || 'Complaint'}" class="complaint-thumb-img" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`
+        : `<span class="no-photo-placeholder" style="font-size: 0.75rem; color: #9ca3af;">No photo</span>`;
 
       return `
         <div class="complaint-card">
@@ -138,20 +147,25 @@ document.addEventListener("DOMContentLoaded", () => {
       else pending++;
     });
 
-    totalCountEl.textContent = total;
-    pendingCountEl.textContent = pending;
-    inProgressCountEl.textContent = inProgress;
-    resolvedCountEl.textContent = resolved;
+    if (totalCountEl) totalCountEl.textContent = total;
+    if (pendingCountEl) pendingCountEl.textContent = pending;
+    if (inProgressCountEl) inProgressCountEl.textContent = inProgress;
+    if (resolvedCountEl) resolvedCountEl.textContent = resolved;
   }
 
   // Fetch from backend
   async function loadComplaints() {
     try {
-      const API_URL = (typeof window.API_BASE_URL !== "undefined")
-        ? `${window.API_BASE_URL}/complaints`
-        : "/api/complaints";
+      // Point directly to /api/complaints/my
+      const base = (typeof CONFIG !== "undefined" && CONFIG.API_BASE_URL)
+        ? CONFIG.API_BASE_URL
+        : ((typeof window.API_BASE_URL !== "undefined") ? window.API_BASE_URL : "/api");
 
-      const headers = {};
+      const API_URL = `${base}/complaints/my`;
+
+      const headers = {
+        "Content-Type": "application/json"
+      };
       if (token) {
         headers["Authorization"] = `Bearer ${token}`;
       }
@@ -161,50 +175,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await res.json();
         allComplaints = Array.isArray(data) ? data : (data.complaints || []);
       } else {
-        // Fallback demo items if backend is offline so the screen matches Image 2
-        allComplaints = [
-          {
-            _id: "68b4f001",
-            title: "Potholes on main road",
-            category: "Roads & Infrastructure",
-            address: "MG Road, Visakhapatnam, Andhra Pradesh, 530002, India",
-            status: "Resolved",
-            createdAt: "2025-08-12T10:00:00Z",
-            imageUrl: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=300&auto=format&fit=crop&q=60"
-          },
-          {
-            _id: "68b4f002",
-            title: "Water pipeline burst",
-            category: "Water Supply",
-            address: "Near Bus Stand, Kakinada, Andhra Pradesh, 533001, India",
-            status: "Resolved",
-            createdAt: "2025-08-05T12:30:00Z",
-            imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb186f5f8?w=300&auto=format&fit=crop&q=60"
-          }
-        ];
+        console.error("Server responded with error:", res.status);
+        allComplaints = [];
       }
     } catch (err) {
-      // Offline fallback
-      allComplaints = [
-        {
-          _id: "68b4f001",
-          title: "Potholes on main road",
-          category: "Roads & Infrastructure",
-          address: "MG Road, Visakhapatnam, Andhra Pradesh, 530002, India",
-          status: "Resolved",
-          createdAt: "2025-08-12T10:00:00Z",
-          imageUrl: "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=300&auto=format&fit=crop&q=60"
-        },
-        {
-          _id: "68b4f002",
-          title: "Water pipeline burst",
-          category: "Water Supply",
-          address: "Near Bus Stand, Kakinada, Andhra Pradesh, 533001, India",
-          status: "Resolved",
-          createdAt: "2025-08-05T12:30:00Z",
-          imageUrl: "https://images.unsplash.com/photo-1541888946425-d0fbb186f5f8?w=300&auto=format&fit=crop&q=60"
-        }
-      ];
+      console.error("Network or fetch error:", err);
+      allComplaints = [];
     } finally {
       updateMetrics();
       renderComplaints();
@@ -217,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const filter = card.getAttribute("data-filter");
       metricCards.forEach(c => c.classList.remove("active-filter"));
       card.classList.add("active-filter");
-      currentFilter = filter;
+      currentFilter = filter || "all";
       renderComplaints();
     });
   });

@@ -1,229 +1,275 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Check auth
+  // Check authentication
   const token = localStorage.getItem("citycare_token");
-  const user = JSON.parse(localStorage.getItem("citycare_user") || "{}");
+  if (!token) {
+    showToast("Please log in to report an issue.", "error");
+    setTimeout(() => {
+      window.location.href = "login.html";
+    }, 1500);
+    return;
+  }
 
+  // Element Selectors
+  const reportForm = document.getElementById("reportForm") || document.querySelector("form");
+  const issuePhotoInput = document.getElementById("issuePhoto") || document.getElementById("photo") || document.querySelector('input[type="file"]');
+  const photoNameDisplay = document.getElementById("photoNameDisplay") || document.querySelector(".file-name-display");
+  const pinInput = document.getElementById("pinCodeInput") || document.querySelector('input[placeholder*="PIN"]') || document.querySelector('input[name="pincode"]');
+  const pinSearchBtn = document.getElementById("pinSearchBtn") || document.querySelector('button.pin-search-btn');
+  const selectedLocationText = document.getElementById("selectedLocationText") || document.querySelector(".selected-location-box span") || document.querySelector(".location-text");
   const logoutBtn = document.getElementById("logoutBtn");
+
+  // Lat / Lng hidden fields or state
+  let currentCoords = {
+    lat: 18.5204, // Default: Pune / Maharashtra area
+    lng: 73.8567
+  };
+
+  // --------------------------------------------------------------------------
+  // 1. Toast Notification Utility
+  // --------------------------------------------------------------------------
+  function showToast(message, type = "info") {
+    let toast = document.querySelector(".toast-notification");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.className = "toast-notification";
+      document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+    toast.className = `toast-notification toast-${type} show`;
+
+    clearTimeout(toast.timeoutId);
+    toast.timeoutId = setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3500);
+  }
+  window.showToast = showToast;
+
+  // --------------------------------------------------------------------------
+  // 2. Leaflet Map Initialization
+  // --------------------------------------------------------------------------
+  let map, marker;
+  const mapElement = document.getElementById("reportMap") || document.getElementById("map");
+
+  if (mapElement && typeof L !== "undefined") {
+    map = L.map(mapElement).setView([currentCoords.lat, currentCoords.lng], 13);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
+      maxZoom: 19
+    }).addTo(map);
+
+    // Custom Map Pin Marker
+    const mapPinIcon = L.divIcon({
+      className: "custom-leaflet-marker",
+      html: `<div style="background-color: #254d36; color: #ffffff; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2.5px solid #fff;"><i class="fa-solid fa-location-dot" style="font-size: 16px;"></i></div>`,
+      iconSize: [34, 34],
+      iconAnchor: [17, 34]
+    });
+
+    marker = L.marker([currentCoords.lat, currentCoords.lng], {
+      draggable: true,
+      icon: mapPinIcon
+    }).addTo(map);
+
+    // Reverse Geocode lookup
+    async function updateLocationAddress(lat, lng) {
+      currentCoords = { lat, lng };
+      if (selectedLocationText) {
+        selectedLocationText.textContent = "Fetching address...";
+      }
+
+      try {
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+        const data = await response.json();
+        if (data && data.display_name) {
+          const shortAddress = data.display_name.split(",").slice(0, 4).join(", ");
+          if (selectedLocationText) {
+            selectedLocationText.textContent = shortAddress;
+          }
+        } else {
+          if (selectedLocationText) {
+            selectedLocationText.textContent = `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`;
+          }
+        }
+      } catch (err) {
+        if (selectedLocationText) {
+          selectedLocationText.textContent = `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`;
+        }
+      }
+    }
+
+    // Marker drag event
+    marker.on("dragend", (e) => {
+      const pos = e.target.getLatLng();
+      updateLocationAddress(pos.lat, pos.lng);
+    });
+
+    // Map click event
+    map.on("click", (e) => {
+      marker.setLatLng(e.latlng);
+      updateLocationAddress(e.latlng.lat, e.latlng.lng);
+    });
+
+    // Initial address fetch
+    updateLocationAddress(currentCoords.lat, currentCoords.lng);
+
+    // Try HTML5 Browser Geolocation
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const userLat = pos.coords.latitude;
+          const userLng = pos.coords.longitude;
+          map.setView([userLat, userLng], 14);
+          marker.setLatLng([userLat, userLng]);
+          updateLocationAddress(userLat, userLng);
+        },
+        () => {
+          // Keep default if location permission declined
+        }
+      );
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // 3. PIN Code Search
+  // --------------------------------------------------------------------------
+  if (pinSearchBtn && pinInput) {
+    pinSearchBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const pin = pinInput.value.trim();
+      if (!pin) {
+        showToast("Please enter a PIN code.", "warning");
+        return;
+      }
+
+      try {
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(pin)}&country=India&format=json`);
+        const results = await res.json();
+        if (results && results.length > 0) {
+          const first = results[0];
+          const lat = parseFloat(first.lat);
+          const lng = parseFloat(first.lon);
+          map.setView([lat, lng], 14);
+          marker.setLatLng([lat, lng]);
+          if (selectedLocationText) {
+            selectedLocationText.textContent = first.display_name.split(",").slice(0, 4).join(", ");
+          }
+          currentCoords = { lat, lng };
+          showToast("Location updated from PIN code!", "success");
+        } else {
+          showToast("PIN code not found. Please click on the map directly.", "error");
+        }
+      } catch (err) {
+        showToast("Failed to search PIN code.", "error");
+      }
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 4. Photo File Selection Preview
+  // --------------------------------------------------------------------------
+  if (issuePhotoInput) {
+    issuePhotoInput.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) {
+        if (photoNameDisplay) {
+          photoNameDisplay.textContent = file.name;
+        }
+      }
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 5. Complaint Form Submission (Robust 200/201 Response Handling)
+  // --------------------------------------------------------------------------
+  if (reportForm) {
+    reportForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const submitBtn = reportForm.querySelector('button[type="submit"]');
+      const originalBtnContent = submitBtn ? submitBtn.innerHTML : "";
+
+      const userToken = localStorage.getItem("citycare_token");
+      if (!userToken) {
+        showToast("Please log in before submitting a complaint.", "error");
+        setTimeout(() => (window.location.href = "login.html"), 1500);
+        return;
+      }
+
+      try {
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Submitting...`;
+        }
+
+        // Build FormData
+        const formData = new FormData(reportForm);
+
+        // Append Coordinates & Address if available
+        if (currentCoords) {
+          formData.set("latitude", currentCoords.lat);
+          formData.set("longitude", currentCoords.lng);
+        }
+        if (selectedLocationText && selectedLocationText.textContent) {
+          formData.set("address", selectedLocationText.textContent.trim());
+        }
+
+        // Determine base API endpoint
+        const apiBase = (typeof CONFIG !== "undefined" && CONFIG.API_BASE_URL) ? CONFIG.API_BASE_URL : "/api";
+
+        const response = await fetch(`${apiBase}/complaints`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${userToken}`
+            // Do not manually set Content-Type; FormData sets multipart/form-data with boundaries
+          },
+          body: formData
+        });
+
+        // Safely extract text first to avoid parsing crashes
+        const rawText = await response.text();
+        let resData = {};
+        try {
+          resData = JSON.parse(rawText);
+        } catch (_) {
+          resData = { message: rawText };
+        }
+
+        if (!response.ok) {
+          const errorMsg = resData.message || resData.error || `Server responded with status ${response.status}`;
+          showToast(errorMsg, "error");
+          return;
+        }
+
+        // Success condition (HTTP 200/201)
+        showToast("Complaint submitted successfully!", "success");
+        reportForm.reset();
+
+        setTimeout(() => {
+          window.location.href = "complaints.html";
+        }, 1200);
+
+      } catch (err) {
+        console.error("Submission error details:", err);
+        showToast(err.message || "Failed to process request.", "error");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnContent;
+        }
+      }
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 6. Logout Handler
+  // --------------------------------------------------------------------------
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.removeItem("citycare_token");
       localStorage.removeItem("citycare_user");
       window.location.href = "login.html";
-    });
-  }
-
-  // File Upload Indicator
-  const imageUpload = document.getElementById("imageUpload");
-  const fileName = document.getElementById("fileName");
-  if (imageUpload && fileName) {
-    imageUpload.addEventListener("change", (e) => {
-      if (e.target.files && e.target.files.length > 0) {
-        fileName.textContent = e.target.files[0].name;
-      } else {
-        fileName.textContent = "No file chosen";
-      }
-    });
-  }
-
-  // Toast Helper
-  function showToast(message, isError = false) {
-    const toast = document.getElementById("toastNotification");
-    if (!toast) return;
-    toast.textContent = message;
-    toast.style.backgroundColor = isError ? "#c53030" : "#254d36";
-    toast.style.display = "block";
-    setTimeout(() => {
-      toast.style.display = "none";
-    }, 3500);
-  }
-
-  // Initialize Leaflet Map (Centered on Pune as per reference image)
-  const defaultLat = 18.5204;
-  const defaultLng = 73.8567;
-  const map = L.map("map", {
-    zoomControl: false
-  }).setView([defaultLat, defaultLng], 12);
-
-  // Reposition zoom controls to match top-left style
-  L.control.zoom({ position: "topleft" }).addTo(map);
-
-  // CartoDB / OSM clean tile layer
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-
-  // Custom Pine/Forest Pin Marker
-  const customPinIcon = L.divIcon({
-    className: "custom-map-marker",
-    html: `
-      <div style="
-        background-color: #254d36;
-        width: 32px;
-        height: 32px;
-        border-radius: 50% 50% 50% 0;
-        transform: rotate(-45deg);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 2px solid #ffffff;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      ">
-        <div style="
-          width: 10px;
-          height: 10px;
-          background-color: #ffffff;
-          border-radius: 50%;
-        "></div>
-      </div>
-    `,
-    iconSize: [32, 32],
-    iconAnchor: [16, 32]
-  });
-
-  let marker = L.marker([defaultLat, defaultLng], { icon: customPinIcon }).addTo(map);
-
-  const selectedLocText = document.getElementById("selectedLocationText");
-  const latInput = document.getElementById("latitude");
-  const lngInput = document.getElementById("longitude");
-  const addressInput = document.getElementById("address");
-
-  function setCoordinates(lat, lng, label = null) {
-    latInput.value = lat;
-    lngInput.value = lng;
-    marker.setLatLng([lat, lng]);
-
-    if (label) {
-      selectedLocText.textContent = label;
-      addressInput.value = label;
-    } else {
-      selectedLocText.textContent = `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`;
-      addressInput.value = `Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)}`;
-      // Reverse Geocoding with OpenStreetMap Nominatim
-      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-        .then(res => res.json())
-        .then(data => {
-          if (data && data.display_name) {
-            const shortAddress = data.display_name.split(",").slice(0, 3).join(",");
-            selectedLocText.textContent = shortAddress;
-            addressInput.value = data.display_name;
-          }
-        })
-        .catch(() => {});
-    }
-  }
-
-  // Set default
-  setCoordinates(defaultLat, defaultLng, "Pune, Maharashtra, India");
-
-  // Map Click Listener
-  map.on("click", (e) => {
-    setCoordinates(e.latlng.lat, e.latlng.lng);
-  });
-
-  // PIN Code Search Handler
-  const pinInput = document.getElementById("pinInput");
-  const searchPinBtn = document.getElementById("searchPinBtn");
-
-  if (searchPinBtn && pinInput) {
-    searchPinBtn.addEventListener("click", () => {
-      const pin = pinInput.value.trim();
-      if (!pin || pin.length < 5) {
-        showToast("Please enter a valid PIN code", true);
-        return;
-      }
-      fetch(`https://nominatim.openstreetmap.org/search?postalcode=${encodeURIComponent(pin)}&country=India&format=json`)
-        .then(res => res.json())
-        .then(results => {
-          if (results && results.length > 0) {
-            const lat = parseFloat(results[0].lat);
-            const lon = parseFloat(results[0].lon);
-            map.setView([lat, lon], 13);
-            setCoordinates(lat, lon, results[0].display_name);
-            showToast(`Location set to PIN: ${pin}`);
-          } else {
-            showToast("PIN code location not found", true);
-          }
-        })
-        .catch(() => {
-          showToast("Failed to lookup PIN code", true);
-        });
-    });
-  }
-
-  // Form Submission
-  const form = document.getElementById("reportIssueForm");
-  const submitBtn = document.getElementById("submitBtn");
-
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const title = document.getElementById("title").value.trim();
-      const category = document.getElementById("category").value;
-      const description = document.getElementById("description").value.trim();
-      const latitude = latInput.value;
-      const longitude = lngInput.value;
-      const address = addressInput.value;
-      const file = imageUpload.files[0];
-
-      if (!title || !category || !description) {
-        showToast("Please fill in all required fields", true);
-        return;
-      }
-
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>Submitting...</span>`;
-
-      try {
-        const formData = new FormData();
-        formData.append("title", title);
-        formData.append("category", category);
-        formData.append("description", description);
-        formData.append("latitude", latitude);
-        formData.append("longitude", longitude);
-        formData.append("address", address);
-        if (file) {
-          formData.append("image", file);
-        }
-
-        const API_URL = (typeof window.API_BASE_URL !== "undefined") 
-          ? `${window.API_BASE_URL}/complaints`
-          : "/api/complaints";
-
-        const headers = {};
-        if (token) {
-          headers["Authorization"] = `Bearer ${token}`;
-        }
-
-        const res = await fetch(API_URL, {
-          method: "POST",
-          headers: headers,
-          body: formData
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          showToast("Complaint submitted successfully!");
-          form.reset();
-          fileName.textContent = "No file chosen";
-          setTimeout(() => {
-            window.location.href = "complaints.html";
-          }, 1200);
-        } else {
-          showToast(data.message || "Failed to submit complaint", true);
-        }
-      } catch (err) {
-        showToast("Network error. Could not reach server.", true);
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = `
-          <i class="fa-regular fa-paper-plane"></i>
-          <span>Submit Complaint</span>
-          <i class="fa-solid fa-arrow-right-long arrow-right"></i>
-        `;
-      }
     });
   }
 });
